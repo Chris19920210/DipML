@@ -87,7 +87,7 @@ class TranslateEnzhAi50k(translate.TranslateProblem):
 
     @property
     def approx_vocab_size(self):
-        return 60000
+        return 50000
 
     @property
     def source_vocab_name(self):
@@ -125,7 +125,7 @@ class TranslateEnzhAi50k(translate.TranslateProblem):
             data_dir,
             tmp_dir,
             self.target_vocab_name,
-            int(self.approx_vocab_size / 4),
+            int(self.approx_vocab_size / 2),
             target_datasets,
             file_byte_budget=1e8)
         tag = "train" if train else "dev"

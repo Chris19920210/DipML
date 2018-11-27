@@ -99,3 +99,4 @@ def main(_):
 
 if __name__ == "__main__":
     tf.app.run()
+from tensor2tensor.utils import decoding

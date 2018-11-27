@@ -52,7 +52,6 @@ if __name__ == '__main__':
         if counter % args.beam_size == 0:
             ret.insert(0, '%d' % (int(counter / args.beam_size)))
             in_queue_m.put(ret)
-            counter = 0
             ret = []
         else:
             for line in lines:

@@ -1,5 +1,15 @@
 import sys
 import jieba
+import argparse
+
+
+parser = argparse.ArgumentParser(description='remover')
+parser.add_argument('--dict', type=str, default=None,
+                    help='path to dictionary')
+args = parser.parse_args()
+
+
+jieba.load_userdict(args.dict)
 
 
 def jieba_cws(string):

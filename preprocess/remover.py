@@ -1,8 +1,8 @@
-from collections import Counter
+# from collections import Counter
 import argparse
 from string import punctuation
 from zhon.hanzi import punctuation as zhpunctuation
-from itertools import chain
+# from itertools import chain
 import os
 
 parser = argparse.ArgumentParser(description='remover')
@@ -24,23 +24,18 @@ def punc_remover(sentence):
     return list(filter(lambda x: x not in punctuations, sentence))
 
 
-def build_counter(sentences):
-    return Counter(chain(*sentences))
+# def build_counter(sentences):
+#     return Counter(chain(*sentences))
 
 
-def threshold_remover(sentence):
-    global counter, num
-    return list(filter(lambda x: counter[x] >= num, sentence))
+# def threshold_remover(sentence):
+#     global counter, num
+#     return list(filter(lambda x: counter[x] >= num, sentence))
 
 
 if __name__ == '__main__':
-    data = []
-    with open(os.path.join(args.base_dir, args.input), 'r') as f:
-        for line in f.readlines():
-            data.append(punc_remover(line.strip().split(" ")))
-    counter = build_counter(data)
-    num = args.num
-    with open(os.path.join(args.base_dir, args.output), 'w') as g:
-        for line in data:
-            g.write(" ".join(threshold_remover(line)))
-            g.write("\n")
+    with open(os.path.join(args.base_dir, args.input), 'w') as g:
+        with open(os.path.join(args.base_dir, args.input), 'r') as f:
+            for line in f.readlines():
+                g.write(" ".join(punc_remover(line.strip().split(" "))))
+                g.write("\n")

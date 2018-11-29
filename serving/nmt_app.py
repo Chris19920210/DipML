@@ -109,7 +109,7 @@ def translation():
     global nmt_client
     try:
         data = json.loads(request.get_data())["data"]
-        return json.dumps({"data": nmt_client.query(data)})
+        return json.dumps({"data": nmt_client.query(data)}, indent=1, ensure_ascii=False).encode('utf8')
     except Exception as e:
         print (e)
         raise InvalidUsage('Ooops. Something went wrong', status_code=503)

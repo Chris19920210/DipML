@@ -16,7 +16,8 @@ import tensorflow as tf
 from mosestokenizer import MosesTokenizer
 import re
 import json
-
+import logging
+import time
 
 flags = tf.flags
 FLAGS = flags.FLAGS
@@ -85,15 +86,32 @@ class NmtClient(object):
         :return:
         """
         inputs = re.split(self.delimiter, input)
-        inputs = [" ".join(self.tokenizer(sentence)) for sentence in inputs]
+        tmp = []
+        tokens = 0
+        for sentence in inputs:
+            sentence = self.tokenizer(sentence)
+            tokens += len(sentence)
+            tmp.append(" ".join(sentence))
+        inputs = tmp
+        del tmp
         outputs = []
+        start = time.time()
         for i in range(0, len(inputs), FLAGS.batch):
             batch_output = serving_utils.predict(inputs[i:(i+FLAGS.batch)],
                                                  self.problem, self.request_fn)
             batch_output = [output[0].replace(" ", "") for output in batch_output]
             outputs.extend([{"key": en, "value": zh}
                             for en, zh in zip(inputs[i:(i+FLAGS.batch)], batch_output)])
-
+        end = time.time()
+        printstr = "Sentences: {sentence:d}\tTokens: {tokens:d}" \
+                   "\tTime: {time:.3f}ms\tTokens/time: {per:.3f}ms"
+        logging.info(printstr.format(sentence=len(inputs),
+                                     tokens=tokens,
+                                     time=(end - start) * 1000,
+                                     per=((end - start) * 1000 / tokens)))
+        for output in outputs:
+            logging.info("Input:{input:s}".format(input=output["key"]))
+            logging.info("Output:{output:s}".format(output=output["value"]))
         return outputs
 
 
@@ -116,6 +134,10 @@ def translation():
 
 
 if __name__ == '__main__':
+    logging.basicConfig(level=logging.INFO,
+                        format='%(asctime)s %(levelname)s %(message)s',
+                        filename='./query.log',
+                        filemode='w')
     flags.mark_flags_as_required(["problem", "data_dir"])
     nmt_client = NmtClient()
     print("Starting app...")

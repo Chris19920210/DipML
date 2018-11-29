@@ -21,6 +21,7 @@ punctuations = list(punctuation + zhpunctuation)
 
 
 def punc_remover(sentence):
+
     return list(filter(lambda x: x not in punctuations, sentence))
 
 

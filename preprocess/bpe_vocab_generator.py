@@ -6,6 +6,7 @@ from __future__ import print_function
 
 import os
 from tensor2tensor.data_generators import generator_utils
+import sentencepiece as spm
 
 import tensorflow as tf
 import argparse
@@ -27,8 +28,8 @@ _OD_TRAIN_DATASETS = [[
 
 _ID_TRAIN_DATASETS = [[
     "fine_tune_train.tgz", [
-        "fine_tune_train/en.tok.train",
-        "fine_tune_train/zh.tok.train"
+        "fine_tune_train/en.tok.total.train",
+        "fine_tune_train/zh.tok.total.train"
     ]
 ]]
 
@@ -41,8 +42,8 @@ _OD_TEST_DATASETS = [[
 
 _ID_TEST_DATASETS = [[
     "fine_tune_test.tgz", [
-        "fine_tune_test/en.tok.test",
-        "fine_tune_test/zh.tok.test"
+        "fine_tune_test/en.tok.total.test",
+        "fine_tune_test/zh.tok.total.test"
     ]
 ]]
 
@@ -85,7 +86,7 @@ class BpeVocabGenerator(object):
 class T2TBpeVocabGenerator(BpeVocabGenerator):
 
     def __init__(self, name):
-        super(T2TBpeVocabGenerator).__init__(name)
+        super(T2TBpeVocabGenerator,self).__init__(name)
 
     @property
     def approx_vocab_size(self):
@@ -117,6 +118,53 @@ class T2TBpeVocabGenerator(BpeVocabGenerator):
             int(self.approx_vocab_size / 2),
             target_datasets,
             file_byte_budget=1e8)
+
+
+class SpmBpeVocabGenerator(BpeVocabGenerator):
+
+    def __init__(self, name):
+        super(SpmBpeVocabGenerator, self).__init__(name)
+
+
+    @property
+    def approx_vocab_size(self):
+        return 50000
+
+    @property
+    def source_vocab_name(self):
+        return "%s.en" % self.vocab_filename
+
+    @property
+    def target_vocab_name(self):
+        return "%s.zh" % self.vocab_filename
+
+    def generate_vocab(self, data_dir, tmp_dir):
+        datasets = get_dataset(tmp_dir)
+        source_datasets = [[item[0], [item[1][0]]] for item in datasets]
+        target_datasets = [[item[0], [item[1][1]]] for item in datasets]
+        source_vocab_generator = \
+            generator_utils.generate_lines_for_vocab(tmp_dir, source_datasets, file_byte_budget=1e8)
+        target_vocab_generator = \
+            generator_utils.generate_lines_for_vocab(tmp_dir, target_datasets, file_byte_budget=1e8)
+        with open(os.path.join(tmp_dir, "source.txt"), "w") as f:
+            for line in source_vocab_generator:
+                f.write(line)
+                f.write("\n")
+
+        with open(os.path.join(tmp_dir, "target.txt"), "w") as f:
+            for line in target_vocab_generator:
+                f.write(line)
+                f.write("\n")
+
+        spm.SentencePieceTrainer.Train('--input={input:s} --model_prefix={prefix:s} --vocab_size={vocab:d}'.format(
+            input=os.path.join(tmp_dir, "source.txt"),
+            prefix=self.source_vocab_name,
+            vocab=self.approx_vocab_size))
+
+        spm.SentencePieceTrainer.Train('--input={input:s} --model_prefix={prefix:s} --vocab_size={vocab:d}'.format(
+            input=os.path.join(tmp_dir, "target.txt"),
+            prefix=self.target_vocab_name,
+            vocab=int(self.approx_vocab_size / 2)))
 
 
 if __name__ == '__main__':

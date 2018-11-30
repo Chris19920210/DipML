@@ -2,12 +2,10 @@ from __future__ import absolute_import
 from __future__ import division
 from __future__ import print_function
 
-from flask import Flask, request, json, jsonify, send_file
+from flask import Flask, request, json, jsonify
 from flask_cors import CORS
 
 import os
-
-from six.moves import input  # pylint: disable=redefined-builtin
 
 from tensor2tensor.serving import serving_utils
 from tensor2tensor.utils import registry
@@ -18,6 +16,7 @@ import re
 import json
 import logging
 import time
+import html
 
 flags = tf.flags
 FLAGS = flags.FLAGS
@@ -79,19 +78,20 @@ class NmtClient(object):
         self.request_fn = make_request_fn()
         self.tokenizer = MosesTokenizer('en')
         self.delimiter = re.compile("(?<!\w\.\w.)(?<![A-Z][a-z]\.)(?<=\.|\?)\s")
+        self.en_pattern = re.compile("^[a-zA-Z]+$")
 
-    def query(self, input):
+    def query(self, sentences):
         """
-        :param input: str
+        :param sentences: str
         :return:
         """
-        inputs = re.split(self.delimiter, input)
+        inputs = re.split(self.delimiter, sentences.strip())
         tmp = []
         tokens = 0
         for sentence in inputs:
-            sentence = self.tokenizer(sentence)
+            sentence = self.tokenizer(sentence.strip())
             tokens += len(sentence)
-            tmp.append(" ".join(sentence))
+            tmp.append(html.unescape(" ".join(sentence).replace("@-@", "-")))
         inputs = tmp
         del tmp
         outputs = []
@@ -99,7 +99,7 @@ class NmtClient(object):
         for i in range(0, len(inputs), FLAGS.batch):
             batch_output = serving_utils.predict(inputs[i:(i+FLAGS.batch)],
                                                  self.problem, self.request_fn)
-            batch_output = [output[0].replace(" ", "") for output in batch_output]
+            batch_output = [self.simple_formatter(output[0]) for output in batch_output]
             outputs.extend([{"key": en, "value": zh}
                             for en, zh in zip(inputs[i:(i+FLAGS.batch)], batch_output)])
         end = time.time()
@@ -113,6 +113,24 @@ class NmtClient(object):
             logging.info("Input:{input:s}".format(input=output["key"]))
             logging.info("Output:{output:s}".format(output=output["value"]))
         return outputs
+
+    def english_token_eval(self, token):
+        if re.match(self.en_pattern, token) is not None:
+            return True
+
+    def simple_formatter(self, sentence):
+        sentence = sentence.split(" ")
+        ret = ""
+        for i in range(len(sentence)):
+            if i < len(sentence) - 1:
+                if self.english_token_eval(sentence[i]) and self.english_token_eval(sentence[i+1]):
+                    ret += sentence[i]
+                    ret += " "
+                else:
+                    ret += sentence[i]
+            else:
+                ret += sentence[i]
+        return ret
 
 
 @app.errorhandler(InvalidUsage)
@@ -129,7 +147,7 @@ def translation():
         data = json.loads(request.get_data())["data"]
         return json.dumps({"data": nmt_client.query(data)}, indent=1, ensure_ascii=False).encode('utf8')
     except Exception as e:
-        print (e)
+        logging.error(str(e))
         raise InvalidUsage('Ooops. Something went wrong', status_code=503)
 
 
@@ -142,4 +160,3 @@ if __name__ == '__main__':
     nmt_client = NmtClient()
     print("Starting app...")
     app.run(host=FLAGS.host, threaded=True, port=FLAGS.port)
-

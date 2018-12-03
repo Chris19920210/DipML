@@ -1,7 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="d0ac3b43-4858-4614-864d-9e52271baf67" name="Default Changelist" comment="bpe generator and finetuning">
+    <list default="true" id="d0ac3b43-4858-4614-864d-9e52271baf67" name="Default Changelist" comment="model service">
+      <change beforePath="" afterPath="$PROJECT_DIR$/bin/giza.sh" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/bin/prepare.sh" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/bin/sentence_perplexity.sh" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/bin/train_lm.sh" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/bin/train_truecaser.sh" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/preprocess/calc_perp.py" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change beforePath="$PROJECT_DIR$/serving/nmt_app.py" afterPath="$PROJECT_DIR$/serving/nmt_app.py" />
     </list>
@@ -14,7 +20,7 @@
   </component>
   <component name="CoverageDataManager">
     <SUITE FILE_PATH="coverage/DipML$nmt_tokenize_pair.coverage" NAME="nmt_tokenize_pair Coverage Results" MODIFIED="1540951956800" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/preprocess" />
-    <SUITE FILE_PATH="coverage/DipML$app_test.coverage" NAME="app_test Coverage Results" MODIFIED="1543816284188" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/serving" />
+    <SUITE FILE_PATH="coverage/DipML$app_test.coverage" NAME="app_test Coverage Results" MODIFIED="1543817945247" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/serving" />
     <SUITE FILE_PATH="coverage/DipML$mutliprocess_asyn.coverage" NAME="mutliprocess_asyn Coverage Results" MODIFIED="1543469828926" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/ensemble" />
   </component>
   <component name="FUSProjectUsageTrigger">
@@ -45,14 +51,76 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="750">
-      <file leaf-file-name="nmt_app.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="nmt_app.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/serving/nmt_app.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1139">
-              <caret line="162" column="40" lean-forward="true" selection-start-line="162" selection-start-column="40" selection-end-line="162" selection-end-column="40" />
+            <state relative-caret-position="257">
+              <caret line="147" column="45" lean-forward="true" selection-start-line="147" selection-start-column="45" selection-end-line="147" selection-end-column="45" />
               <folding>
                 <element signature="e#0#38#0" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="calc_perp.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/preprocess/calc_perp.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="331">
+              <caret line="89" column="0" lean-forward="false" selection-start-line="89" selection-start-column="0" selection-end-line="89" selection-end-column="0" />
+              <folding>
+                <element signature="e#15#26#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="giza.sh" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/bin/giza.sh">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="259">
+              <caret line="31" column="9" lean-forward="true" selection-start-line="31" selection-start-column="9" selection-end-line="31" selection-end-column="9" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="prepare.sh" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/bin/prepare.sh">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="222">
+              <caret line="6" column="14" lean-forward="false" selection-start-line="6" selection-start-column="13" selection-end-line="6" selection-end-column="14" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="train_lm.sh" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/bin/train_lm.sh">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="222">
+              <caret line="6" column="0" lean-forward="true" selection-start-line="6" selection-start-column="0" selection-end-line="6" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="train_truecaser.sh" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/bin/train_truecaser.sh">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="74">
+              <caret line="2" column="0" lean-forward="false" selection-start-line="2" selection-start-column="0" selection-end-line="2" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="sentence_perplexity.sh" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/bin/sentence_perplexity.sh">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="222">
+              <caret line="6" column="0" lean-forward="true" selection-start-line="6" selection-start-column="0" selection-end-line="6" selection-end-column="0" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -62,16 +130,6 @@
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="0">
               <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="json.py" pinned="false" current-in-tab="false">
-        <entry file="file://$USER_HOME$/anaconda3/lib/python3.6/site-packages/flask/json.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="929">
-              <caret line="122" column="18" lean-forward="true" selection-start-line="122" selection-start-column="18" selection-end-line="122" selection-end-column="18" />
               <folding />
             </state>
           </provider>
@@ -90,61 +148,11 @@
       <file leaf-file-name="app_test.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/serving/app_test.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="185">
-              <caret line="5" column="9" lean-forward="true" selection-start-line="5" selection-start-column="9" selection-end-line="5" selection-end-column="9" />
+            <state relative-caret-position="999">
+              <caret line="36" column="32" lean-forward="true" selection-start-line="36" selection-start-column="32" selection-end-line="37" selection-end-column="92" />
               <folding>
                 <element signature="e#0#58#0" expanded="true" />
               </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="translate_enzh_ai50k.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/preprocess/translate_enzh_ai50k.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1036">
-              <caret line="40" column="0" lean-forward="false" selection-start-line="40" selection-start-column="0" selection-end-line="40" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="translate.py" pinned="false" current-in-tab="false">
-        <entry file="file://$USER_HOME$/anaconda3/lib/python3.6/site-packages/tensor2tensor/data_generators/translate.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="3589">
-              <caret line="109" column="4" lean-forward="false" selection-start-line="109" selection-start-column="4" selection-end-line="109" selection-end-column="4" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="translate_enzh_ai50k.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/finetune/translate_enzh_ai50k.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1036">
-              <caret line="40" column="2" lean-forward="false" selection-start-line="40" selection-start-column="2" selection-end-line="40" selection-end-column="2" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="text_problems.py" pinned="false" current-in-tab="false">
-        <entry file="file://$USER_HOME$/anaconda3/lib/python3.6/site-packages/tensor2tensor/data_generators/text_problems.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="22163">
-              <caret line="611" column="4" lean-forward="false" selection-start-line="611" selection-start-column="4" selection-end-line="611" selection-end-column="4" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="translate_enzh_ai300k.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/preprocess/translate_enzh_ai300k.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="4514">
-              <caret line="134" column="44" lean-forward="false" selection-start-line="134" selection-start-column="44" selection-end-line="134" selection-end-column="44" />
-              <folding />
             </state>
           </provider>
         </entry>
@@ -160,7 +168,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>build_</find>
       <find>build</find>
       <find>escaped</find>
       <find>decode</find>
@@ -190,6 +197,7 @@
       <find>self.name</find>
       <find>EOS</find>
       <find>inputs_</find>
+      <find>izip</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -198,12 +206,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/preprocess/nmt_tokenize_pair.py" />
-        <option value="$PROJECT_DIR$/utils/my_client.py" />
-        <option value="$PROJECT_DIR$/preprocess/d.py" />
-        <option value="$PROJECT_DIR$/preprocess/translate_enzh_wmt32k.py" />
-        <option value="$PROJECT_DIR$/preprocess/translate_enzh_ai80k.py" />
-        <option value="$PROJECT_DIR$/preprocess/translate_enzh_mywmt32k.py" />
         <option value="$PROJECT_DIR$/preprocess/translate_enzh_ai60k.py" />
         <option value="$PROJECT_DIR$/preprocess/sentence_piece_training.py" />
         <option value="$PROJECT_DIR$/preprocess/my_text_encoder.py" />
@@ -249,6 +251,12 @@
         <option value="$PROJECT_DIR$/preprocess/translate_enzh_ai50k.py" />
         <option value="$PROJECT_DIR$/serving/app_test.py" />
         <option value="$PROJECT_DIR$/serving/nmt_app.py" />
+        <option value="$PROJECT_DIR$/preprocess/calc_perp.py" />
+        <option value="$PROJECT_DIR$/bin/giza.sh" />
+        <option value="$PROJECT_DIR$/bin/prepare.sh" />
+        <option value="$PROJECT_DIR$/bin/sentence_perplexity.sh" />
+        <option value="$PROJECT_DIR$/bin/train_lm.sh" />
+        <option value="$PROJECT_DIR$/bin/train_truecaser.sh" />
       </list>
     </option>
   </component>
@@ -259,10 +267,10 @@
     <sorting>DEFINITION_ORDER</sorting>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="676" />
-    <option name="y" value="134" />
-    <option name="width" value="2550" />
-    <option name="height" value="1490" />
+    <option name="x" value="3840" />
+    <option name="y" value="-32" />
+    <option name="width" value="2560" />
+    <option name="height" value="1472" />
   </component>
   <component name="ProjectInspectionProfilesVisibleTreeState">
     <entry key="Project Default">
@@ -283,7 +291,9 @@
       </profile-state>
     </entry>
   </component>
-  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
   <component name="ProjectView">
     <navigator currentView="ProjectPane" proportions="" version="1">
       <flattenPackages />
@@ -309,32 +319,7 @@
             <path>
               <item name="DipML" type="b2602c69:ProjectViewProjectNode" />
               <item name="DipML" type="462c0819:PsiDirectoryNode" />
-              <item name="ensemble" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="DipML" type="b2602c69:ProjectViewProjectNode" />
-              <item name="DipML" type="462c0819:PsiDirectoryNode" />
-              <item name="finetune" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="DipML" type="b2602c69:ProjectViewProjectNode" />
-              <item name="DipML" type="462c0819:PsiDirectoryNode" />
-              <item name="postprocess" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="DipML" type="b2602c69:ProjectViewProjectNode" />
-              <item name="DipML" type="462c0819:PsiDirectoryNode" />
-              <item name="preprocess" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="DipML" type="b2602c69:ProjectViewProjectNode" />
-              <item name="DipML" type="462c0819:PsiDirectoryNode" />
-              <item name="presentation" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="DipML" type="b2602c69:ProjectViewProjectNode" />
-              <item name="DipML" type="462c0819:PsiDirectoryNode" />
-              <item name="serving" type="462c0819:PsiDirectoryNode" />
+              <item name="bin" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -547,20 +532,27 @@
       <option name="project" value="LOCAL" />
       <updated>1543574328200</updated>
     </task>
-    <option name="localTasksCounter" value="14" />
+    <task id="LOCAL-00014" summary="model service">
+      <created>1543817295893</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1543817295893</updated>
+    </task>
+    <option name="localTasksCounter" value="15" />
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="1230" y="203" width="3840" height="2134" extended-state="6" />
+    <frame x="3840" y="-32" width="2560" height="1472" extended-state="6" />
     <editor active="true" />
     <layout>
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.19422151" sideWeight="0.50885415" order="7" side_tool="true" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.30074564" sideWeight="0.509375" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.2129481" sideWeight="0.49583334" order="11" side_tool="false" content_ui="tabs" />
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32958803" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.19422151" sideWeight="0.49114582" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.30074564" sideWeight="0.490625" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4217067" sideWeight="0.6609375" order="9" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.15651041" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.23476562" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Docker" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="false" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="SciView" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
@@ -593,7 +585,8 @@
     <MESSAGE value="gpc client (beta)" />
     <MESSAGE value="gpc client modify" />
     <MESSAGE value="bpe generator and finetuning" />
-    <option name="LAST_COMMIT_MESSAGE" value="bpe generator and finetuning" />
+    <MESSAGE value="model service" />
+    <option name="LAST_COMMIT_MESSAGE" value="model service" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -609,42 +602,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/preprocess/nmt_train_test_split.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="37">
-          <caret line="4" column="0" lean-forward="false" selection-start-line="4" selection-start-column="0" selection-end-line="14" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/ensemble/mbr.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="575">
-          <caret line="24" column="65" lean-forward="false" selection-start-line="24" selection-start-column="65" selection-end-line="24" selection-end-column="65" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/anaconda3/lib/python3.6/html/__init__.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="216">
-          <caret line="121" column="4" lean-forward="false" selection-start-line="121" selection-start-column="4" selection-end-line="121" selection-end-column="4" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/preprocess/html.py" />
-    <entry file="file://$PROJECT_DIR$/preprocess/remover.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="296">
-          <caret line="23" column="0" lean-forward="false" selection-start-line="23" selection-start-column="0" selection-end-line="23" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/preprocess/jieba_cws.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="370">
-          <caret line="22" column="24" lean-forward="false" selection-start-line="22" selection-start-column="18" selection-end-line="22" selection-end-column="24" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/preprocess/sentence_perplexity.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="555">
@@ -863,7 +820,7 @@
         <state relative-caret-position="1369">
           <caret line="46" column="5" lean-forward="false" selection-start-line="43" selection-start-column="4" selection-end-line="46" selection-end-column="5" />
           <folding>
-            <element signature="e#50#88#0" expanded="true" />
+            <element signature="e#50#88#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -932,16 +889,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/serving/app_test.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="185">
-          <caret line="5" column="9" lean-forward="true" selection-start-line="5" selection-start-column="9" selection-end-line="5" selection-end-column="9" />
-          <folding>
-            <element signature="e#0#58#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$USER_HOME$/anaconda3/lib/python3.6/site-packages/simplejson/__init__.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
@@ -950,13 +897,73 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/serving/app_test.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="999">
+          <caret line="36" column="32" lean-forward="true" selection-start-line="36" selection-start-column="32" selection-end-line="37" selection-end-column="92" />
+          <folding>
+            <element signature="e#0#58#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/serving/nmt_app.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1139">
-          <caret line="162" column="40" lean-forward="true" selection-start-line="162" selection-start-column="40" selection-end-line="162" selection-end-column="40" />
+        <state relative-caret-position="257">
+          <caret line="147" column="45" lean-forward="true" selection-start-line="147" selection-start-column="45" selection-end-line="147" selection-end-column="45" />
           <folding>
             <element signature="e#0#38#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/preprocess/calc_perp.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="331">
+          <caret line="89" column="0" lean-forward="false" selection-start-line="89" selection-start-column="0" selection-end-line="89" selection-end-column="0" />
+          <folding>
+            <element signature="e#15#26#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/bin/train_truecaser.sh">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="74">
+          <caret line="2" column="0" lean-forward="false" selection-start-line="2" selection-start-column="0" selection-end-line="2" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/bin/train_lm.sh">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="222">
+          <caret line="6" column="0" lean-forward="true" selection-start-line="6" selection-start-column="0" selection-end-line="6" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/bin/sentence_perplexity.sh">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="222">
+          <caret line="6" column="0" lean-forward="true" selection-start-line="6" selection-start-column="0" selection-end-line="6" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/bin/prepare.sh">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="222">
+          <caret line="6" column="14" lean-forward="false" selection-start-line="6" selection-start-column="13" selection-end-line="6" selection-end-column="14" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/bin/giza.sh">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="259">
+          <caret line="31" column="9" lean-forward="true" selection-start-line="31" selection-start-column="9" selection-end-line="31" selection-end-column="9" />
+          <folding />
         </state>
       </provider>
     </entry>

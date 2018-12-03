@@ -145,7 +145,12 @@ def handle_invalid_usage(error):
 def translation():
     global nmt_client
     try:
-        data = json.loads(str(request.get_data(), "utf-8").replace('\r\n', '').replace('\n', ''))["data"]
+        data = json.loads(str(request.get_data(), "utf-8")
+                          .replace('-\\r\\n', '').replace("-\\n", "").replace('-\\r', "")
+                          .replace('\\n', '').replace("\\r\\n", "").replace("\\r", ""))["data"]
+        print(data)
+        print(str(request.get_data(), "utf-8").replace('\r\n', '').replace('\n', ''))
+        print(request.get_data())
         return json.dumps({"data": nmt_client.query(data)}, indent=1, ensure_ascii=False)
     except Exception as e:
         logging.error(str(e))

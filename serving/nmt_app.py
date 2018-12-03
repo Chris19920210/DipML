@@ -2,7 +2,7 @@ from __future__ import absolute_import
 from __future__ import division
 from __future__ import print_function
 
-from flask import Flask, request, json, jsonify
+from flask import Flask, request, jsonify
 from flask_cors import CORS
 
 import os
@@ -13,10 +13,11 @@ from tensor2tensor.utils import usr_dir
 import tensorflow as tf
 from mosestokenizer import MosesTokenizer
 import re
-import json
+import simplejson as json
 import logging
 import time
 import html
+
 
 flags = tf.flags
 FLAGS = flags.FLAGS
@@ -144,8 +145,8 @@ def handle_invalid_usage(error):
 def translation():
     global nmt_client
     try:
-        data = json.loads(request.get_data())["data"]
-        return json.dumps({"data": nmt_client.query(data)}, indent=1, ensure_ascii=False).encode('utf8')
+        data = json.loads(str(request.get_data(), "utf-8").replace('\r\n', '').replace('\n', ''))["data"]
+        return json.dumps({"data": nmt_client.query(data)}, indent=1, ensure_ascii=False)
     except Exception as e:
         logging.error(str(e))
         raise InvalidUsage('Ooops. Something went wrong', status_code=503)

@@ -4,3 +4,5 @@ ensemble/__pycache__/
 postprocess/external_translation.py
 /serving/app_test.py
 serving/app_test.py
+preprocess/m.model
+preprocess/m.vocab

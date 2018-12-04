@@ -6,17 +6,10 @@ from __future__ import print_function
 
 import os
 from tensor2tensor.data_generators import generator_utils
-import sentencepiece as spm
+from SpmTextEncoder import SpmTextEncoder
 
 import tensorflow as tf
 import argparse
-
-parser = argparse.ArgumentParser(description='BPE generator')
-parser.add_argument('--tmp-dir', type=str, default=None,
-                    help='path to tmp-dir(where the data is)')
-parser.add_argument('--data-dir', type=str, default=None,
-                    help='path to data-dir(where to store the vocab)')
-args = parser.parse_args()
 
 
 _OD_TRAIN_DATASETS = [[
@@ -53,8 +46,8 @@ def get_filename(dataset):
 
 
 def get_dataset(tmp_dir):
-    full_dataset = _OD_TRAIN_DATASETS
-    for dataset in [_OD_TEST_DATASETS, _ID_TRAIN_DATASETS, _ID_TEST_DATASETS]:
+    full_dataset = _ID_TRAIN_DATASETS
+    for dataset in [_OD_TRAIN_DATASETS, _OD_TEST_DATASETS, _ID_TEST_DATASETS]:
         filename = get_filename(dataset)
         tmp_filepath = os.path.join(tmp_dir, filename)
         if tf.gfile.Exists(tmp_filepath):
@@ -79,14 +72,14 @@ class BpeVocabGenerator(object):
                                    self.approx_vocab_size,
                                    "subwords")
 
-    def generate_vocab(self, data_dir, tmp_dir):
+    def generate_vocab(self, data_dir, tmp_dir, **kwargs):
         return
 
 
 class T2TBpeVocabGenerator(BpeVocabGenerator):
 
     def __init__(self, name):
-        super(T2TBpeVocabGenerator,self).__init__(name)
+        super(T2TBpeVocabGenerator, self).__init__(name)
 
     @property
     def approx_vocab_size(self):
@@ -100,7 +93,7 @@ class T2TBpeVocabGenerator(BpeVocabGenerator):
     def target_vocab_name(self):
         return "%s.zh" % self.vocab_filename
 
-    def generate_vocab(self, data_dir, tmp_dir):
+    def generate_vocab(self, data_dir, tmp_dir, **kwargs):
         datasets = get_dataset(tmp_dir)
         source_datasets = [[item[0], [item[1][0]]] for item in datasets]
         target_datasets = [[item[0], [item[1][1]]] for item in datasets]
@@ -125,7 +118,6 @@ class SpmBpeVocabGenerator(BpeVocabGenerator):
     def __init__(self, name):
         super(SpmBpeVocabGenerator, self).__init__(name)
 
-
     @property
     def approx_vocab_size(self):
         return 50000
@@ -138,35 +130,84 @@ class SpmBpeVocabGenerator(BpeVocabGenerator):
     def target_vocab_name(self):
         return "%s.zh" % self.vocab_filename
 
-    def generate_vocab(self, data_dir, tmp_dir):
+    def generate_vocab(self, data_dir, tmp_dir, **kwargs):
         datasets = get_dataset(tmp_dir)
         source_datasets = [[item[0], [item[1][0]]] for item in datasets]
         target_datasets = [[item[0], [item[1][1]]] for item in datasets]
+        tf.gfile.MkDir(data_dir)
+        for each in source_datasets:
+            print("src_file:{file:s}".format(file=str(each)))
+
+        for each in target_datasets:
+            print("target_file:{file:s}".format(file=str(each)))
+
         source_vocab_generator = \
-            generator_utils.generate_lines_for_vocab(tmp_dir, source_datasets, file_byte_budget=1e8)
+            generator_utils.generate_lines_for_vocab(tmp_dir, source_datasets, file_byte_budget=1e10)
         target_vocab_generator = \
-            generator_utils.generate_lines_for_vocab(tmp_dir, target_datasets, file_byte_budget=1e8)
-        with open(os.path.join(tmp_dir, "source.txt"), "w") as f:
+            generator_utils.generate_lines_for_vocab(tmp_dir, target_datasets, file_byte_budget=1e10)
+        count = 0
+        with tf.gfile.Open(os.path.join(tmp_dir,
+                                        "{prefix:s}.corpus.txt".format(prefix=self.source_vocab_name)), "w") as f:
             for line in source_vocab_generator:
                 f.write(line)
                 f.write("\n")
+                count += 1
 
-        with open(os.path.join(tmp_dir, "target.txt"), "w") as f:
+        print("====src:{src:d}=====".format(src=count))
+
+        count = 0
+        with tf.gfile.Open(os.path.join(tmp_dir,
+                                        "{prefix:s}.corpus.txt".format(prefix=self.target_vocab_name)), "w") as f:
             for line in target_vocab_generator:
                 f.write(line)
                 f.write("\n")
+                count += 1
 
-        spm.SentencePieceTrainer.Train('--input={input:s} --model_prefix={prefix:s} --vocab_size={vocab:d}'.format(
-            input=os.path.join(tmp_dir, "source.txt"),
-            prefix=self.source_vocab_name,
-            vocab=self.approx_vocab_size))
+        print("====target:{target:d}=====".format(target=count))
 
-        spm.SentencePieceTrainer.Train('--input={input:s} --model_prefix={prefix:s} --vocab_size={vocab:d}'.format(
-            input=os.path.join(tmp_dir, "target.txt"),
-            prefix=self.target_vocab_name,
-            vocab=int(self.approx_vocab_size / 2)))
+        _ = SpmTextEncoder.build_from_file(output_dir=data_dir,
+                                           filename=os.path.join(tmp_dir,
+                                                                 "{prefix:s}.corpus.txt".
+                                                                 format(prefix=self.source_vocab_name)),
+                                           vocab_size=self.approx_vocab_size,
+                                           model_prefix=self.source_vocab_name,
+                                           reserved_tokens=kwargs['reserved_tokens'],
+                                           model_type=kwargs["model_type"])
+
+        _ = SpmTextEncoder.build_from_file(output_dir=data_dir,
+                                           filename=os.path.join(tmp_dir,
+                                                                 "{prefix:s}.corpus.txt".
+                                                                 format(prefix=self.target_vocab_name)),
+                                           vocab_size=int(self.approx_vocab_size/2),
+                                           model_prefix=self.target_vocab_name,
+                                           reserved_tokens=kwargs['reserved_tokens'],
+                                           model_type=kwargs["model_type"])
 
 
 if __name__ == '__main__':
-    generator = T2TBpeVocabGenerator('translate_enzh_ai50k')
-    generator.generate_vocab(args.data_dir, args.tmp_dir)
+    parser = argparse.ArgumentParser(description='Bpe')
+    parser.add_argument('--method', type=str, default="spm",
+                        choices=["t2t", "spm"],
+                        help='method for bpe')
+    parser.add_argument('--tmp-dir', type=str, required=True,
+                        help='where the original data is')
+    parser.add_argument('--data-dir', type=str, required=True,
+                        help='where to store model and vocab')
+    parser.add_argument('--model-type', type=str, default="bpe",
+                        choices=["bpe", "unigram", "char", "word"],
+                        help='model_type for spm')
+    parser.add_argument('--problem', type=str, default="translate_enzh_ai50k",
+                        help="name for problem")
+    parser.add_argument('--reserved-tokens', type=str, nargs='+', default=None,
+                        help="reserved tokens")
+    args = parser.parse_args()
+
+    if args.method == "spm":
+        generator = SpmBpeVocabGenerator(args.problem)
+        generator.generate_vocab(args.data_dir,
+                                 args.tmp_dir,
+                                 model_type=args.model_type,
+                                 reserved_tokens=args.reserved_tokens)
+    else:
+        generator = T2TBpeVocabGenerator(args.problem)
+        generator.generate_vocab(args.data_dir, args.tmp_dir)

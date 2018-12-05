@@ -5,6 +5,7 @@ from __future__ import print_function
 from tensor2tensor.data_generators.text_encoder import TextEncoder, strip_ids
 import os
 import sentencepiece as spm
+from sentencepiece import SentencePieceProcessor
 import shutil
 
 EOS = "</s>"
@@ -17,6 +18,21 @@ PAD_ID = RESERVED_TOKENS.index(PAD)
 EOS_ID = RESERVED_TOKENS.index(EOS)
 
 
+class PickalableSWIG:
+
+    def __setstate__(self, state):
+        self.__init__(*state['args'])
+
+    def __getstate__(self):
+        return {'args': self.args}
+
+
+class MySentencePieceProcessor(SentencePieceProcessor, PickalableSWIG):
+    def __init__(self, *args):
+        self.args = args
+        SentencePieceProcessor.__init__(self)
+
+
 class SpmTextEncoder(TextEncoder):
 
     def __init__(self, filename=None):
@@ -27,7 +43,7 @@ class SpmTextEncoder(TextEncoder):
             model
         """
         self.filename = filename
-        self.sp = spm.SentencePieceProcessor()
+        self.sp = MySentencePieceProcessor()
         if filename is not None:
             self.sp.Load(filename)
         super(SpmTextEncoder, self).__init__(num_reserved_ids=NUM_RESERVED_TOKENS)

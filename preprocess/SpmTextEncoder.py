@@ -93,7 +93,7 @@ class SpmTextEncoder(TextEncoder):
                    "--eos_id=1 " \
                    "--unk_id=2 " \
                    "--input={filename:s} " \
-                   "--model_prefix={model_prefix:s} "\
+                   "--model_prefix={model_prefix:s} " \
                    "--model_type={model_type:s} " \
                    "--vocab_size={vocab_size:d} " \
                    "--character_coverage=1.0 " \

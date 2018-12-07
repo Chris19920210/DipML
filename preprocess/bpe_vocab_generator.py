@@ -46,8 +46,8 @@ def get_filename(dataset):
 
 
 def get_dataset(tmp_dir):
-    full_dataset = _ID_TRAIN_DATASETS
-    for dataset in [_OD_TRAIN_DATASETS, _OD_TEST_DATASETS, _ID_TEST_DATASETS]:
+    full_dataset = _OD_TRAIN_DATASETS
+    for dataset in [_ID_TRAIN_DATASETS, _OD_TEST_DATASETS, _ID_TEST_DATASETS]:
         filename = get_filename(dataset)
         tmp_filepath = os.path.join(tmp_dir, filename)
         if tf.gfile.Exists(tmp_filepath):

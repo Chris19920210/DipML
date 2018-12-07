@@ -7,6 +7,7 @@ import os
 import sentencepiece as spm
 from sentencepiece import SentencePieceProcessor
 import shutil
+import numpy as np
 
 EOS = "</s>"
 UNK = "<unk>"
@@ -68,7 +69,7 @@ class SpmTextEncoder(TextEncoder):
         """
         if strip_extraneous:
             ids = strip_ids(ids, list(range(self._num_reserved_ids or 0)))
-        return self.sp.DecodeIds(ids)
+        return self.sp.DecodeIds(ids.tolist())
 
     def decode_list(self, ids):
         return [self._subtoken_id_to_subtoken_string(s) for s in ids]
@@ -81,7 +82,7 @@ class SpmTextEncoder(TextEncoder):
     def _subtoken_id_to_subtoken_string(self, subtoken):
         """Converts a subtoken integer ID to a subtoken string."""
         if 0 <= subtoken < self.vocab_size:
-            return self.sp.IdToPiece(subtoken)
+            return self.sp.IdToPiece(int(subtoken))
         return u""
 
     @classmethod
@@ -153,5 +154,5 @@ if __name__ == '__main__':
                                                  8000,
                                                  model_prefix="dd",
                                                  model_type="bpe")
-    a = spm_encoder.decode([579, 4831, 1903, 4207, 1903, 2160, 3624, 1564, 4598])
+    a = spm_encoder.decode(np.array([579, 4831, 1903, 4207, 1903, 2160, 3624, 1564, 4598]))
     print(a)

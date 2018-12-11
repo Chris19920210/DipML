@@ -30,7 +30,6 @@ from tensor2tensor.utils import cloud_mlengine as cloud
 import tensorflow as tf
 from tensorflow_serving.apis import predict_pb2
 from tensorflow_serving.apis import prediction_service_pb2_grpc
-import time
 
 
 def _make_example(input_ids, problem, input_feature_name="inputs"):
@@ -97,8 +96,6 @@ def _decode(output_ids, output_decoder):
   return output_decoder.decode(output_ids, strip_extraneous=True)
 
 
-
-
 def make_grpc_request_fn(servable_name, server, timeout_secs):
   """Wraps function to make grpc requests with runtime args."""
   stub = _create_stub(server)
@@ -143,45 +140,20 @@ def make_cloud_mlengine_request_fn(credentials, model_name, version):
   return _make_cloud_mlengine_request
 
 
-def predict(inputs_list, problem, request_fn):
+def predict(inputs_list, problem, request_fn, input_encoder, output_decoder):
   """Encodes inputs, makes request to deployed TF model, and decodes outputs."""
   assert isinstance(inputs_list, list)
   fname = "inputs" if problem.has_inputs else "targets"
-  input_encoder = problem.feature_info[fname].encoder
-  encode_start = time.time()
   input_ids_list = [
       _encode(inputs, input_encoder, add_eos=problem.has_inputs)
       for inputs in inputs_list
   ]
-  encode_end = time.time()
   examples = [_make_example(input_ids, problem, fname)
               for input_ids in input_ids_list]
-  predict_start = time.time()
   predictions = request_fn(examples)
-  predict_end = time.time()
-  output_decoder = problem.feature_info["targets"].encoder
-  decode_start = time.time()
   outputs = [
       (_decode(prediction["outputs"], output_decoder),
        prediction["scores"])
       for prediction in predictions
   ]
-  decode_end = time.time()
-  encode_time = (encode_end - encode_start) * 1000
-  predict_time = (predict_end - predict_start) * 1000
-  decode_time = (decode_end - decode_start) * 1000
-  total_time = (decode_end - encode_start) * 1000
-  print_str="""
-  Batch:{batch:d} \t
-  Encode:{encode:.3f} \t 
-  Prediction:{predict:.3f} \t 
-  Decode:{decode:.3f}　\t
-  Total:{total:.3f}
-  """
-  print(print_str.format(batch=len(outputs),
-                         encode=encode_time,
-                         predict=predict_time,
-                         decode=decode_time,
-                         total=total_time))
-
   return outputs

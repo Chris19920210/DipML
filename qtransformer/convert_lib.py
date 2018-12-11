@@ -103,7 +103,7 @@ def get_masks_from_ckpt(reader, threshold_percentile=0.4):
     for scope, (weight_name, mask_name, sharded, num_shards) in weight_map.items():
         # Expand the sharded name into a list of full names
         weight_names = scoped_names(weight_name, scope, sharded, num_shards)
-        mask_names   = scoped_names(mask_name, scope, sharded, num_shards)
+        mask_names = scoped_names(mask_name, scope, sharded, num_shards)
 
         # Get the weights for the shard
         weights = map(reader.get_tensor, weight_names)

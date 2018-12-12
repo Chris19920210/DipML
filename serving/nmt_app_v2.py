@@ -7,7 +7,7 @@ import traceback
 from tornado import web, ioloop, gen
 """Tornado Web Application"""
 
-parser = argparse.ArgumentParser(description='server')
+parser = argparse.ArgumentParser(description='nmt web application')
 parser.add_argument('--host', type=str, default=None,
                     help='host')
 parser.add_argument('--port', type=int, default=None,

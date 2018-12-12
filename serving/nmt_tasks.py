@@ -5,7 +5,7 @@ from rpc import RpcClient
 import pika
 import celery
 
-parser = argparse.ArgumentParser(description='remover')
+parser = argparse.ArgumentParser(description='nmt_tasks')
 parser.add_argument('--user', type=str, default=None,
                     help='user_name')
 parser.add_argument('--password', type=str, default=None,

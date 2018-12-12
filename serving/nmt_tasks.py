@@ -18,18 +18,22 @@ parser.add_argument('--basic-config', type=str, default='./config.properties',
                     help='Path to Basic Configuration for RabbitMQ')
 args = parser.parse_args()
 
+"""Celery asynchronous task"""
 
+
+# cache the rabbitmq connection for each task instantiation
 class TanslationTask(celery.Task):
-    global conf
+    conf = configparser.RawConfigParser()
+    conf.read(args.basic_config)
     _connection = None
 
     @property
     def connection(self):
         # channel declaration
-        user = conf.get('config', 'user')
-        password = conf.get('config', 'password')
-        host = conf.get('config', 'host')
-        port = conf.getint('config', 'port')
+        user = self.conf.get('config', 'user')
+        password = self.conf.get('config', 'password')
+        host = self.conf.get('config', 'host')
+        port = self.conf.getint('config', 'port')
         credentials = pika.PlainCredentials(user, password)
         parameters = pika.ConnectionParameters(host=host,
                                                port=port,
@@ -38,6 +42,7 @@ class TanslationTask(celery.Task):
         return self._connection
 
 
+# set up the broker
 app = Celery("tasks",
              broker="amqp://{user:s}:{password:s}@{host:s}:{port:d}"
              .format(
@@ -47,7 +52,8 @@ app = Celery("tasks",
                  port=args.port))
 
 
-@app.task(base=TanslationTask)
+# make a asynchronous rpc request for translation
+@app.task(name="tasks.translation", base=TanslationTask)
 def translation(msg):
     global callback_queue, publisher_queue, durable, exclusive, auto_delete
     rpc_client = RpcClient(translation.connection,

@@ -79,7 +79,7 @@ class NmtClient(object):
         printstr = "Sentences: {sentence:d}" \
                    "\tTokens: {tokens:d}" \
                    "\tTime: {time:.3f}ms" \
-                   "\tTokens/time: {per:.3f}ms"
+                   "\tToken/time: {per:.3f}ms"
 
         logging.info(printstr.format(sentence=len(sentences),
                                      tokens=tokens,

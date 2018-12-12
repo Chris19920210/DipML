@@ -1,11 +1,11 @@
-import tornado.httpclient
 import tcelery
 import nmt_tasks
 import argparse
 import json
 import logging
 import traceback
-from tornado import web, ioloop
+from tornado import web, ioloop, gen
+"""Tornado Web Application"""
 
 parser = argparse.ArgumentParser(description='server')
 parser.add_argument('--host', type=str, default=None,
@@ -49,22 +49,24 @@ class MyAppBaseHandler(web.RequestHandler):
 
 
 class AsyncAppNmtHandler(MyAppBaseHandler):
-    @tornado.web.asynchronous
+    @web.asynchronous
+    @gen.coroutine
     def get(self):
         content_type = self.request.headers.get('Content-Type')
         if not (content_type and content_type.lower().startswith('application/json')):
             MyAppException(reason="Wrong data format, needs json", status_code=400)
-        nmt_tasks.translation.apply_async(args=[self.request.body], callback=self.on_result)
+        res = yield gen.Task(nmt_tasks.translation.apply_async, args=[self.request.body])
+        self.write(res.result)
+        self.finish()
 
-    @tornado.web.asynchronous
+    @web.asynchronous
+    @gen.coroutine
     def post(self):
         content_type = self.request.headers.get('Content-Type')
         if not (content_type and content_type.lower().startswith('application/json')):
             MyAppException(reason="Wrong data format, needs json", status_code=400)
-        nmt_tasks.translation.apply_async(args=[self.request.body], callback=self.on_result)
-
-    def on_result(self, response):
-        self.write(response.result)
+        res = yield gen.Task(nmt_tasks.translation.apply_async, args=[self.request.body])
+        self.write(res.result)
         self.finish()
 
 
@@ -74,6 +76,6 @@ if __name__ == '__main__':
                         datefmt='%a, %d %b %Y %H:%M:%S',
                         filename='myapp.log',
                         filemode='w')
-    application = tornado.web.Application([r"/translation", AsyncAppNmtHandler])
+    application = web.Application([r"/translation", AsyncAppNmtHandler])
     application.listen(port=args.port, address=args.host)
     ioloop.IOLoop.instance().start()

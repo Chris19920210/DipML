@@ -5,6 +5,8 @@ from rpc import RpcServer
 from utils_nmt import validate_flags, NmtClient
 import logging
 
+"""Model server. one process one gpu """
+
 argparser = argparse.ArgumentParser(description='configuration setting')
 argparser.add_argument('--basic-config', type=str, default='./config.properties',
                        help='Path to Basic Configuration for RabbitMQ')

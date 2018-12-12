@@ -8,56 +8,63 @@ import uuid
 class RpcServer(object):
     def __init__(self, conf):
         self.conf = conf
-        self.consumer_queue = None
-        self.publisher_queue = None
 
-    def server(self, callback, *args, **kwargs):
         # consume configuration
         self.consumer_queue = self.conf.get('config', "consumer_queue")
 
-        self.publisher_queue = self.conf.get('config', "publisher_queue")
-
-        # channel declaration
+        # build connection
         user = self.conf.get('config', 'user')
         password = self.conf.get('config', 'password')
         host = self.conf.get('config', 'host')
         port = self.conf.getint('config', 'port')
 
         credentials = pika.PlainCredentials(user, password)
-        parameters = pika.ConnectionParameters(host=host, port=port, credentials=credentials)
-        connection = pika.BlockingConnection(parameters)
-        channel = connection.channel()
+        parameters = pika.ConnectionParameters(host=host,
+                                               port=port,
+                                               credentials=credentials)
+        self.connection = pika.BlockingConnection(parameters)
+
+        # virtual channel
+        self.channel = self.connection.channel()
 
         # queue configuration
         durable = self.conf.getboolean('config', 'durable')
         exclusive = self.conf.getboolean('config', 'exclusive')
         auto_delete = self.conf.getboolean('config', 'auto_delete')
+        self.channel.queue_declare(self.consumer_queue,
+                                   durable=durable,
+                                   exclusive=exclusive,
+                                   auto_delete=auto_delete)
 
-        channel.queue_declare(self.consumer_queue, durable=durable, exclusive=exclusive, auto_delete=auto_delete)
+        self.channel.basic_qos(prefetch_count=1)
 
-        channel.queue_declare(self.publisher_queue, durable=durable, exclusive=exclusive, auto_delete=auto_delete)
+        # consumer acknowledge or not
+        self.no_ack = self.conf.getboolean('config', 'no_ack')
 
-        channel.basic_qos(prefetch_count=1)
-        no_ack = self.conf.getboolean('config', 'no_ack')
+    def server(self, callback, *args, **kwargs):
 
-        def on_server_request(ch, method, _, body):
-            response = callback(json.loads(body), *args, **kwargs)
+        def on_server_request(ch, method, props, body):
+            response = callback(json.loads(str(body, "utf-8")), *args, **kwargs)
 
-            if not no_ack:
+            if not self.no_ack:
                 ch.basic_ack(delivery_tag=method.delivery_tag)
 
             ch.basic_publish(exchange='',
-                             routing_key=self.publisher_queue,
-                             properties=pika.BasicProperties(content_type="application/json"),
-                             body=json.dumps(response))
+                             routing_key=props.reply_to,
+                             properties=pika.BasicProperties(content_type="application/json",
+                                                             correlation_id=props.correlation_id),
+                             body=json.dumps(response, indent=1, ensure_ascii=False))
             logging.info("%s::req => '%s' response => '%s'" % (self.consumer_queue, body, response))
 
         # consumer configuration
-        channel.basic_consume(on_server_request, no_ack=no_ack, exclusive=exclusive, queue=self.consumer_queue)
+        self.channel.basic_consume(on_server_request,
+                                   no_ack=self.no_ack,
+                                   queue=self.consumer_queue)
 
-        print("%s RPC '%s' initialized" % (time.strftime("[%d/%m/%Y-%H:%M:%S]", time.localtime(time.time())),
+        print("%s RPC '%s' initialized" % (time.strftime("[%d/%m/%Y-%H:%M:%S]",
+                                           time.localtime(time.time())),
                                            self.consumer_queue))
-        channel.start_consuming()
+        self.channel.start_consuming()
 
 
 class RpcClient(object):
@@ -87,7 +94,8 @@ class RpcClient(object):
                                    exclusive=self.exclusive,
                                    auto_delete=self.auto_delete)
 
-        self.channel.basic_consume(self.on_response, no_ack=False,
+        self.channel.basic_consume(self.on_response,
+                                   no_ack=False,
                                    queue=self.callback_queue)
 
         self.response = None
@@ -97,6 +105,8 @@ class RpcClient(object):
         if self.corr_id == props.correlation_id:
             self.response = body
             ch.basic_ack(delivery_tag=method.delivery_tag)
+        else:
+            ch.basic_reject(delivery_tag=method.delivery_tag, requeue=True)
 
     def call(self, msg):
         self.response = None

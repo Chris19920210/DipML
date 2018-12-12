@@ -21,25 +21,38 @@ args = parser.parse_args()
 """Celery asynchronous task"""
 
 
-# cache the rabbitmq connection for each task instantiation
+# cache the rpc client for each task instantiation
 class TanslationTask(celery.Task):
     conf = configparser.RawConfigParser()
     conf.read(args.basic_config)
-    _connection = None
+    _rpc_client = None
 
     @property
-    def connection(self):
+    def rpc_client(self):
         # channel declaration
         user = self.conf.get('config', 'user')
         password = self.conf.get('config', 'password')
         host = self.conf.get('config', 'host')
         port = self.conf.getint('config', 'port')
+        durable = conf.getboolean('config', 'durable')
+        exclusive = conf.getboolean('config', 'exclusive')
+        auto_delete = conf.getboolean('config', 'auto_delete')
+        callback_queue = conf.get('config', "callback_queue")
+        publisher_queue = conf.get('config', "consumer_queue")
+
         credentials = pika.PlainCredentials(user, password)
         parameters = pika.ConnectionParameters(host=host,
                                                port=port,
                                                credentials=credentials)
-        self._connection = pika.BlockingConnection(parameters)
-        return self._connection
+        connection = pika.BlockingConnection(parameters)
+        self._rpc_client = RpcClient(connection,
+                                     callback_queue,
+                                     publisher_queue,
+                                     durable,
+                                     exclusive,
+                                     auto_delete)
+
+        return self._rpc_client
 
 
 # set up the broker
@@ -55,14 +68,8 @@ app = Celery("tasks",
 # make a asynchronous rpc request for translation
 @app.task(name="tasks.translation", base=TanslationTask)
 def translation(msg):
-    global callback_queue, publisher_queue, durable, exclusive, auto_delete
-    rpc_client = RpcClient(translation.connection,
-                           callback_queue,
-                           publisher_queue,
-                           durable,
-                           exclusive,
-                           auto_delete)
-    return rpc_client.call(msg)
+
+    return translation.rpc_client.call(msg)
 
 
 if __name__ == '__main__':

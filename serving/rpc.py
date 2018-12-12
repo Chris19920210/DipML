@@ -44,7 +44,10 @@ class RpcServer(object):
     def server(self, callback, *args, **kwargs):
 
         def on_server_request(ch, method, props, body):
-            response = callback(json.loads(str(body, "utf-8")), *args, **kwargs)
+            try:
+                response = callback(json.loads(body, strict=False), *args, **kwargs)
+            except Exception as e:
+                response = {"error": str(e)}
 
             if not self.no_ack:
                 ch.basic_ack(delivery_tag=method.delivery_tag)
@@ -53,7 +56,7 @@ class RpcServer(object):
                              routing_key=props.reply_to,
                              properties=pika.BasicProperties(content_type="application/json",
                                                              correlation_id=props.correlation_id),
-                             body=json.dumps(response, indent=1, ensure_ascii=False))
+                             body=json.dumps(response, ensure_ascii=False).replace("</", "<\\/"))
             logging.info("%s::req => '%s' response => '%s'" % (self.consumer_queue, body, response))
 
         # consumer configuration
@@ -84,10 +87,6 @@ class RpcClient(object):
         self.durable = durable
         self.exclusive = exclusive
         self.auto_delete = auto_delete
-        self.channel.queue_declare(self.publisher_queue,
-                                   durable=self.durable,
-                                   exclusive=self.exclusive,
-                                   auto_delete=self.auto_delete)
 
         self.channel.queue_declare(self.callback_queue,
                                    durable=self.durable,

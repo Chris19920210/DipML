@@ -2,6 +2,8 @@ from celery import Celery
 import argparse
 import configparser
 from rpc import RpcClient
+import pika
+import celery
 
 parser = argparse.ArgumentParser(description='remover')
 parser.add_argument('--user', type=str, default=None,
@@ -17,6 +19,25 @@ parser.add_argument('--basic-config', type=str, default='./config.properties',
 args = parser.parse_args()
 
 
+class TanslationTask(celery.Task):
+    global conf
+    _connection = None
+
+    @property
+    def connection(self):
+        # channel declaration
+        user = conf.get('config', 'user')
+        password = conf.get('config', 'password')
+        host = conf.get('config', 'host')
+        port = conf.getint('config', 'port')
+        credentials = pika.PlainCredentials(user, password)
+        parameters = pika.ConnectionParameters(host=host,
+                                               port=port,
+                                               credentials=credentials)
+        self._connection = pika.BlockingConnection(parameters)
+        return self._connection
+
+
 app = Celery("tasks",
              broker="amqp://{user:s}:{password:s}@{host:s}:{port:d}"
              .format(
@@ -26,14 +47,25 @@ app = Celery("tasks",
                  port=args.port))
 
 
-@app.task(name='task.translation')
+@app.task(base=TanslationTask)
 def translation(msg):
-    global rpc_client
+    global callback_queue, publisher_queue, durable, exclusive, auto_delete
+    rpc_client = RpcClient(translation.connection,
+                           callback_queue,
+                           publisher_queue,
+                           durable,
+                           exclusive,
+                           auto_delete)
     return rpc_client.call(msg)
 
 
 if __name__ == '__main__':
     conf = configparser.RawConfigParser()
     conf.read(args.basic_config)
-    rpc_client = RpcClient(conf)
+    durable = conf.getboolean('config', 'durable')
+    exclusive = conf.getboolean('config', 'exclusive')
+    auto_delete = conf.getboolean('config', 'auto_delete')
+    callback_queue = conf.get('config', "callback_queue")
+    publisher_queue = conf.get('config', "consumer_queue")
+
     app.start()

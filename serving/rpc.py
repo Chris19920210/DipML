@@ -31,7 +31,7 @@ class RpcServer(object):
         # queue configuration
         durable = self.conf.getboolean('config', 'durable')
         exclusive = self.conf.getboolean('config', 'exclusive')
-        auto_delete = self.conf.getboolean('config', 'autodelete')
+        auto_delete = self.conf.getboolean('config', 'auto_delete')
 
         channel.queue_declare(self.consumer_queue, durable=durable, exclusive=exclusive, auto_delete=auto_delete)
 
@@ -48,7 +48,7 @@ class RpcServer(object):
 
             ch.basic_publish(exchange='',
                              routing_key=self.publisher_queue,
-                             properties=pika.BasicProperties(content_type="application/json", delivery_mode=2),
+                             properties=pika.BasicProperties(content_type="application/json"),
                              body=json.dumps(response))
             logging.info("%s::req => '%s' response => '%s'" % (self.consumer_queue, body, response))
 
@@ -61,24 +61,22 @@ class RpcServer(object):
 
 
 class RpcClient(object):
-    def __init__(self, conf):
-        self.conf = conf
-        self.callback_queue = self.conf.get('config', "callback_queue")
-        self.publisher_queue = self.conf.get('config', "consumer_queue")
+    def __init__(self,
+                 connection,
+                 callback_queue,
+                 publisher_queue,
+                 durable,
+                 exclusive,
+                 auto_delete):
+        self.connection = connection
+        self.callback_queue = callback_queue
+        self.publisher_queue = publisher_queue
         # channel declaration
-        self.user = self.conf.get('config', 'user')
-        self.password = self.conf.get('config', 'password')
-        self.host = self.conf.get('config', 'host')
-        self.port = self.conf.getint('config', 'port')
-        self.credentials = pika.PlainCredentials(self.user, self.password)
-        self.parameters = pika.ConnectionParameters(host=self.host,
-                                                    port=self.port,
-                                                    credentials=self.credentials)
-        self.connection = pika.BlockingConnection(self.parameters)
-        self.channel = self.connection.channel()
-        self.durable = self.conf.getboolean('config', 'durable')
-        self.exclusive = self.conf.getboolean('config', 'exclusive')
-        self.auto_delete = self.conf.getboolean('config', 'autodelete')
+        self.channel = connection.channel()
+
+        self.durable = durable
+        self.exclusive = exclusive
+        self.auto_delete = auto_delete
         self.channel.queue_declare(self.publisher_queue,
                                    durable=self.durable,
                                    exclusive=self.exclusive,
@@ -89,20 +87,16 @@ class RpcClient(object):
                                    exclusive=self.exclusive,
                                    auto_delete=self.auto_delete)
 
-        self.channel.basic_consume(self.on_response, no_ack=True,
+        self.channel.basic_consume(self.on_response, no_ack=False,
                                    queue=self.callback_queue)
 
         self.response = None
         self.corr_id = None
 
-    def on_response(self, ch, _, props, body):
+    def on_response(self, ch, method, props, body):
         if self.corr_id == props.correlation_id:
             self.response = body
-        else:
-            ch.basic_publish(exchange='',
-                             routing_key=self.callback_queue,
-                             properties=pika.BasicProperties(content_type="application/json"),
-                             body=body)
+            ch.basic_ack(delivery_tag=method.delivery_tag)
 
     def call(self, msg):
         self.response = None

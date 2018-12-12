@@ -34,11 +34,11 @@ class TanslationTask(celery.Task):
         password = self.conf.get('config', 'password')
         host = self.conf.get('config', 'host')
         port = self.conf.getint('config', 'port')
-        durable = conf.getboolean('config', 'durable')
-        exclusive = conf.getboolean('config', 'exclusive')
-        auto_delete = conf.getboolean('config', 'auto_delete')
-        callback_queue = conf.get('config', "callback_queue")
-        publisher_queue = conf.get('config', "consumer_queue")
+        durable = self.conf.getboolean('config', 'durable')
+        exclusive = self.conf.getboolean('config', 'exclusive')
+        auto_delete = self.conf.getboolean('config', 'auto_delete')
+        callback_queue = self.conf.get('config', "callback_queue")
+        publisher_queue = self.conf.get('config', "consumer_queue")
 
         credentials = pika.PlainCredentials(user, password)
         parameters = pika.ConnectionParameters(host=host,
@@ -73,12 +73,4 @@ def translation(msg):
 
 
 if __name__ == '__main__':
-    conf = configparser.RawConfigParser()
-    conf.read(args.basic_config)
-    durable = conf.getboolean('config', 'durable')
-    exclusive = conf.getboolean('config', 'exclusive')
-    auto_delete = conf.getboolean('config', 'auto_delete')
-    callback_queue = conf.get('config', "callback_queue")
-    publisher_queue = conf.get('config', "consumer_queue")
-
     app.start()

@@ -3,6 +3,7 @@ import time
 import json
 import logging
 import uuid
+from tornado.escape import json_decode
 
 
 class RpcServer(object):

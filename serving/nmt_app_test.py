@@ -1,5 +1,3 @@
-import tcelery
-import nmt_tasks
 import argparse
 import json
 import logging
@@ -7,14 +5,6 @@ import traceback
 from tornado import web, ioloop, gen
 """Tornado Web Application"""
 
-parser = argparse.ArgumentParser(description='nmt web application')
-parser.add_argument('--host', type=str, default=None,
-                    help='host')
-parser.add_argument('--port', type=int, default=None,
-                    help='port')
-args = parser.parse_args()
-
-tcelery.setup_nonblocking_producer()
 
 
 class MyAppException(web.HTTPError):
@@ -49,24 +39,14 @@ class MyAppBaseHandler(web.RequestHandler):
 
 
 class AsyncAppNmtHandler(MyAppBaseHandler):
-    @web.asynchronous
-    @gen.coroutine
     def get(self):
-        content_type = self.request.headers.get('Content-Type')
-        if not (content_type and content_type.lower().startswith('application/json')):
-            MyAppException(reason="Wrong data format, needs json", status_code=400)
-        res = yield gen.Task(nmt_tasks.translation.apply_async, args=[self.request.body])
-        self.write(res.result)
+        print(self.request.body)
+        self.write(self.request.body)
         self.finish()
 
-    @web.asynchronous
-    @gen.coroutine
     def post(self):
-        content_type = self.request.headers.get('Content-Type')
-        if not (content_type and content_type.lower().startswith('application/json')):
-            MyAppException(reason="Wrong data format, needs json", status_code=400)
-        res = yield gen.Task(nmt_tasks.translation.apply_async, args=[self.request.body])
-        self.write(res.result)
+        print(self.request.body)
+        self.write(self.request.body)
         self.finish()
 
 
@@ -77,5 +57,5 @@ if __name__ == '__main__':
     #                     filename='myapp.log',
     #                     filemode='w')
     application = web.Application([(r"/translation_v2", AsyncAppNmtHandler)])
-    application.listen(port=args.port, address=args.host)
+    application.listen(port=5000)
     ioloop.IOLoop.instance().start()

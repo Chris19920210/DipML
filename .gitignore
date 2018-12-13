@@ -7,3 +7,5 @@ serving/app_test.py
 preprocess/m.model
 preprocess/m.vocab
 serving.tgz
+/serving/nmt_app_test.py
+serving/__pycache__/

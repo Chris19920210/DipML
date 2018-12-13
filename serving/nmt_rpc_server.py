@@ -44,7 +44,7 @@ def rpc_process(server, servable_name, t2t_usr_dir, problem, data_dir, timeout_s
 
 
 if __name__ == '__main__':
-    logging.basicConfig(level=logging.DEBUG,
+    logging.basicConfig(level=logging.INFO,
                         format='%(asctime)s %(filename)s[line:%(lineno)d] %(levelname)s %(message)s',
                         datefmt='%a, %d %b %Y %H:%M:%S',
                         filename='myapp.log',

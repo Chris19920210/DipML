@@ -62,7 +62,7 @@ class NmtClient(object):
         sentences = msg["data"]
         tmp = list(map(lambda x: (x["key"], self.sentence_prepare(x["value"])), sentences))
         if len(tmp) == 1:
-            tokens = tmp[1][0]
+            tokens = tmp[0][1][0]
         else:
             tokens = reduce(lambda x, y: x[1][0] + y[1][0], tmp)
         sentences = list(map(lambda x: x[1][1], tmp))
@@ -74,7 +74,7 @@ class NmtClient(object):
                                             self.request_fn,
                                             self.input_encoder,
                                             self.output_decoder)
-        outputs = [{"key": key, "value": self.simple_formatter(zh)} for key, zh in zip(keys, outputs)]
+        outputs = [{"key": key, "value": self.simple_formatter(zh[0])} for key, zh in zip(keys, outputs)]
         end = time.time()
         printstr = "Sentences: {sentence:d}" \
                    "\tTokens: {tokens:d}" \

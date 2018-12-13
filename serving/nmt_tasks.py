@@ -1,22 +1,10 @@
 from celery import Celery
-import argparse
 import configparser
 from rpc import RpcClient
 import pika
 import celery
+import os
 
-parser = argparse.ArgumentParser(description='nmt_tasks')
-parser.add_argument('--user', type=str, default=None,
-                    help='user_name')
-parser.add_argument('--password', type=str, default=None,
-                    help='password')
-parser.add_argument('--host', type=str, default=None,
-                    help='host')
-parser.add_argument('--port', type=int, default=None,
-                    help='port')
-parser.add_argument('--basic-config', type=str, default='./config.properties',
-                    help='Path to Basic Configuration for RabbitMQ')
-args = parser.parse_args()
 
 """Celery asynchronous task"""
 
@@ -24,7 +12,7 @@ args = parser.parse_args()
 # cache the rpc client for each task instantiation
 class TanslationTask(celery.Task):
     conf = configparser.RawConfigParser()
-    conf.read(args.basic_config)
+    conf.read(os.environ("CONFIG_PROPERTIES"))
     _rpc_client = None
 
     @property
@@ -59,10 +47,11 @@ class TanslationTask(celery.Task):
 app = Celery("tasks",
              broker="amqp://{user:s}:{password:s}@{host:s}:{port:d}"
              .format(
-                 user=args.user,
-                 password=args.password,
-                 host=args.host,
-                 port=args.port))
+                 user=os.environ('MQ_USER'),
+                 password=os.environ('MQ_PASSWORD'),
+                 host=os.environ('MQ_HOST'),
+                 port=os.environ('MQ_PORT')),
+             backend='amqp')
 
 
 # make a asynchronous rpc request for translation
@@ -73,4 +62,5 @@ def translation(msg):
 
 
 if __name__ == '__main__':
+
     app.start()

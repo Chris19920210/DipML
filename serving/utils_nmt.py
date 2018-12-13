@@ -1,6 +1,6 @@
 import os
 
-import serving_utils
+import nmt_serving_utils
 from tensor2tensor.utils import registry
 from tensor2tensor.utils import usr_dir
 import tensorflow as tf
@@ -19,7 +19,7 @@ def validate_flags(server, servable_name):
 
 
 def make_request_fn(server, servable_name, timeout_secs):
-    request_fn = serving_utils.make_grpc_request_fn(
+    request_fn = nmt_serving_utils.make_grpc_request_fn(
         servable_name=servable_name,
         server=server,
         timeout_secs=timeout_secs)
@@ -45,7 +45,7 @@ class NmtClient(object):
         self.tokenizer = MosesTokenizer('en')
         self.en_pattern = re.compile("^[a-zA-Z]+$")
         fname = "inputs" if self.problem.has_inputs else "targets"
-        self.input_encoder = problem.feature_info[fname].encoder
+        self.input_encoder = self.problem.feature_info[fname].encoder
         self.output_decoder = self.problem.feature_info["targets"].encoder
 
     def sentence_prepare(self, sentence):
@@ -69,11 +69,11 @@ class NmtClient(object):
         keys = list(map(lambda x: x[0], tmp))
         del tmp
         start = time.time()
-        outputs = serving_utils.predict(sentences,
-                                        self.problem,
-                                        self.request_fn,
-                                        self.input_encoder,
-                                        self.output_decoder)
+        outputs = nmt_serving_utils.predict(sentences,
+                                            self.problem,
+                                            self.request_fn,
+                                            self.input_encoder,
+                                            self.output_decoder)
         outputs = [{"key": key, "value": self.simple_formatter(zh)} for key, zh in zip(keys, outputs)]
         end = time.time()
         printstr = "Sentences: {sentence:d}" \

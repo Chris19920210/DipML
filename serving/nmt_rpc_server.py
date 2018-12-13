@@ -50,7 +50,7 @@ if __name__ == '__main__':
                         filename='myapp.log',
                         filemode='w')
 
-    assert args.servable_names == args.servers
+    assert len(args.servable_names) == len(args.servers)
     assert len(args.servers) >= args.processes
 
     workers = [mp.Process(target=rpc_process,

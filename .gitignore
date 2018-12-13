@@ -6,3 +6,4 @@ postprocess/external_translation.py
 serving/app_test.py
 preprocess/m.model
 preprocess/m.vocab
+serving.tgz

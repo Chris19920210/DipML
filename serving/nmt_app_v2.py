@@ -71,11 +71,11 @@ class AsyncAppNmtHandler(MyAppBaseHandler):
 
 
 if __name__ == '__main__':
-    # logging.basicConfig(level=logging.INFO,
-    #                     format='%(asctime)s %(filename)s[line:%(lineno)d] %(levelname)s %(message)s',
-    #                     datefmt='%a, %d %b %Y %H:%M:%S',
-    #                     filename='myapp.log',
-    #                     filemode='w')
+    logging.basicConfig(level=logging.INFO,
+                        format='%(asctime)s %(filename)s[line:%(lineno)d] %(levelname)s %(message)s',
+                        datefmt='%a, %d %b %Y %H:%M:%S',
+                        filename='web_application.log',
+                        filemode='w')
     application = web.Application([(r"/translation_v2", AsyncAppNmtHandler)])
     application.listen(port=args.port, address=args.host)
     ioloop.IOLoop.instance().start()

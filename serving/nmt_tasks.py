@@ -5,7 +5,6 @@ import numpy as np
 import json
 import logging
 import os
-
 """Celery asynchronous task"""
 
 
@@ -35,6 +34,9 @@ class TanslationTask(celery.Task):
 
         return self._nmt_clients
 
+    def on_failure(self, exc, task_id, args, kwargs, einfo):
+        logging.error('{0!r} failed: {1!r}'.format(task_id, exc))
+
 
 # set up the broker
 app = Celery("tasks",
@@ -47,24 +49,28 @@ app = Celery("tasks",
              backend='amqp',
              task_serializer='json',
              result_serializer='json',
-             accept_content=['application/json']
+             accept_content=['json']
              )
 
 
 # make a asynchronous rpc request for translation
-@app.task(name="tasks.translation", base=TanslationTask, bind=True)
+@app.task(name="tasks.translation", base=TanslationTask, bind=True, max_retries=int(os.environ['MAX_RETRIES']))
 def translation(self, msg):
-    logging.info(os.getpid())
-    return json.dumps(translation.nmt_clients[os.getpid() % self.num_servers].query(json.loads(msg, strict=False)),
-                      ensure_ascii=False).replace("</", "<\\/")
+    try:
+        logging.info("Server is {0}".format(self.servers[(os.getpid() + self.request.retries) % self.num_servers]))
+        source = json.loads(msg, strict=False)
+        target = json.dumps(translation.nmt_clients[(os.getpid() + self.request.retries) % self.num_servers]
+                            .query(source),
+                            ensure_ascii=False).replace("</", "<\\/")
+        logging.info("Source:{0}\tTarget:{1}".format(msg, target))
+        return target
+
+    except Exception as e:
+        logging.warning("Probably Server {0} got broken down".format((os.getpid() + self.request.retries)
+                                                                     % self.num_servers))
+        self.retry(countdown=2 ** self.request.retries, exc=e)
 
 
 if __name__ == '__main__':
-    app.conf.update(
-        CELERY_TASK_SERIALIZER='json',
-        CELERY_ACCEPT_CONTENT=['json'],  # Ignore other content
-        CELERY_RESULT_SERIALIZER='json',
-        CELERY_TIMEZONE='Europe/Oslo',
-        CELERY_ENABLE_UTC=True, )
 
     app.start()

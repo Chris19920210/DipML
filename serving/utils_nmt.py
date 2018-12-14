@@ -61,10 +61,7 @@ class NmtClient(object):
         batch_num = msg["batch_num"]
         sentences = msg["data"]
         tmp = list(map(lambda x: (x["key"], self.sentence_prepare(x["value"])), sentences))
-        if len(tmp) == 1:
-            tokens = tmp[0][1][0]
-        else:
-            tokens = reduce(lambda x, y: x[1][0] + y[1][0], tmp)
+        tokens = sum(map(lambda x: x[1][0], tmp))
         sentences = list(map(lambda x: x[1][1], tmp))
         keys = list(map(lambda x: x[0], tmp))
         del tmp

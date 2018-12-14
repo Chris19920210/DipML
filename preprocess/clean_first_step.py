@@ -58,7 +58,8 @@ if __name__ == '__main__':
 
     with open(os.path.join(args.base_dir, args.input), 'r') as f:
         for each in f.readlines():
-            each = each.strip()
+            each = each.strip().replace(u'\uf020', "")
+
             try:
                 if each[0].isdigit() or each[0] in punctuations:
                     continue

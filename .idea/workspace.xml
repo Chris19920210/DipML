@@ -3,8 +3,9 @@
   <component name="ChangeListManager">
     <list default="true" id="d0ac3b43-4858-4614-864d-9e52271baf67" name="Default Changelist" comment="remove rabbitmq rpc">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change beforePath="$PROJECT_DIR$/serving/nmt_app_v2.py" afterPath="$PROJECT_DIR$/serving/nmt_app_v2.py" />
+      <change beforePath="$PROJECT_DIR$/preprocess/clean_first_step.py" afterPath="$PROJECT_DIR$/preprocess/clean_first_step.py" />
       <change beforePath="$PROJECT_DIR$/serving/nmt_tasks.py" afterPath="$PROJECT_DIR$/serving/nmt_tasks.py" />
+      <change beforePath="$PROJECT_DIR$/serving/utils_nmt.py" afterPath="$PROJECT_DIR$/serving/utils_nmt.py" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -52,11 +53,55 @@
       <file leaf-file-name="nmt_tasks.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/serving/nmt_tasks.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="901">
-              <caret line="63" column="30" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="76" selection-end-column="0" />
+            <state relative-caret-position="1974">
+              <caret line="72" column="0" lean-forward="true" selection-start-line="72" selection-start-column="0" selection-end-line="72" selection-end-column="0" />
               <folding>
                 <element signature="e#0#25#0" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="clean_first_step.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/preprocess/clean_first_step.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="1493">
+              <caret line="80" column="33" lean-forward="false" selection-start-line="80" selection-start-column="33" selection-end-line="80" selection-end-column="33" />
+              <folding>
+                <element signature="e#0#15#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="translate_enzh_ai50k.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/finetune/translate_enzh_ai50k.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="185">
+              <caret line="26" column="0" lean-forward="false" selection-start-line="26" selection-start-column="0" selection-end-line="41" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="utils_nmt.py" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/serving/utils_nmt.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="1863">
+              <caret line="71" column="44" lean-forward="false" selection-start-line="71" selection-start-column="44" selection-end-line="71" selection-end-column="44" />
+              <folding>
+                <element signature="e#0#9#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="_functools.py" pinned="false" current-in-tab="false">
+        <entry file="file://$USER_HOME$/.PyCharm2017.3/system/python_stubs/-530030716/_functools.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-1863">
+              <caret line="13" column="38" lean-forward="false" selection-start-line="13" selection-start-column="31" selection-end-line="13" selection-end-column="38" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -81,26 +126,6 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="datastructures.py" pinned="false" current-in-tab="false">
-        <entry file="file://$USER_HOME$/anaconda3/lib/python3.6/site-packages/celery/datastructures.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="781">
-              <caret line="453" column="4" lean-forward="false" selection-start-line="453" selection-start-column="4" selection-end-line="453" selection-end-column="4" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name=".gitignore" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/.gitignore">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="370">
-              <caret line="10" column="0" lean-forward="true" selection-start-line="10" selection-start-column="0" selection-end-line="10" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="base.py" pinned="false" current-in-tab="false">
         <entry file="file://$USER_HOME$/anaconda3/lib/python3.6/site-packages/celery/app/base.py">
           <provider selected="true" editor-type-id="text-editor">
@@ -111,34 +136,14 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="nmt_app_v2.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="nmt_app_v2.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/serving/nmt_app_v2.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="383">
-              <caret line="61" column="21" lean-forward="true" selection-start-line="0" selection-start-column="0" selection-end-line="81" selection-end-column="0" />
+            <state relative-caret-position="346">
+              <caret line="60" column="0" lean-forward="true" selection-start-line="60" selection-start-column="0" selection-end-line="60" selection-end-column="0" />
               <folding>
                 <element signature="e#0#14#0" expanded="true" />
               </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="gen.py" pinned="false" current-in-tab="false">
-        <entry file="file://$USER_HOME$/anaconda3/lib/python3.6/site-packages/tornado/gen.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="468">
-              <caret line="596" column="4" lean-forward="false" selection-start-line="596" selection-start-column="4" selection-end-line="596" selection-end-column="4" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="nmt_app_test.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/serving/nmt_app_test.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-851">
-              <caret line="1" column="11" lean-forward="true" selection-start-line="1" selection-start-column="11" selection-end-line="1" selection-end-column="11" />
-              <folding />
             </state>
           </provider>
         </entry>
@@ -215,7 +220,6 @@
         <option value="$PROJECT_DIR$/preprocess/remover.py" />
         <option value="$PROJECT_DIR$/preprocess/html.py" />
         <option value="$PROJECT_DIR$/preprocess/tag_remover.py" />
-        <option value="$PROJECT_DIR$/preprocess/clean_first_step.py" />
         <option value="$PROJECT_DIR$/postprocess/external_translation.py" />
         <option value="$PROJECT_DIR$/ensemble/avg_checkpoints.py" />
         <option value="$PROJECT_DIR$/serving/query.py" />
@@ -249,12 +253,13 @@
         <option value="$PROJECT_DIR$/conf/config.properties" />
         <option value="$PROJECT_DIR$/serving/nmt_rpc_server.py" />
         <option value="$PROJECT_DIR$/serving/nmt_app_test.py" />
-        <option value="$PROJECT_DIR$/serving/utils_nmt.py" />
         <option value="$PROJECT_DIR$/serving/nmt_serving_utils.py" />
         <option value="$PROJECT_DIR$/serving/rpc.py" />
         <option value="$PROJECT_DIR$/.gitignore" />
         <option value="$PROJECT_DIR$/serving/nmt_app_v2.py" />
+        <option value="$PROJECT_DIR$/serving/utils_nmt.py" />
         <option value="$PROJECT_DIR$/serving/nmt_tasks.py" />
+        <option value="$PROJECT_DIR$/preprocess/clean_first_step.py" />
       </list>
     </option>
   </component>
@@ -313,6 +318,16 @@
             <path>
               <item name="DipML" type="b2602c69:ProjectViewProjectNode" />
               <item name="DipML" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="DipML" type="b2602c69:ProjectViewProjectNode" />
+              <item name="DipML" type="462c0819:PsiDirectoryNode" />
+              <item name="finetune" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="DipML" type="b2602c69:ProjectViewProjectNode" />
+              <item name="DipML" type="462c0819:PsiDirectoryNode" />
+              <item name="postprocess" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="DipML" type="b2602c69:ProjectViewProjectNode" />
@@ -699,7 +714,14 @@
       <option name="project" value="LOCAL" />
       <updated>1544701612404</updated>
     </task>
-    <option name="localTasksCounter" value="31" />
+    <task id="LOCAL-00031" summary="remove rabbitmq rpc">
+      <created>1544759480026</created>
+      <option name="number" value="00031" />
+      <option name="presentableId" value="LOCAL-00031" />
+      <option name="project" value="LOCAL" />
+      <updated>1544759480026</updated>
+    </task>
+    <option name="localTasksCounter" value="32" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -776,30 +798,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/preprocess/nmt_train_test_split.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="401">
-          <caret line="15" column="26" lean-forward="true" selection-start-line="15" selection-start-column="26" selection-end-line="15" selection-end-column="26" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/preprocess/remover.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-555">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/preprocess/score_percentile.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/preprocess/sentence_perplexity.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
@@ -1066,16 +1064,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/serving/utils_nmt.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1574">
-          <caret line="35" column="28" lean-forward="false" selection-start-line="35" selection-start-column="28" selection-end-line="35" selection-end-column="28" />
-          <folding>
-            <element signature="e#0#9#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/serving/nmt_rpc_server.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="938">
@@ -1184,22 +1172,58 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/serving/nmt_app_v2.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="346">
+          <caret line="60" column="0" lean-forward="true" selection-start-line="60" selection-start-column="0" selection-end-line="60" selection-end-column="0" />
+          <folding>
+            <element signature="e#0#14#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/.PyCharm2017.3/system/python_stubs/-530030716/_functools.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1863">
+          <caret line="13" column="38" lean-forward="false" selection-start-line="13" selection-start-column="31" selection-end-line="13" selection-end-column="38" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/preprocess/clean_first_step.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1493">
+          <caret line="80" column="33" lean-forward="false" selection-start-line="80" selection-start-column="33" selection-end-line="80" selection-end-column="33" />
+          <folding>
+            <element signature="e#0#15#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/finetune/translate_enzh_ai50k.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="185">
+          <caret line="26" column="0" lean-forward="false" selection-start-line="26" selection-start-column="0" selection-end-line="41" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/serving/nmt_tasks.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="901">
-          <caret line="63" column="30" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="76" selection-end-column="0" />
+        <state relative-caret-position="1974">
+          <caret line="72" column="0" lean-forward="true" selection-start-line="72" selection-start-column="0" selection-end-line="72" selection-end-column="0" />
           <folding>
             <element signature="e#0#25#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/serving/nmt_app_v2.py">
+    <entry file="file://$PROJECT_DIR$/serving/utils_nmt.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="383">
-          <caret line="61" column="21" lean-forward="true" selection-start-line="0" selection-start-column="0" selection-end-line="81" selection-end-column="0" />
+        <state relative-caret-position="1863">
+          <caret line="71" column="44" lean-forward="false" selection-start-line="71" selection-start-column="44" selection-end-line="71" selection-end-column="44" />
           <folding>
-            <element signature="e#0#14#0" expanded="true" />
+            <element signature="e#0#9#0" expanded="true" />
           </folding>
         </state>
       </provider>

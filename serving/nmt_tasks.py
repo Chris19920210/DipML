@@ -57,17 +57,17 @@ app = Celery("tasks",
 @app.task(name="tasks.translation", base=TanslationTask, bind=True, max_retries=int(os.environ['MAX_RETRIES']))
 def translation(self, msg):
     try:
-        logging.info("Server is {0}".format(self.servers[(os.getpid() + self.request.retries) % self.num_servers]))
+        logging.info("Server is {0}".format(self.servers[os.getpid() % self.num_servers]))
+        logging.info("Source:{0}".format(msg))
         source = json.loads(msg, strict=False)
-        target = json.dumps(translation.nmt_clients[(os.getpid() + self.request.retries) % self.num_servers]
+        target = json.dumps(translation.nmt_clients[os.getpid() % self.num_servers]
                             .query(source),
                             ensure_ascii=False).replace("</", "<\\/")
-        logging.info("Source:{0}\tTarget:{1}".format(msg, target))
+        logging.info("Target:{0}".format(target))
         return target
 
     except Exception as e:
-        logging.warning("Probably Server {0} got broken down".format((os.getpid() + self.request.retries)
-                                                                     % self.num_servers))
+        logging.warning("Probably Server {0} got broken down".format(self.servers[os.getpid() % self.num_servers]))
         self.retry(countdown=2 ** self.request.retries, exc=e)
 
 

@@ -69,6 +69,8 @@ class SpmTextEncoder(TextEncoder):
         """
         if strip_extraneous:
             ids = strip_ids(ids, list(range(self._num_reserved_ids or 0)))
+        if isinstance(ids, list):
+            return self.sp.DecodeIds(list(map(lambda x: int(x), ids)))
         return self.sp.DecodeIds(ids.tolist())
 
     def decode_list(self, ids):

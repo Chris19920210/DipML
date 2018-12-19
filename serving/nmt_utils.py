@@ -95,7 +95,7 @@ class EnZhNmtClient(NmtClient):
         self.problem.get_hparams(self.hparams)
         self.request_fn = make_request_fn(server, servable_name, timeout_secs)
         self.moses_tokenizer = MosesTokenizer('en')
-        self.moses_detokenizer = MosesDetokenizer('ko')
+        self.moses_detokenizer = MosesDetokenizer('zh')
         fname = "inputs" if self.problem.has_inputs else "targets"
         self.input_encoder = self.problem.feature_info[fname].encoder
         self.output_decoder = self.problem.feature_info["targets"].encoder

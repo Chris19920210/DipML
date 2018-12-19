@@ -1,6 +1,6 @@
 from celery import Celery
 import celery
-from utils_nmt import EnZhNmtClient
+from nmt_utils import EnZhNmtClient
 import numpy as np
 import json
 import logging

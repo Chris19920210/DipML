@@ -26,7 +26,56 @@ def make_request_fn(server, servable_name, timeout_secs):
     return request_fn
 
 
-class EnZhNmtClient(object):
+class NmtClient(object):
+    def __init__(self):
+        self.__doc__ = "Nmt Client"
+
+    def sentence_prepare(self, sentence):
+        """
+        :param sentence: string
+        :return: length of sentence, word split sentence
+        """
+        sentence = self.tokenizer(sentence)
+        return len(sentence), " ".join(sentence)
+
+    def tokenizer(self, sentence) -> list:
+        """
+        :param sentence: string
+        :return: list of word
+        """
+
+    def detokenizer(self, sentence) -> str:
+        """
+        :param sentence: list of words
+        :return: detokenized sentence
+        """
+
+    def query(self, msg) -> dict:
+        """
+        :param msg: dictionary{doc_id:string, batch_num:int, data:[{}]}
+        :return:
+        """
+    @staticmethod
+    def log_printer(sentences, tokens, start, end):
+        """
+        :param sentences:
+        :param tokens:
+        :param start:
+        :param end:
+        :return:
+        """
+        printstr = "Sentences: {sentence:d}" \
+                   "\tTokens: {tokens:d}" \
+                   "\tTime: {time:.3f}ms" \
+                   "\tToken/time: {per:.3f}ms"
+
+        logging.info(printstr.format(sentence=len(sentences),
+                                     tokens=tokens,
+                                     time=(end - start) * 1000,
+                                     per=((end - start) * 1000 / tokens)))
+
+
+class EnZhNmtClient(NmtClient):
     def __init__(self,
                  server,
                  servable_name,
@@ -34,6 +83,7 @@ class EnZhNmtClient(object):
                  problem,
                  data_dir,
                  timeout_secs):
+        super(EnZhNmtClient).__init__()
         tf.logging.set_verbosity(tf.logging.INFO)
         validate_flags(server, servable_name)
         usr_dir.import_usr_dir(t2t_usr_dir)
@@ -42,11 +92,17 @@ class EnZhNmtClient(object):
             data_dir=os.path.expanduser(data_dir))
         self.problem.get_hparams(self.hparams)
         self.request_fn = make_request_fn(server, servable_name, timeout_secs)
-        self.tokenizer = MosesTokenizer('en')
-        self.detokenizer = MosesDetokenizer('ko')
+        self.moses_tokenizer = MosesTokenizer('en')
+        self.moses_detokenizer = MosesDetokenizer('ko')
         fname = "inputs" if self.problem.has_inputs else "targets"
         self.input_encoder = self.problem.feature_info[fname].encoder
         self.output_decoder = self.problem.feature_info["targets"].encoder
+
+    def tokenizer(self, sentence):
+        return self.moses_tokenizer(sentence)
+
+    def detokenizer(self, sentence):
+        return self.moses_detokenizer(sentence)
 
     def sentence_prepare(self, sentence):
         sentence = self.tokenizer(sentence.strip())
@@ -73,22 +129,14 @@ class EnZhNmtClient(object):
                                             self.output_decoder)
         outputs = [{"key": key, "value": self.detokenizer(zh[0].split(" "))} for key, zh in zip(keys, outputs)]
         end = time.time()
-        printstr = "Sentences: {sentence:d}" \
-                   "\tTokens: {tokens:d}" \
-                   "\tTime: {time:.3f}ms" \
-                   "\tToken/time: {per:.3f}ms"
-
-        logging.info(printstr.format(sentence=len(sentences),
-                                     tokens=tokens,
-                                     time=(end - start) * 1000,
-                                     per=((end - start) * 1000 / tokens)))
+        self.log_printer(sentences, tokens, start, end)
 
         return {"document_id": doc_id,
                 "batch_num": batch_num,
                 "data": outputs}
 
 
-class ZhEnNmtClient(object):
+class ZhEnNmtClient(NmtClient):
     def __init__(self,
                  server,
                  servable_name,
@@ -97,6 +145,7 @@ class ZhEnNmtClient(object):
                  data_dir,
                  user_dict,
                  timeout_secs):
+        super(ZhEnNmtClient).__init__()
         tf.logging.set_verbosity(tf.logging.INFO)
         validate_flags(server, servable_name)
         usr_dir.import_usr_dir(t2t_usr_dir)
@@ -106,14 +155,16 @@ class ZhEnNmtClient(object):
         self.problem.get_hparams(self.hparams)
         self.request_fn = make_request_fn(server, servable_name, timeout_secs)
         jieba.load_userdict(user_dict)
-        self.detokenizer = MosesDetokenizer('en')
+        self.moses_detokenizer = MosesDetokenizer('en')
         fname = "inputs" if self.problem.has_inputs else "targets"
         self.input_encoder = self.problem.feature_info[fname].encoder
         self.output_decoder = self.problem.feature_info["targets"].encoder
 
-    def sentence_prepare(self, sentence):
-        sentence = jieba.lcut(sentence.strip())
-        return len(sentence), " ".join(sentence)
+    def tokenizer(self, sentence):
+        return jieba.lcut(sentence.strip())
+
+    def detokenizer(self, sentence):
+        return self.moses_detokenizer(sentence)
 
     def query(self, msg):
         """
@@ -136,17 +187,8 @@ class ZhEnNmtClient(object):
                                             self.output_decoder)
         outputs = [{"key": key, "value": self.detokenizer(en[0].split(" "))} for key, en in zip(keys, outputs)]
         end = time.time()
-        printstr = "Sentences: {sentence:d}" \
-                   "\tTokens: {tokens:d}" \
-                   "\tTime: {time:.3f}ms" \
-                   "\tToken/time: {per:.3f}ms"
-
-        logging.info(printstr.format(sentence=len(sentences),
-                                     tokens=tokens,
-                                     time=(end - start) * 1000,
-                                     per=((end - start) * 1000 / tokens)))
+        self.log_printer(sentences, tokens, start, end)
 
         return {"document_id": doc_id,
                 "batch_num": batch_num,
                 "data": outputs}
-

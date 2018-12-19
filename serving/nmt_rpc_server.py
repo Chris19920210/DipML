@@ -2,7 +2,7 @@ import argparse
 import configparser
 import multiprocessing as mp
 from rpc import RpcServer
-from utils_nmt import validate_flags, NmtClient
+from nmt_utils import validate_flags, NmtClient
 import logging
 
 """Model server. one process one gpu """

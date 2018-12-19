@@ -1,6 +1,6 @@
 from celery import Celery
 import celery
-from utils_nmt import NmtClient
+from utils_nmt import EnZhNmtClient
 import numpy as np
 import json
 import logging
@@ -22,12 +22,12 @@ class TanslationTask(celery.Task):
     _nmt_clients = []
     num_servers = len(servable_names)
     for server, servable_name in zip(servers, servable_names):
-        _nmt_clients.append(NmtClient(server,
-                                      servable_name,
-                                      t2t_usr_dir,
-                                      problem,
-                                      data_dir,
-                                      int(timeout_secs)))
+        _nmt_clients.append(EnZhNmtClient(server,
+                                          servable_name,
+                                          t2t_usr_dir,
+                                          problem,
+                                          data_dir,
+                                          int(timeout_secs)))
 
     @property
     def nmt_clients(self):

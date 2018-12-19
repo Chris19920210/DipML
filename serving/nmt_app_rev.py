@@ -11,12 +11,12 @@ from tensor2tensor.serving import serving_utils
 from tensor2tensor.utils import registry
 from tensor2tensor.utils import usr_dir
 import tensorflow as tf
-from mosestokenizer import MosesTokenizer, MosesDetokenizer
+from mosestokenizer import MosesDetokenizer
 import re
 import simplejson as json
 import logging
 import time
-import html
+import jieba
 
 
 flags = tf.flags
@@ -28,12 +28,15 @@ flags.DEFINE_string("problem", None, "Problem name.")
 flags.DEFINE_string("data_dir", None, "Data directory, for vocab files.")
 flags.DEFINE_string("t2t_usr_dir", None, "Usr dir for registrations.")
 flags.DEFINE_integer("timeout_secs", 100, "Timeout for query.")
-flags.DEFINE_integer("batch", 5, "Batch size for request")
+flags.DEFINE_integer("batch", 10, "Batch size for request")
 flags.DEFINE_string("port", None, "Port")
 flags.DEFINE_string("host", None, "host")
+flags.DEFINE_string("dictionary", None, "Dictionary for word split")
 
 app = Flask(__name__)
 CORS(app)
+
+jieba.load_userdict(FLAGS.dictionary)
 
 
 class InvalidUsage(Exception):
@@ -77,22 +80,19 @@ class NmtClient(object):
             data_dir=os.path.expanduser(FLAGS.data_dir))
         self.problem.get_hparams(self.hparams)
         self.request_fn = make_request_fn()
-        self.tokenizer = MosesTokenizer('en')
-        self.detokenizer = MosesDetokenizer('ko')
-        self.delimiter = re.compile("(?<!\w\.\w.)(?<![A-Z][a-z]\.)(?<=\.|\?)\s")
+        self.detokenizer = MosesDetokenizer('en')
 
     def query(self, sentences):
         """
         :param sentences: str
         :return:
         """
-        inputs = re.split(self.delimiter, sentences.strip())
         tmp = []
         tokens = 0
-        for sentence in inputs:
-            sentence = self.tokenizer(sentence.strip())
+        for sentence in self.cut_sent(sentences):
+            sentence = jieba.lcut(sentence.strip())
             tokens += len(sentence)
-            tmp.append(html.unescape(" ".join(sentence).replace("@-@", "-")))
+            tmp.append(" ".join(sentence))
         inputs = tmp
         del tmp
         outputs = []
@@ -101,8 +101,8 @@ class NmtClient(object):
             batch_output = serving_utils.predict(inputs[i:(i+FLAGS.batch)],
                                                  self.problem, self.request_fn)
             batch_output = [self.detokenizer(output[0].split(" ")) for output in batch_output]
-            outputs.extend([{"key": en, "value": zh}
-                            for en, zh in zip(inputs[i:(i+FLAGS.batch)], batch_output)])
+            outputs.extend([{"key": zh, "value": en}
+                            for zh, en in zip(inputs[i:(i+FLAGS.batch)], batch_output)])
         end = time.time()
         printstr = "Sentences: {sentence:d}\tTokens: {tokens:d}" \
                    "\tTime: {time:.3f}ms\tTokens/time: {per:.3f}ms"
@@ -115,6 +115,15 @@ class NmtClient(object):
             logging.info("Output:{output:s}".format(output=output["value"]))
         return outputs
 
+    @staticmethod
+    def cut_sent(para):
+        para = re.sub('([。！？\?])([^”])', r"\1\n\2", para)
+        para = re.sub('(\.{6})([^”])', r"\1\n\2", para)
+        para = re.sub('(\…{2})([^”])', r"\1\n\2", para)
+        para = re.sub('(”)', '”\n', para)
+        para = para.rstrip()
+        return para.split("\n")
+
 
 @app.errorhandler(InvalidUsage)
 def handle_invalid_usage(error):
@@ -123,13 +132,13 @@ def handle_invalid_usage(error):
     return response
 
 
-@app.route("/translation", methods=['POST', 'GET'])
-def translation():
+@app.route("/translation_rev", methods=['POST', 'GET'])
+def translation_rev():
     global nmt_client
     try:
         data = json.loads(request.get_data(), strict=False)["data"]
         print(request.get_data())
-        return json.dumps({"data": nmt_client.query(data)}, indent=1, ensure_ascii=False)
+        return json.dumps({"data": nmt_client.query(data)}, ensure_ascii=False)
     except Exception as e:
         logging.error(str(e))
         raise InvalidUsage('Ooops. Something went wrong', status_code=503)

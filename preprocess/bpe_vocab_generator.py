@@ -11,6 +11,8 @@ from SpmTextEncoder import SpmTextEncoder
 import tensorflow as tf
 import argparse
 
+from tensor2tensor.utils import t2t_model
+
 
 _OD_TRAIN_DATASETS = [[
     "train.tgz", [
@@ -145,25 +147,32 @@ class SpmBpeVocabGenerator(BpeVocabGenerator):
             generator_utils.generate_lines_for_vocab(tmp_dir, source_datasets, file_byte_budget=1e10)
         target_vocab_generator = \
             generator_utils.generate_lines_for_vocab(tmp_dir, target_datasets, file_byte_budget=1e10)
-        count = 0
-        with tf.gfile.Open(os.path.join(tmp_dir,
-                                        "{prefix:s}.corpus.txt".format(prefix=self.source_vocab_name)), "w") as f:
-            for line in source_vocab_generator:
-                f.write(line)
-                f.write("\n")
-                count += 1
 
-        print("====src:{src:d}=====".format(src=count))
+        if tf.gfile.Exists(os.path.join(tmp_dir,
+                                        "{prefix:s}.corpus.txt".format(prefix=self.source_vocab_name))):
+            print("====Source File Exists====")
+        else:
+            count = 0
+            with tf.gfile.Open(os.path.join(tmp_dir,
+                                            "{prefix:s}.corpus.txt".format(prefix=self.source_vocab_name)), "w") as f:
+                for line in source_vocab_generator:
+                    f.write(line)
+                    f.write("\n")
+                    count += 1
+                print("====src:{src:d}=====".format(src=count))
 
-        count = 0
-        with tf.gfile.Open(os.path.join(tmp_dir,
-                                        "{prefix:s}.corpus.txt".format(prefix=self.target_vocab_name)), "w") as f:
-            for line in target_vocab_generator:
-                f.write(line)
-                f.write("\n")
-                count += 1
-
-        print("====target:{target:d}=====".format(target=count))
+        if tf.gfile.Exists(os.path.join(tmp_dir,
+                                        "{prefix:s}.corpus.txt".format(prefix=self.target_vocab_name))):
+            print("====Source File Exists====")
+        else:
+            count = 0
+            with tf.gfile.Open(os.path.join(tmp_dir,
+                                            "{prefix:s}.corpus.txt".format(prefix=self.target_vocab_name)), "w") as f:
+                for line in target_vocab_generator:
+                    f.write(line)
+                    f.write("\n")
+                    count += 1
+                print("====target:{target:d}=====".format(target=count))
 
         _ = SpmTextEncoder.build_from_file(output_dir=data_dir,
                                            filename=os.path.join(tmp_dir,

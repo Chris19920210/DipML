@@ -10,6 +10,8 @@ import logging
 import time
 import html
 import jieba
+import re
+from zhon.hanzi import punctuation as zhpunc
 
 
 def validate_flags(server, servable_name):
@@ -102,7 +104,7 @@ class EnZhNmtClient(NmtClient):
         return self.moses_tokenizer(sentence)
 
     def detokenizer(self, sentence):
-        return self.moses_detokenizer(sentence)
+        return re.sub(r'\s+([{0}])\s+'.format(zhpunc), r"\1", self.moses_detokenizer(sentence))
 
     def sentence_prepare(self, sentence):
         sentence = self.tokenizer(sentence.strip())

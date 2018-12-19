@@ -12,6 +12,7 @@ from tensor2tensor.utils import registry
 from tensor2tensor.utils import usr_dir
 import tensorflow as tf
 from mosestokenizer import MosesTokenizer, MosesDetokenizer
+from zhon.hanzi import punctuation as zhpunc
 import re
 import simplejson as json
 import logging
@@ -78,8 +79,11 @@ class NmtClient(object):
         self.problem.get_hparams(self.hparams)
         self.request_fn = make_request_fn()
         self.tokenizer = MosesTokenizer('en')
-        self.detokenizer = MosesDetokenizer('ko')
+        self.moses_detokenizer = MosesDetokenizer('zh')
         self.delimiter = re.compile("(?<!\w\.\w.)(?<![A-Z][a-z]\.)(?<=\.|\?)\s")
+
+    def detokenizer(self, sentence):
+        return re.sub(r'\s+([{0}])\s+'.format(zhpunc), r"\1", self.moses_detokenizer(sentence))
 
     def query(self, sentences):
         """

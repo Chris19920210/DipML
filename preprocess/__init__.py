@@ -4,3 +4,4 @@ from . import translate_enzh_ai300k
 from . import translatespm_enzh_ai50k
 from . import SpmTextEncoder
 from . import my_spm_utils
+from . import translatespm_zhen_ai50k

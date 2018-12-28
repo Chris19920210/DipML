@@ -17,6 +17,7 @@ import simplejson as json
 import logging
 import time
 import jieba
+from pyltp import SentenceSplitter
 
 
 flags = tf.flags
@@ -80,7 +81,13 @@ class NmtClient(object):
             data_dir=os.path.expanduser(FLAGS.data_dir))
         self.problem.get_hparams(self.hparams)
         self.request_fn = make_request_fn()
-        self.detokenizer = MosesDetokenizer('en')
+        self.mose_detokenizer = MosesDetokenizer('en')
+
+    def detokenizer(self, en):
+        en = self.mose_detokenizer(en)
+        if en.startswith('"') and en.endswith('"'):
+            return en.rstrip('"').lstrip('"')
+        return en
 
     def query(self, sentences):
         """
@@ -96,6 +103,7 @@ class NmtClient(object):
         inputs = tmp
         del tmp
         outputs = []
+        print(inputs)
         start = time.time()
         for i in range(0, len(inputs), FLAGS.batch):
             batch_output = serving_utils.predict(inputs[i:(i+FLAGS.batch)],
@@ -113,16 +121,12 @@ class NmtClient(object):
         for output in outputs:
             logging.info("Input:{input:s}".format(input=output["key"]))
             logging.info("Output:{output:s}".format(output=output["value"]))
+
         return outputs
 
     @staticmethod
     def cut_sent(para):
-        para = re.sub('([。！？\?])([^”])', r"\1\n\2", para)
-        para = re.sub('(\.{6})([^”])', r"\1\n\2", para)
-        para = re.sub('(\…{2})([^”])', r"\1\n\2", para)
-        para = re.sub('(”)', '”\n', para)
-        para = para.rstrip()
-        return para.split("\n")
+        return list(filter(lambda x: len(x) != 0, SentenceSplitter.split(para)))
 
 
 @app.errorhandler(InvalidUsage)
@@ -136,7 +140,7 @@ def handle_invalid_usage(error):
 def translation_rev():
     global nmt_client
     try:
-        data = json.loads(request.get_data(), strict=False)["data"]
+        data = json.loads(str(request.get_data(), "utf-8"), strict=False)["data"]
         print(request.get_data())
         return json.dumps({"data": nmt_client.query(data)}, ensure_ascii=False)
     except Exception as e:
@@ -147,7 +151,7 @@ def translation_rev():
 if __name__ == '__main__':
     logging.basicConfig(level=logging.INFO,
                         format='%(asctime)s %(levelname)s %(message)s',
-                        filename='./query.log',
+                        filename='./query_rev.log',
                         filemode='w')
     flags.mark_flags_as_required(["problem", "data_dir"])
     nmt_client = NmtClient()

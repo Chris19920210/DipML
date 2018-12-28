@@ -71,7 +71,7 @@ def get_filename(dataset):
 
 
 @registry.register_problem
-class TranslatespmEnzhAi50k(translate.TranslateProblem):
+class TranslatespmZhenAi50k(translate.TranslateProblem):
     """Problem spec for WMT En-Zh translation.
     Attempts to use full training dataset, which needs website
     registration and downloaded manually from official sources:
@@ -92,11 +92,11 @@ class TranslatespmEnzhAi50k(translate.TranslateProblem):
 
     @property
     def source_vocab_name(self):
-        return "%s.en" % self.vocab_filename
+        return "%s.zh" % self.vocab_filename
 
     @property
     def target_vocab_name(self):
-        return "%s.zh" % self.vocab_filename
+        return "%s.en" % self.vocab_filename
 
     def get_training_dataset(self, tmp_dir):
         """UN Parallel Corpus and CWMT Corpus need to be downloaded manually.
@@ -130,7 +130,7 @@ class TranslatespmEnzhAi50k(translate.TranslateProblem):
             sources=target_datasets,
             file_byte_budget=1e10)
         tag = "train" if train else "dev"
-        filename_base = "wmt_enzh_%sk_tok_%s" % (self.approx_vocab_size, tag)
+        filename_base = "wmt_zhen_%sk_tok_%s" % (self.approx_vocab_size, tag)
         data_path = translate.compile_data(tmp_dir, datasets, filename_base)
         return text_problems.text2text_generate_encoded(
             text_problems.text2text_txt_iterator(data_path + ".lang1",

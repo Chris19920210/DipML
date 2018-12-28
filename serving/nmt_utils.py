@@ -96,9 +96,16 @@ class EnZhNmtClient(NmtClient):
         self.request_fn = make_request_fn(server, servable_name, timeout_secs)
         self.moses_tokenizer = MosesTokenizer('en')
         self.moses_detokenizer = MosesDetokenizer('zh')
-        fname = "inputs" if self.problem.has_inputs else "targets"
+        if problem.endswith("_rev"):
+            fname = "targets"
+        else:
+            fname = "inputs" if self.problem.has_inputs else "targets"
         self.input_encoder = self.problem.feature_info[fname].encoder
-        self.output_decoder = self.problem.feature_info["targets"].encoder
+
+        if problem.endswith("_rev"):
+            self.output_decoder = self.problem.feature_info["inputs"].encoder
+        else:
+            self.output_decoder = self.problem.feature_info["targets"].encoder
 
     def tokenizer(self, sentence):
         return self.moses_tokenizer(sentence)
@@ -158,9 +165,17 @@ class ZhEnNmtClient(NmtClient):
         self.request_fn = make_request_fn(server, servable_name, timeout_secs)
         jieba.load_userdict(user_dict)
         self.moses_detokenizer = MosesDetokenizer('en')
-        fname = "inputs" if self.problem.has_inputs else "targets"
+
+        if problem.endswith("_rev"):
+            fname = "targets"
+        else:
+            fname = "inputs" if self.problem.has_inputs else "targets"
         self.input_encoder = self.problem.feature_info[fname].encoder
-        self.output_decoder = self.problem.feature_info["targets"].encoder
+
+        if problem.endswith("_rev"):
+            self.output_decoder = self.problem.feature_info["inputs"].encoder
+        else:
+            self.output_decoder = self.problem.feature_info["targets"].encoder
 
     def tokenizer(self, sentence):
         return jieba.lcut(sentence.strip())

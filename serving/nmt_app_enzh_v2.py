@@ -1,11 +1,10 @@
 import tcelery
-import nmt_tasks
+import nmt_tasks_enzh
 import argparse
 import json
 import logging
 import traceback
 from tornado import web, ioloop, gen
-
 """Tornado Web Application"""
 
 parser = argparse.ArgumentParser(description='nmt web application')
@@ -56,7 +55,7 @@ class AsyncAppNmtHandler(MyAppBaseHandler):
         content_type = self.request.headers.get('Content-Type')
         if not (content_type and content_type.lower().startswith('application/json')):
             MyAppException(reason="Wrong data format, needs json", status_code=400)
-        res = yield gen.Task(nmt_tasks.translation_enzh.apply_async, args=[self.request.body])
+        res = yield gen.Task(nmt_tasks_enzh.translation.apply_async, args=[self.request.body])
         self.write(res.result)
         self.finish()
 
@@ -66,7 +65,7 @@ class AsyncAppNmtHandler(MyAppBaseHandler):
         content_type = self.request.headers.get('Content-Type')
         if not (content_type and content_type.lower().startswith('application/json')):
             MyAppException(reason="Wrong data format, needs json", status_code=400)
-        res = yield gen.Task(nmt_tasks.translation_enzh.apply_async, args=[self.request.body])
+        res = yield gen.Task(nmt_tasks_enzh.translation.apply_async, args=[self.request.body])
         self.write(res.result)
         self.finish()
 
@@ -75,8 +74,8 @@ if __name__ == '__main__':
     logging.basicConfig(level=logging.INFO,
                         format='%(asctime)s %(filename)s[line:%(lineno)d] %(levelname)s %(message)s',
                         datefmt='%a, %d %b %Y %H:%M:%S',
-                        filename='web_application.log',
+                        filename='web_application_zhen.log',
                         filemode='w')
-    application = web.Application([(r"/translation_enzh", AsyncAppNmtHandler)])
+    application = web.Application([(r"/translation_zhen", AsyncAppNmtHandler)])
     application.listen(port=args.port, address=args.host)
     ioloop.IOLoop.instance().start()

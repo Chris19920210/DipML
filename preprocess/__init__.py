@@ -5,3 +5,5 @@ from . import translatespm_enzh_ai50k
 from . import SpmTextEncoder
 from . import my_spm_utils
 from . import translatespm_zhen_ai50k
+from . import translatespm_enja_ai50k
+from . import translatespm_jaen_ai50k

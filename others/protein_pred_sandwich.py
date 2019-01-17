@@ -39,7 +39,7 @@ parser.add_argument('--model-dir', type=str, default='./',
                     help='model dir to save the model')
 parser.add_argument('--early-stopping', type=int, default=5,
                     help='round for early stopping')
-parser.add_argument('--checkpoint-epochs', type=int, default=5,
+parser.add_argument('--checkpoint-epochs', type=int, default=1,
                     help='save the checkpoints epoch')
 
 args = parser.parse_args()
@@ -160,5 +160,14 @@ if __name__ == "__main__":
     X_train, y_train = np.load(args.x_train), np.load(args.y_train)
     X_eval, y_eval = np.load(args.x_eval), np.load(args.y_eval)
     X_test, y_test = np.load(args.x_test), np.load(args.y_test)
+    # subtract mean and normalize
+    mean_image = np.mean(X_train, axis=0)
+    X_train -= mean_image
+    X_eval -= mean_image
+    X_test -= mean_image
+    X_train /= 30
+    X_eval /= 30
+    X_test /= 30
+
     classifier.train(X_train, y_train, X_eval, y_eval, save_model=True)
     classifier.evaluate(X_test, y_test)

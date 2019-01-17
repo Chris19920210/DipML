@@ -8,18 +8,17 @@ from keras.layers import (
     GRU,
     LSTM,
     Dense,
-    Flatten,
-    Bidirectional
+    Bidirectional,
+    TimeDistributed
 )
 from keras.layers.convolutional import (
     Conv1D,
-    MaxPooling1D,
-    AveragePooling1D,
 )
 from keras.layers.merge import add
 from keras.layers.normalization import BatchNormalization
 from keras.regularizers import l2
 from keras import backend as K
+from attention_with_context import AttentionWithContext
 
 
 def _bn_relu(input):
@@ -213,7 +212,8 @@ def _get_block(identifier):
 
 class TimeResnetBuilder(object):
     @staticmethod
-    def build(input_shape, num_outputs, block_fn, rnn_fn, cnn_repetitions, filters, rnn_units, rnn_layers=None):
+    def build(input_shape, num_outputs, block_fn, rnn_fn, cnn_repetitions, filters, rnn_units,
+              dense_units=100, rnn_layers=None):
         """Builds a custom ResNet like architecture.
         Args:
             input_shape: The input shape in the form (time_steps, channels)
@@ -225,6 +225,7 @@ class TimeResnetBuilder(object):
                 At each block unit, the number of filters are doubled and the input size is halved (not necessarily)
             filters: filter for start.
             rnn_units: rnn units
+            dense_units: dense units
             rnn_layers: num of layers, tuple (before cnn layers, after cnn layers)
 
         Returns:
@@ -239,9 +240,9 @@ class TimeResnetBuilder(object):
         # Load function from str if needed.
         if rnn_layers is None:
             conv1 = _conv_bn_relu(filters=filters, kernel_size=3, strides=1)(input)
-            pool1 = MaxPooling1D(pool_size=2, strides=1, padding="same")(conv1)
+            #pool1 = MaxPooling1D(pool_size=2, strides=1, padding="same")(conv1)
 
-            block = pool1
+            block = conv1
             filters = filters
             for i, r in enumerate(cnn_repetitions):
                 block = _residual_block(block_fn, filters=filters, repetitions=r, is_first_layer=(i == 0))(block)
@@ -251,12 +252,13 @@ class TimeResnetBuilder(object):
             block = _bn_relu(block)
 
             # Classifier block
-            block_shape = K.int_shape(block)
-            pool2 = AveragePooling1D(pool_size=block_shape[TIME_AXIS],
-                                     strides=1)(block)
-            flatten1 = Flatten()(pool2)
+            block = TimeDistributed(
+                Dense(dense_units, kernel_regularizer=l2(1e-4)))(block)
+
+            block = AttentionWithContext()(block)
+
             dense = Dense(units=num_outputs, kernel_initializer="he_normal",
-                          activation="softmax")(flatten1)
+                          activation="softmax")(block)
 
             model = Model(inputs=input, outputs=dense)
             return model
@@ -268,9 +270,9 @@ class TimeResnetBuilder(object):
             for _ in range(bottom):
                 rnn = rnn_fn(units=rnn_units, return_sequences=True)(rnn)
             conv1 = _conv_bn_relu(filters=filters, kernel_size=3, strides=1)(rnn)
-            pool1 = MaxPooling1D(pool_size=2, strides=1, padding="same")(conv1)
+            #pool1 = MaxPooling1D(pool_size=2, strides=1, padding="same")(conv1)
 
-            block = pool1
+            block = conv1
             filters = filters
             for i, r in enumerate(cnn_repetitions):
                 block = _residual_block(block_fn, filters=filters, repetitions=r, is_first_layer=(i == 0))(block)
@@ -282,7 +284,10 @@ class TimeResnetBuilder(object):
             for _ in range(up):
                 block = rnn_fn(units=rnn_units, return_sequences=True)(block)
 
-            rnn = rnn_fn(units=rnn_units, return_sequences=False)(block)
+            rnn = TimeDistributed(
+                Dense(dense_units, kernel_regularizer=l2(1e-4)))(block)
+
+            rnn = AttentionWithContext()(rnn)
 
             dense = Dense(units=num_outputs, kernel_initializer="he_normal",
                           activation="softmax")(rnn)
@@ -293,16 +298,18 @@ class TimeResnetBuilder(object):
 
     @staticmethod
     def build_resnet_very_tiny(input_shape, num_outputs):
-        return TimeResnetBuilder.build(input_shape, num_outputs, basic_block, gru_bn_relu, [2], 16, 32, [0, 0])
+        return TimeResnetBuilder.build(input_shape, num_outputs, basic_block, gru_bn_relu, [2], 16, 32, 32, [0, 0])
 
     @staticmethod
     def build_resnet_tiny(input_shape, num_outputs):
-        return TimeResnetBuilder.build(input_shape, num_outputs, basic_block, gru_bn_relu, [2, 2], 16, 32, [0, 1])
+        return TimeResnetBuilder.build(input_shape, num_outputs, basic_block, gru_bn_relu, [2, 2], 16, 32, 32, [0, 1])
 
     @staticmethod
     def build_resnet_small(input_shape, num_outputs):
-        return TimeResnetBuilder.build(input_shape, num_outputs, basic_block, gru_bn_relu, [2, 2, 2], 16, 32, [0, 1])
+        return TimeResnetBuilder.build(input_shape, num_outputs, basic_block, gru_bn_relu, [2, 2, 2], 16, 32, 32,
+                                       [0, 1])
 
     @staticmethod
     def build_resnet_big(input_shape, num_outputs):
-        return TimeResnetBuilder.build(input_shape, num_outputs, basic_block, gru_bn_relu, [2, 2, 2, 2], 16, 32, [0, 1])
+        return TimeResnetBuilder.build(input_shape, num_outputs, basic_block, gru_bn_relu, [2, 2, 2, 2], 16, 32,
+                                       32, [0, 1])

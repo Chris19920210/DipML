@@ -58,13 +58,14 @@ if __name__ == '__main__':
 
     with open(os.path.join(args.base_dir, args.input), 'r') as f:
         for each in f.readlines():
+            each = bytes(each, 'utf-8').decode('utf-8', 'ignore')
             each = each.strip().replace(u'\uf020', "")
 
             try:
-                if each[0].isdigit() or each[0] in punctuations:
-                    continue
-                cleantext = re.sub(cleaner, '', each)
-                cleantext = html.unescape(cleantext)
+                # if each[0].isdigit() or each[0] in punctuations:
+                #     continue
+                #cleantext = re.sub(cleaner, '', each)
+                cleantext = html.unescape(each)
                 line = cleantext.strip().split("\t")
                 line = list(filter(lambda x: x != "", line))
                 check_and_add(line[0].strip(), line[1].strip())

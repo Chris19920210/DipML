@@ -2,17 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="d0ac3b43-4858-4614-864d-9e52271baf67" name="Default Changelist" comment="japanese english">
-      <change beforePath="" afterPath="$PROJECT_DIR$/others/HAN.py" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/others/attention_with_context.py" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/others/protein_pred_han.py" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/preprocess/alignment_prep.py" />
-      <change beforePath="" afterPath="$PROJECT_DIR$/preprocess/filter_empty.py" />
-      <change beforePath="$PROJECT_DIR$/.idea/DipML.iml" afterPath="$PROJECT_DIR$/.idea/DipML.iml" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change beforePath="$PROJECT_DIR$/others/protein_pred_rnn.py" afterPath="$PROJECT_DIR$/others/protein_pred_rnn.py" />
-      <change beforePath="$PROJECT_DIR$/others/protein_pred_sandwich.py" afterPath="$PROJECT_DIR$/others/protein_pred_sandwich.py" />
-      <change beforePath="$PROJECT_DIR$/others/resnet_temporal.py" afterPath="$PROJECT_DIR$/others/resnet_temporal.py" />
-      <change beforePath="$PROJECT_DIR$/preprocess/clean_first_step.py" afterPath="$PROJECT_DIR$/preprocess/clean_first_step.py" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -117,8 +107,8 @@
       <file leaf-file-name="protein_pred_han.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/others/protein_pred_han.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="528">
-              <caret line="86" column="23" lean-forward="true" selection-start-line="86" selection-start-column="23" selection-end-line="86" selection-end-column="23" />
+            <state relative-caret-position="232">
+              <caret line="78" column="30" lean-forward="true" selection-start-line="78" selection-start-column="30" selection-end-line="78" selection-end-column="30" />
               <folding>
                 <element signature="e#0#18#0" expanded="true" />
               </folding>
@@ -804,7 +794,14 @@
       <option name="project" value="LOCAL" />
       <updated>1547693458558</updated>
     </task>
-    <option name="localTasksCounter" value="44" />
+    <task id="LOCAL-00044" summary="japanese english">
+      <created>1547726531086</created>
+      <option name="number" value="00044" />
+      <option name="presentableId" value="LOCAL-00044" />
+      <option name="project" value="LOCAL" />
+      <updated>1547726531086</updated>
+    </task>
+    <option name="localTasksCounter" value="45" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -863,9 +860,9 @@
     <MESSAGE value="indent modification" />
     <MESSAGE value="serving change" />
     <MESSAGE value="independent tasks" />
-    <MESSAGE value="japanese english" />
     <MESSAGE value="temporal resnet" />
-    <option name="LAST_COMMIT_MESSAGE" value="temporal resnet" />
+    <MESSAGE value="japanese english" />
+    <option name="LAST_COMMIT_MESSAGE" value="japanese english" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1018,6 +1015,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="740">
           <caret line="20" column="0" lean-forward="false" selection-start-line="20" selection-start-column="0" selection-end-line="20" selection-end-column="0" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -1088,6 +1086,7 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="296">
           <caret line="8" column="0" lean-forward="true" selection-start-line="8" selection-start-column="0" selection-end-line="8" selection-end-column="0" />
+          <folding />
         </state>
       </provider>
     </entry>
@@ -1120,6 +1119,9 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="933">
           <caret line="60" column="19" lean-forward="false" selection-start-line="60" selection-start-column="19" selection-end-line="60" selection-end-column="19" />
+          <folding>
+            <element signature="e#0#15#0" expanded="false" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -1285,8 +1287,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/others/protein_pred_han.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="528">
-          <caret line="86" column="23" lean-forward="true" selection-start-line="86" selection-start-column="23" selection-end-line="86" selection-end-column="23" />
+        <state relative-caret-position="232">
+          <caret line="78" column="30" lean-forward="true" selection-start-line="78" selection-start-column="30" selection-end-line="78" selection-end-column="30" />
           <folding>
             <element signature="e#0#18#0" expanded="true" />
           </folding>

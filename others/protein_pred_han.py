@@ -3,6 +3,11 @@ import HAN
 import argparse
 from keras.layers import LSTM, GRU
 
+import tensorflow as tf
+
+import keras.backend.tensorflow_backend as KTF
+
+
 parser = argparse.ArgumentParser(description='remover')
 parser.add_argument('--time-steps', type=int, default=13,
                     help='time steps for rnn')
@@ -89,4 +94,12 @@ def main():
 
 
 if __name__ == '__main__':
+    config = tf.ConfigProto()
+
+    config.gpu_options.allow_growth = True
+
+    sess = tf.Session(config=config)
+
+    KTF.set_session(sess)
+
     main()

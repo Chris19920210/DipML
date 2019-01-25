@@ -19,6 +19,8 @@ from keras.layers.normalization import BatchNormalization
 from keras.regularizers import l2
 from keras import backend as K
 from attention_with_context import AttentionWithContext
+from HAN import HAN
+from keras.layers.merge import concatenate
 
 
 def _bn_relu(input):
@@ -213,7 +215,7 @@ def _get_block(identifier):
 class TimeResnetBuilder(object):
     @staticmethod
     def build(input_shape, num_outputs, block_fn, rnn_fn, cnn_repetitions, filters, rnn_units,
-              dense_units=100, rnn_layers=None):
+              dense_units=50, rnn_layers=None, embedding_size=None, vocab_size=None):
         """Builds a custom ResNet like architecture.
         Args:
             input_shape: The input shape in the form (time_steps, channels)
@@ -227,6 +229,8 @@ class TimeResnetBuilder(object):
             rnn_units: rnn units
             dense_units: dense units
             rnn_layers: num of layers, tuple (before cnn layers, after cnn layers)
+            embedding_size:
+            vocab_size:
 
         Returns:
             The keras `Model`.
@@ -270,7 +274,6 @@ class TimeResnetBuilder(object):
             for _ in range(bottom):
                 rnn = rnn_fn(units=rnn_units, return_sequences=True)(rnn)
             conv1 = _conv_bn_relu(filters=filters, kernel_size=3, strides=1)(rnn)
-            #pool1 = MaxPooling1D(pool_size=2, strides=1, padding="same")(conv1)
 
             block = conv1
             filters = filters
@@ -289,27 +292,40 @@ class TimeResnetBuilder(object):
 
             rnn = AttentionWithContext()(rnn)
 
-            dense = Dense(units=num_outputs, kernel_initializer="he_normal",
-                          activation="softmax")(rnn)
-
-            model = Model(inputs=input, outputs=dense)
-
-            return model
+            if embedding_size is not None and vocab_size is not None:
+                han = HAN(input_shape[0],
+                          input_shape[1],
+                          embedding_size,
+                          vocab_size,
+                          num_classes=num_outputs)
+                sent_input, sent_att = han.body()
+                rnn = concatenate([rnn, sent_att])
+                dense = Dense(units=num_outputs, kernel_initializer="he_normal",
+                              activation="softmax")(rnn)
+                model = Model(inputs=[input, sent_input], outputs=dense)
+                return model
+            else:
+                dense = Dense(units=num_outputs, kernel_initializer="he_normal",
+                              activation="softmax")(rnn)
+                model = Model(inputs=input, outputs=dense)
+                return model
 
     @staticmethod
-    def build_resnet_very_tiny(input_shape, num_outputs):
-        return TimeResnetBuilder.build(input_shape, num_outputs, basic_block, gru_bn_relu, [2], 16, 32, 32, [0, 0])
+    def build_resnet_very_tiny(input_shape, num_outputs, embedding_size=None, vocab_size=None):
+        return TimeResnetBuilder.build(input_shape, num_outputs, basic_block, gru_bn_relu, [2], 16, 32, 32, [0, 0],
+                                       embedding_size, vocab_size)
 
     @staticmethod
-    def build_resnet_tiny(input_shape, num_outputs):
-        return TimeResnetBuilder.build(input_shape, num_outputs, basic_block, gru_bn_relu, [2, 2], 16, 32, 32, [0, 1])
+    def build_resnet_tiny(input_shape, num_outputs, embedding_size=None, vocab_size=None):
+        return TimeResnetBuilder.build(input_shape, num_outputs, basic_block, gru_bn_relu, [2, 2], 16, 32, 32, [0, 1],
+                                       embedding_size, vocab_size)
 
     @staticmethod
-    def build_resnet_small(input_shape, num_outputs):
+    def build_resnet_small(input_shape, num_outputs, embedding_size=None, vocab_size=None):
         return TimeResnetBuilder.build(input_shape, num_outputs, basic_block, gru_bn_relu, [2, 2, 2], 16, 32, 32,
-                                       [0, 1])
+                                       [0, 1], embedding_size, vocab_size)
 
     @staticmethod
-    def build_resnet_big(input_shape, num_outputs):
+    def build_resnet_big(input_shape, num_outputs, embedding_size=None, vocab_size=None):
         return TimeResnetBuilder.build(input_shape, num_outputs, basic_block, gru_bn_relu, [2, 2, 2, 2], 16, 32,
-                                       32, [0, 1])
+                                       32, [0, 1], embedding_size, vocab_size)

@@ -8,6 +8,9 @@ from keras.layers.normalization import BatchNormalization
 from keras.layers import Bidirectional
 import argparse
 import os
+import tensorflow as tf
+
+import keras.backend.tensorflow_backend as KTF
 
 parser = argparse.ArgumentParser(description='remover')
 parser.add_argument('--time-steps', type=int, default=13,
@@ -202,6 +205,14 @@ if __name__ == "__main__":
     elif args.rnn_type == 'gru':
         rnn = GRU
 
+    config = tf.ConfigProto()
+
+    config.gpu_options.allow_growth = True
+
+    sess = tf.Session(config=config)
+
+    KTF.set_session(sess)
+
     classifier = ProteinRNNClassifier(args.time_steps,
                                       args.n_units,
                                       args.n_inputs,
@@ -225,9 +236,9 @@ if __name__ == "__main__":
     X_train -= mean_image
     X_eval -= mean_image
     X_test -= mean_image
-    X_train /= 30
-    X_eval /= 30
-    X_test /= 30
+    X_train /= 29
+    X_eval /= 29
+    X_test /= 29
 
     classifier.train(X_train, y_train, X_eval, y_eval, save_model=True)
     classifier.evaluate(X_test, y_test)

@@ -7,6 +7,11 @@ import argparse
 import os
 import resnet_temporal
 
+import tensorflow as tf
+
+import keras.backend.tensorflow_backend as KTF
+
+
 parser = argparse.ArgumentParser(description='remover')
 parser.add_argument('--time-steps', type=int, default=13,
                     help='time steps for rnn')
@@ -18,6 +23,10 @@ parser.add_argument('--batch-size', type=int, default=32,
                     help='batch size')
 parser.add_argument('--n-epochs', type=int, default=200,
                     help='# of epochs')
+parser.add_argument('--embedding-size', type=int, default=None,
+                    help='embedding size')
+parser.add_argument('--vocab-size', type=int, default=None,
+                    help='vocab-size')
 parser.add_argument('--resnet-type', type=str, default='tiny',
                     choices=['very_tiny', 'tiny', 'small', 'big'],
                     help='# of layers for rnn')
@@ -37,7 +46,7 @@ parser.add_argument('--y-test', type=str, default='y_test.npy',
                     help='path to y test or y eval')
 parser.add_argument('--model-dir', type=str, default='./',
                     help='model dir to save the model')
-parser.add_argument('--early-stopping', type=int, default=5,
+parser.add_argument('--early-stopping', type=int, default=10,
                     help='round for early stopping')
 parser.add_argument('--checkpoint-epochs', type=int, default=1,
                     help='save the checkpoints epoch')
@@ -56,7 +65,9 @@ class ProteinSWClassifier(object):
                  optimizer,
                  model_path,
                  checkpoint_epochs,
-                 early_stopping
+                 early_stopping,
+                 embedding_size=None,
+                 vocab_size=None
                  ):
         # Classifier
         self.time_steps = time_steps
@@ -64,6 +75,8 @@ class ProteinSWClassifier(object):
         self.n_classes = n_classes
         self.batch_size = batch_size
         self.n_epochs = n_epochs
+        self.embedding_size = embedding_size
+        self.vocab_size = vocab_size
         # Internal
         self._trained = None
         self._optimizer = optimizer
@@ -75,13 +88,33 @@ class ProteinSWClassifier(object):
     def __create_model(self):
 
         if self._resnet_type == 'tiny':
-            self.model = resnet_temporal.TimeResnetBuilder.build_resnet_tiny((self.time_steps, self.n_inputs), self.n_classes)
+            self.model = resnet_temporal.TimeResnetBuilder.build_resnet_tiny((self.time_steps,
+                                                                              self.n_inputs),
+                                                                             self.n_classes,
+                                                                             self.embedding_size,
+                                                                             self.vocab_size
+                                                                             )
         elif self._resnet_type == 'small':
-            self.model = resnet_temporal.TimeResnetBuilder.build_resnet_small((self.time_steps, self.n_inputs), self.n_classes)
+            self.model = resnet_temporal.TimeResnetBuilder.build_resnet_small((self.time_steps,
+                                                                               self.n_inputs),
+                                                                              self.n_classes,
+                                                                              self.embedding_size,
+                                                                              self.vocab_size
+                                                                              )
         elif self._resnet_type == 'big':
-            self.model = resnet_temporal.TimeResnetBuilder.build_resnet_big((self.time_steps, self.n_inputs), self.n_classes)
+            self.model = resnet_temporal.TimeResnetBuilder.build_resnet_big((self.time_steps,
+                                                                             self.n_inputs),
+                                                                            self.n_classes,
+                                                                            self.embedding_size,
+                                                                            self.vocab_size
+                                                                            )
         elif self._resnet_type == 'very_tiny':
-            self.model = resnet_temporal.TimeResnetBuilder.build_resnet_very_tiny((self.time_steps, self.n_inputs), self.n_classes)
+            self.model = resnet_temporal.TimeResnetBuilder.build_resnet_very_tiny((self.time_steps,
+                                                                                   self.n_inputs),
+                                                                                  self.n_classes,
+                                                                                  self.embedding_size,
+                                                                                  self.vocab_size
+                                                                                  )
         else:
             errmsg = "[!] Error: no such resnet type"
             print(errmsg, file=sys.stderr)
@@ -91,7 +124,14 @@ class ProteinSWClassifier(object):
                            optimizer=self._optimizer,
                            metrics=['accuracy'])
 
-    def train(self, X, y, X_eval, y_eval, save_model):
+    def train(self,
+              X,
+              y,
+              X_eval,
+              y_eval,
+              X_ind=None,
+              X_val_ind=None,
+              save_model=True):
         self.__create_model()
 
         checkpoint_callback = ModelCheckpoint(filepath=os.path.join(self._model_path,
@@ -107,17 +147,28 @@ class ProteinSWClassifier(object):
                                                 verbose=0,
                                                 mode='auto')
 
-        csv_logger = CSVLogger('resnet_conv1d_{0}.csv'.format(self._resnet_type))
+        csv_logger = CSVLogger(os.path.join(self._model_path, 'resnet_conv1d_{0}.csv'.format(self._resnet_type)))
 
         lr_reducer = ReduceLROnPlateau(factor=np.sqrt(0.1), cooldown=0, patience=5, min_lr=0.5e-6)
 
-        self.model.fit(X, y,
-                       batch_size=self.batch_size,
-                       epochs=self.n_epochs,
-                       shuffle=True,
-                       validation_data=(X_eval, y_eval),
-                       callbacks=[checkpoint_callback, early_stopping_callback, csv_logger, lr_reducer]
-                       )
+        if self.embedding_size is not None and self.vocab_size is not None:
+            self.model.fit([X, X_ind],
+                           y,
+                           batch_size=self.batch_size,
+                           epochs=self.n_epochs,
+                           shuffle=True,
+                           validation_data=[[X_eval, X_val_ind], y_eval],
+                           callbacks=[checkpoint_callback, early_stopping_callback, csv_logger, lr_reducer]
+                           )
+        else:
+            self.model.fit(X,
+                           y,
+                           batch_size=self.batch_size,
+                           epochs=self.n_epochs,
+                           shuffle=True,
+                           validation_data=(X_eval, y_eval),
+                           callbacks=[checkpoint_callback, early_stopping_callback, csv_logger, lr_reducer]
+                           )
 
         self._trained = True
 
@@ -145,6 +196,13 @@ class ProteinSWClassifier(object):
 
 
 if __name__ == "__main__":
+    config = tf.ConfigProto()
+
+    config.gpu_options.allow_growth = True
+
+    sess = tf.Session(config=config)
+
+    KTF.set_session(sess)
 
     classifier = ProteinSWClassifier(args.time_steps,
                                      args.n_inputs,
@@ -155,19 +213,25 @@ if __name__ == "__main__":
                                      args.optimizer,
                                      args.model_dir,
                                      args.checkpoint_epochs,
-                                     args.early_stopping
+                                     args.early_stopping,
+                                     args.embedding_size,
+                                     args.vocab_size
                                      )
     X_train, y_train = np.load(args.x_train), np.load(args.y_train)
     X_eval, y_eval = np.load(args.x_eval), np.load(args.y_eval)
-    X_test, y_test = np.load(args.x_test), np.load(args.y_test)
+    #X_test, y_test = np.load(args.x_test), np.load(args.y_test)
     # subtract mean and normalize
     mean_image = np.mean(X_train, axis=0)
     X_train -= mean_image
     X_eval -= mean_image
-    X_test -= mean_image
-    X_train /= 30
-    X_eval /= 30
-    X_test /= 30
+    #X_test -= mean_image
+    X_train /= 29
+    X_eval /= 29
+    #X_test /= 29
 
-    classifier.train(X_train, y_train, X_eval, y_eval, save_model=True)
-    classifier.evaluate(X_test, y_test)
+    if args.embedding_size is not None and args.vocab_size is not None:
+        X_ind = np.load(args.x_train[:args.x_train.find(".")] + "_ind" + args.x_train[args.x_train.find("."):])
+        X_eval_ind = np.load(args.x_eval[:args.x_eval.find(".")] + "_ind" + args.x_eval[args.x_eval.find("."):])
+        classifier.train(X_train, y_train, X_eval, y_eval, X_ind, X_eval_ind, save_model=True)
+    else:
+        classifier.train(X_train, y_train, X_eval, y_eval, save_model=True)

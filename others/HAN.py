@@ -97,7 +97,7 @@ class HAN(object):
         norm = BatchNormalization()(input)
         return Activation("relu")(norm)
 
-    def set_model(self):
+    def body(self):
         """
         Set the HAN model according to the given hyperparameters
         """
@@ -135,6 +135,11 @@ class HAN(object):
             Dense(self.hyperparameters['dense_units'], kernel_regularizer=kernel_regularizer))(sent_activation)
         sent_att = Dropout(dropout_regularizer)(
             AttentionWithContext()(sent_dense))
+        return sent_input, sent_att
+
+    def set_model(self):
+
+        sent_input, sent_att = self.body()
         preds = Dense(self.num_classes,  activation='softmax')(sent_att)
         self.model = Model(sent_input, preds)
         self.model.compile(

@@ -5,6 +5,8 @@ import string
 import re
 import html
 from zhon.hanzi import punctuation as zhpunctuation
+from mosestokenizer import MosesTokenizer
+import MeCab
 
 parser = argparse.ArgumentParser(description='remover')
 parser.add_argument('--base-dir', type=str, default=None,
@@ -14,6 +16,7 @@ parser.add_argument('--input', type=str, default=None,
 parser.add_argument('--output', type=str, default=None,
                     help='path to output')
 args = parser.parse_args()
+
 
 
 class EnZhTuple(object):
@@ -40,12 +43,13 @@ def punc_remover_lower(en_sentence):
 
 
 def check_and_add(en_sentence, zh_sentence):
-    global sentence_dict
+    global sentence_dict, entokenzier, mecab
     key = punc_remover_lower(en_sentence)
     if key not in sentence_dict:
         sentence_dict[key] = EnZhTuple(zh_sentence, en_sentence)
     else:
-        if len(sentence_dict[key].getZh()) < len(zh_sentence):
+        if abs(len(entokenzier(sentence_dict[key].getEn())) - len(mecab.parse(zh_sentence))) \
+                < abs(len(entokenzier(sentence_dict[key].getEn())) - len(mecab.parse(sentence_dict[key].getZh()))):
             sentence_dict[key].setZh(zh_sentence)
 
 
@@ -55,12 +59,17 @@ if __name__ == '__main__':
     punctuations = punctuations.replace("(", "").replace("\"", "").replace("<", "") + " \t"
     cleaner = re.compile('<.*?>')
     table = str.maketrans(dict.fromkeys(string.punctuation + zhpunctuation + "\t "))
+    entokenzier = MosesTokenizer('en')
+    mecab = MeCab.Tagger('-Owakati')
 
-    with open(os.path.join(args.base_dir, args.input), 'r') as f:
+    with open(os.path.join(args.base_dir, args.input), 'r', errors='ignore') as f:
         for each in f.readlines():
-            each = bytes(each, 'utf-8').decode('utf-8', 'ignore')
-            each = each.strip().replace(u'\uf020', "")
-
+            try:
+                each = bytes(each, 'utf-8').decode('utf-8', 'ignore')
+                each = each.strip().replace(u'\uf020', "")
+                each = each.replace('\n', '')
+            except Exception as e:
+                print(str(e))
             try:
                 # if each[0].isdigit() or each[0] in punctuations:
                 #     continue
@@ -81,3 +90,4 @@ if __name__ == '__main__':
             g.write('\t')
             g.write(value.getZh())
             g.write('\n')
+

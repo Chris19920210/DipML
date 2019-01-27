@@ -87,6 +87,13 @@ class SpmTextEncoder(TextEncoder):
             return self.sp.IdToPiece(int(subtoken))
         return u""
 
+    def encode_as_pieces(self, s):
+        """ encode sentence as sentence piece
+        :param s: string
+        :return: list[str] pieces list
+        """
+        return self.sp.EncodeAsPieces(s)
+
     @classmethod
     def build_from_file(cls,
                         output_dir,

@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="d0ac3b43-4858-4614-864d-9e52271baf67" name="Default Changelist" comment="japanese english">
-      <change beforePath="" afterPath="$PROJECT_DIR$/serving/nmt_app_enja.py" />
+    <list default="true" id="d0ac3b43-4858-4614-864d-9e52271baf67" name="Default Changelist" comment="Sentencepieces modification">
+      <change beforePath="" afterPath="$PROJECT_DIR$/others/inception_resnet_v2.py" />
+      <change beforePath="" afterPath="$PROJECT_DIR$/others/resnet.py" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change beforePath="$PROJECT_DIR$/preprocess/SpmTextEncoder.py" afterPath="$PROJECT_DIR$/preprocess/SpmTextEncoder.py" />
-      <change beforePath="$PROJECT_DIR$/preprocess/clean_first_step.py" afterPath="$PROJECT_DIR$/preprocess/clean_first_step.py" />
+      <change beforePath="$PROJECT_DIR$/others/protein_pred_sandwich.py" afterPath="$PROJECT_DIR$/others/protein_pred_sandwich.py" />
+      <change beforePath="$PROJECT_DIR$/others/resnet_temporal.py" afterPath="$PROJECT_DIR$/others/resnet_temporal.py" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -51,21 +52,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="750">
-      <file leaf-file-name="nmt_utils.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/serving/nmt_utils.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="4440">
-              <caret line="133" column="41" lean-forward="false" selection-start-line="133" selection-start-column="41" selection-end-line="133" selection-end-column="41" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="nmt_serving_utils.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/serving/nmt_serving_utils.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1856">
-              <caret line="141" column="4" lean-forward="false" selection-start-line="141" selection-start-column="4" selection-end-line="141" selection-end-column="4" />
+            <state relative-caret-position="5624">
+              <caret line="152" column="15" lean-forward="false" selection-start-line="152" selection-start-column="15" selection-end-line="152" selection-end-column="15" />
               <folding>
                 <element signature="e#650#688#0" expanded="true" />
               </folding>
@@ -73,56 +64,12 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="translatespm_enja_ai50k.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/preprocess/translatespm_enja_ai50k.py">
+      <file leaf-file-name="resnet_temporal.py" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/others/resnet_temporal.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1913">
-              <caret line="132" column="56" lean-forward="false" selection-start-line="132" selection-start-column="56" selection-end-line="132" selection-end-column="56" />
+            <state relative-caret-position="237">
+              <caret line="271" column="38" lean-forward="true" selection-start-line="271" selection-start-column="38" selection-end-line="271" selection-end-column="38" />
               <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="SpmTextEncoder.py" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/preprocess/SpmTextEncoder.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1040">
-              <caret line="92" column="38" lean-forward="false" selection-start-line="92" selection-start-column="38" selection-end-line="92" selection-end-column="38" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="rpc.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/serving/rpc.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
-              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-              <folding>
-                <element signature="e#0#11#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="query.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/serving/query.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
-              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="protein_pred_rnn.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/others/protein_pred_rnn.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="8880">
-              <caret line="240" column="16" lean-forward="false" selection-start-line="240" selection-start-column="16" selection-end-line="240" selection-end-column="16" />
-              <folding>
-                <element signature="e#0#10#0" expanded="true" />
-              </folding>
             </state>
           </provider>
         </entry>
@@ -130,30 +77,82 @@
       <file leaf-file-name="protein_pred_sandwich.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/others/protein_pred_sandwich.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1369">
-              <caret line="48" column="60" lean-forward="false" selection-start-line="48" selection-start-column="60" selection-end-line="48" selection-end-column="60" />
-              <folding>
-                <element signature="e#0#10#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="nmt_app_enja.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/serving/nmt_app_enja.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="4329">
-              <caret line="136" column="23" lean-forward="false" selection-start-line="136" selection-start-column="23" selection-end-line="136" selection-end-column="23" />
+            <state relative-caret-position="-4514">
+              <caret line="48" column="59" lean-forward="false" selection-start-line="48" selection-start-column="59" selection-end-line="48" selection-end-column="59" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="__init__.py" pinned="false" current-in-tab="false">
-        <entry file="file://$USER_HOME$/anaconda3/lib/python3.6/site-packages/simplejson/__init__.py">
+      <file leaf-file-name="resnet.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/others/resnet.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="10397">
-              <caret line="281" column="4" lean-forward="false" selection-start-line="281" selection-start-column="4" selection-end-line="281" selection-end-column="4" />
+            <state relative-caret-position="1558">
+              <caret line="248" column="87" lean-forward="false" selection-start-line="248" selection-start-column="87" selection-end-line="248" selection-end-column="87" />
+              <folding>
+                <element signature="e#0#31#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="inception_resnet_v2.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/others/inception_resnet_v2.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-1476">
+              <caret line="288" column="48" lean-forward="true" selection-start-line="288" selection-start-column="16" selection-end-line="288" selection-end-column="48" />
+              <folding>
+                <element signature="e#597#635#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="__init__.py" pinned="false" current-in-tab="false">
+        <entry file="file://$USER_HOME$/anaconda3/lib/python3.6/site-packages/keras_applications/__init__.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="185">
+              <caret line="7" column="0" lean-forward="false" selection-start-line="7" selection-start-column="0" selection-end-line="7" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="inception_resnet_v2.py" pinned="false" current-in-tab="false">
+        <entry file="file://$USER_HOME$/anaconda3/lib/python3.6/site-packages/keras_applications/inception_resnet_v2.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="13135">
+              <caret line="364" column="29" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="368" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="merge.py" pinned="false" current-in-tab="false">
+        <entry file="file://$USER_HOME$/anaconda3/lib/python3.6/site-packages/keras/layers/merge.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="1017">
+              <caret line="637" column="4" lean-forward="false" selection-start-line="637" selection-start-column="4" selection-end-line="637" selection-end-column="4" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="text_encoder.py" pinned="false" current-in-tab="false">
+        <entry file="file://$USER_HOME$/anaconda3/lib/python3.6/site-packages/tensor2tensor/data_generators/text_encoder.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="1073">
+              <caret line="44" column="0" lean-forward="false" selection-start-line="44" selection-start-column="0" selection-end-line="44" selection-end-column="0" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="SpmTextEncoder.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/preprocess/SpmTextEncoder.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="3071">
+              <caret line="92" column="38" lean-forward="false" selection-start-line="92" selection-start-column="38" selection-end-line="92" selection-end-column="38" />
               <folding />
             </state>
           </provider>
@@ -170,7 +169,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>retr</find>
       <find>def retr</find>
       <find>countd</find>
       <find>tim</find>
@@ -200,6 +198,7 @@
       <find>num_classes</find>
       <find>num_clas</find>
       <find>self.request_fn</find>
+      <find>concat</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -208,8 +207,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/serving/nmt_app_test.py" />
-        <option value="$PROJECT_DIR$/serving/rpc.py" />
         <option value="$PROJECT_DIR$/.gitignore" />
         <option value="$PROJECT_DIR$/bin/asyn_celery.sh" />
         <option value="$PROJECT_DIR$/bin/tornado_web_application.sh" />
@@ -255,10 +252,12 @@
         <option value="$PROJECT_DIR$/others/protein_pred_rnn.py" />
         <option value="$PROJECT_DIR$/preprocess/clean_first_step.py" />
         <option value="$PROJECT_DIR$/others/HAN.py" />
-        <option value="$PROJECT_DIR$/others/resnet_temporal.py" />
-        <option value="$PROJECT_DIR$/others/protein_pred_sandwich.py" />
         <option value="$PROJECT_DIR$/serving/nmt_app_enja.py" />
         <option value="$PROJECT_DIR$/preprocess/SpmTextEncoder.py" />
+        <option value="$PROJECT_DIR$/others/resnetpa.py" />
+        <option value="$PROJECT_DIR$/others/inception_resnet_v2.py" />
+        <option value="$PROJECT_DIR$/others/protein_pred_sandwich.py" />
+        <option value="$PROJECT_DIR$/others/resnet_temporal.py" />
       </list>
     </option>
   </component>
@@ -269,9 +268,10 @@
     <sorting>DEFINITION_ORDER</sorting>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="y" value="26" />
-    <option name="width" value="3840" />
-    <option name="height" value="2134" />
+    <option name="x" value="3840" />
+    <option name="y" value="-32" />
+    <option name="width" value="2560" />
+    <option name="height" value="1472" />
   </component>
   <component name="ProjectInspectionProfilesVisibleTreeState">
     <entry key="Project Default">
@@ -316,26 +316,6 @@
             <path>
               <item name="DipML" type="b2602c69:ProjectViewProjectNode" />
               <item name="DipML" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="DipML" type="b2602c69:ProjectViewProjectNode" />
-              <item name="DipML" type="462c0819:PsiDirectoryNode" />
-              <item name="preprocess" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="DipML" type="b2602c69:ProjectViewProjectNode" />
-              <item name="DipML" type="462c0819:PsiDirectoryNode" />
-              <item name="presentation" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="DipML" type="b2602c69:ProjectViewProjectNode" />
-              <item name="DipML" type="462c0819:PsiDirectoryNode" />
-              <item name="serving" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="DipML" type="b2602c69:ProjectViewProjectNode" />
-              <item name="DipML" type="462c0819:PsiDirectoryNode" />
-              <item name="TCWordSeg" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -825,23 +805,29 @@
       <option name="project" value="LOCAL" />
       <updated>1548386122431</updated>
     </task>
-    <option name="localTasksCounter" value="47" />
+    <task id="LOCAL-00047" summary="Sentencepieces modification">
+      <created>1548562539096</created>
+      <option name="number" value="00047" />
+      <option name="presentableId" value="LOCAL-00047" />
+      <option name="project" value="LOCAL" />
+      <updated>1548562539097</updated>
+    </task>
+    <option name="localTasksCounter" value="48" />
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="26" width="3840" height="2134" extended-state="6" />
+    <frame x="3840" y="-32" width="2560" height="1472" extended-state="6" />
     <editor active="true" />
     <layout>
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.049224183" sideWeight="0.14973958" order="7" side_tool="true" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.07622204" sideWeight="0.14973958" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.22257891" sideWeight="0.85026044" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.2129481" sideWeight="0.49583334" order="11" side_tool="false" content_ui="tabs" />
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32958803" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4217067" sideWeight="0.6609375" order="9" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.15651041" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.23476562" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Docker" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="false" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="SciView" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.39967898" sideWeight="0.49895832" order="3" side_tool="false" content_ui="tabs" />
@@ -851,6 +837,7 @@
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
@@ -861,7 +848,6 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="gpc client modify" />
     <MESSAGE value="bpe generator and finetuning" />
     <MESSAGE value="model service" />
     <MESSAGE value="bash　script" />
@@ -886,7 +872,8 @@
     <MESSAGE value="temporal resnet" />
     <MESSAGE value="japanese english" />
     <MESSAGE value="protein prediction" />
-    <option name="LAST_COMMIT_MESSAGE" value="protein prediction" />
+    <MESSAGE value="Sentencepieces modification" />
+    <option name="LAST_COMMIT_MESSAGE" value="Sentencepieces modification" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -927,41 +914,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/preprocess/translatespm_enzh_ai50k.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="925">
-          <caret line="38" column="34" lean-forward="false" selection-start-line="38" selection-start-column="34" selection-end-line="38" selection-end-column="34" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/presentation/parallel_sentence.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="518">
-          <caret line="15" column="26" lean-forward="false" selection-start-line="15" selection-start-column="26" selection-end-line="15" selection-end-column="26" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/preprocess/translatespm_jaen_ai50k.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="592">
-          <caret line="29" column="18" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="148" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/bin/train_lm.sh">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="148">
-          <caret line="4" column="71" lean-forward="false" selection-start-line="4" selection-start-column="52" selection-end-line="4" selection-end-column="71" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/bin/sentence_perplexity.sh">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="148">
-          <caret line="4" column="105" lean-forward="false" selection-start-line="4" selection-start-column="105" selection-end-line="4" selection-end-column="105" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/preprocess/score_percentile.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
@@ -1170,25 +1122,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$USER_HOME$/anaconda3/lib/python3.6/site-packages/keras/layers/merge.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="23384">
-          <caret line="637" column="4" lean-forward="false" selection-start-line="637" selection-start-column="4" selection-end-line="637" selection-end-column="4" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/serving/nmt_app.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="3108">
           <caret line="103" column="43" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="150" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/others/resnet_temporal.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="7215">
-          <caret line="217" column="29" lean-forward="false" selection-start-line="217" selection-start-column="29" selection-end-line="217" selection-end-column="29" />
         </state>
       </provider>
     </entry>
@@ -1203,9 +1140,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="592">
           <caret line="27" column="26" lean-forward="false" selection-start-line="27" selection-start-column="26" selection-end-line="27" selection-end-column="26" />
-          <folding>
-            <element signature="e#0#30#0" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1213,9 +1147,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1887">
           <caret line="58" column="0" lean-forward="false" selection-start-line="58" selection-start-column="0" selection-end-line="58" selection-end-column="0" />
-          <folding>
-            <element signature="e#0#18#0" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1224,17 +1155,7 @@
         <state relative-caret-position="8880">
           <caret line="240" column="16" lean-forward="false" selection-start-line="240" selection-start-column="16" selection-end-line="240" selection-end-column="16" />
           <folding>
-            <element signature="e#0#10#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/others/protein_pred_sandwich.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1369">
-          <caret line="48" column="60" lean-forward="false" selection-start-line="48" selection-start-column="60" selection-end-line="48" selection-end-column="60" />
-          <folding>
-            <element signature="e#0#10#0" expanded="true" />
+            <element signature="e#0#10#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -1243,7 +1164,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="4329">
           <caret line="136" column="23" lean-forward="false" selection-start-line="136" selection-start-column="23" selection-end-line="136" selection-end-column="23" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1251,7 +1171,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="10397">
           <caret line="281" column="4" lean-forward="false" selection-start-line="281" selection-start-column="4" selection-end-line="281" selection-end-column="4" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1259,7 +1178,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1267,9 +1185,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding>
-            <element signature="e#0#11#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1281,19 +1196,9 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/serving/nmt_serving_utils.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1856">
-          <caret line="141" column="4" lean-forward="false" selection-start-line="141" selection-start-column="4" selection-end-line="141" selection-end-column="4" />
-          <folding>
-            <element signature="e#650#688#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/preprocess/translatespm_enja_ai50k.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1913">
+        <state relative-caret-position="4403">
           <caret line="132" column="56" lean-forward="false" selection-start-line="132" selection-start-column="56" selection-end-line="132" selection-end-column="56" />
           <folding />
         </state>
@@ -1301,8 +1206,86 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/preprocess/SpmTextEncoder.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1040">
+        <state relative-caret-position="3071">
           <caret line="92" column="38" lean-forward="false" selection-start-line="92" selection-start-column="38" selection-end-line="92" selection-end-column="38" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/anaconda3/lib/python3.6/site-packages/tensor2tensor/data_generators/text_encoder.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1073">
+          <caret line="44" column="0" lean-forward="false" selection-start-line="44" selection-start-column="0" selection-end-line="44" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/serving/nmt_serving_utils.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="5624">
+          <caret line="152" column="15" lean-forward="false" selection-start-line="152" selection-start-column="15" selection-end-line="152" selection-end-column="15" />
+          <folding>
+            <element signature="e#650#688#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/anaconda3/lib/python3.6/site-packages/keras_applications/inception_resnet_v2.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="13135">
+          <caret line="364" column="29" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="368" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/anaconda3/lib/python3.6/site-packages/keras_applications/__init__.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="185">
+          <caret line="7" column="0" lean-forward="false" selection-start-line="7" selection-start-column="0" selection-end-line="7" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/anaconda3/lib/python3.6/site-packages/keras/layers/merge.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1017">
+          <caret line="637" column="4" lean-forward="false" selection-start-line="637" selection-start-column="4" selection-end-line="637" selection-end-column="4" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/others/inception_resnet_v2.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1476">
+          <caret line="288" column="48" lean-forward="true" selection-start-line="288" selection-start-column="16" selection-end-line="288" selection-end-column="48" />
+          <folding>
+            <element signature="e#597#635#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/others/resnet.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1558">
+          <caret line="248" column="87" lean-forward="false" selection-start-line="248" selection-start-column="87" selection-end-line="248" selection-end-column="87" />
+          <folding>
+            <element signature="e#0#31#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/others/protein_pred_sandwich.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-4514">
+          <caret line="48" column="59" lean-forward="false" selection-start-line="48" selection-start-column="59" selection-end-line="48" selection-end-column="59" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/others/resnet_temporal.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="237">
+          <caret line="271" column="38" lean-forward="true" selection-start-line="271" selection-start-column="38" selection-end-line="271" selection-end-column="38" />
           <folding />
         </state>
       </provider>

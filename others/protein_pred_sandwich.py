@@ -46,7 +46,7 @@ parser.add_argument('--y-test', type=str, default='y_test.npy',
                     help='path to y test or y eval')
 parser.add_argument('--model-dir', type=str, default='./',
                     help='model dir to save the model')
-parser.add_argument('--early-stopping', type=int, default=10,
+parser.add_argument('--early-stopping', type=int, default=30,
                     help='round for early stopping')
 parser.add_argument('--checkpoint-epochs', type=int, default=1,
                     help='save the checkpoints epoch')
@@ -203,6 +203,7 @@ if __name__ == "__main__":
     sess = tf.Session(config=config)
 
     KTF.set_session(sess)
+
 
     classifier = ProteinSWClassifier(args.time_steps,
                                      args.n_inputs,

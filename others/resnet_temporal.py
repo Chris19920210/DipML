@@ -82,6 +82,26 @@ def _conv_bn_relu(**conv_params):
     return f
 
 
+def _conv_bn(**conv_params):
+    """Helper to build a conv -> BN -> relu block
+    """
+    filters = conv_params["filters"]
+    kernel_size = conv_params["kernel_size"]
+    strides = conv_params.setdefault("strides", 1)
+    kernel_initializer = conv_params.setdefault("kernel_initializer", "he_normal")
+    padding = conv_params.setdefault("padding", "same")
+    kernel_regularizer = conv_params.setdefault("kernel_regularizer", l2(1.e-4))
+
+    def f(input):
+        conv = Conv1D(filters=filters, kernel_size=kernel_size,
+                      strides=strides, padding=padding,
+                      kernel_initializer=kernel_initializer,
+                      kernel_regularizer=kernel_regularizer)(input)
+        return BatchNormalization()(conv)
+
+    return f
+
+
 def _bn_relu_conv(**conv_params):
     """Helper to build a BN -> relu -> conv block.
     This is an improved scheme proposed in http://arxiv.org/pdf/1603.05027v2.pdf
@@ -127,7 +147,7 @@ def _shortcut(input, residual):
     return add([shortcut, residual])
 
 
-def _residual_block(block_function, filters, repetitions, is_first_layer=False):
+def _residual_block(block_function, filters, repetitions, is_first_layer=False, inception=False):
     """Builds a residual block with repeating bottleneck blocks.
     """
     def f(input):
@@ -141,28 +161,40 @@ def _residual_block(block_function, filters, repetitions, is_first_layer=False):
             #     else:
             #         init_strides = 1
             input = block_function(filters=filters, init_strides=init_strides,
-                                   is_first_block_of_first_layer=(is_first_layer and i == 0))(input)
+                                   is_first_block_of_first_layer=(is_first_layer and i == 0), inception=inception)(input)
         return input
 
     return f
 
 
-def basic_block(filters, init_strides=1, is_first_block_of_first_layer=False):
+def basic_block(filters, init_strides=1, is_first_block_of_first_layer=False, inception=False):
     """Basic 3 X 3 convolution blocks for use on resnets with layers <= 34.
     Follows improved proposed scheme in http://arxiv.org/pdf/1603.05027v2.pdf
     """
     def f(input):
 
         if is_first_block_of_first_layer:
-            # don't repeat bn->relu since we just did bn->relu->maxpool
-            conv1 = Conv1D(filters=filters, kernel_size=3,
-                           strides=init_strides,
-                           padding="same",
-                           kernel_initializer="he_normal",
-                           kernel_regularizer=l2(1e-4))(input)
+            if inception:
+                conv1_1 = _conv_bn(filters=filters, kernel_size=1, strides=init_strides)(input)
+                conv1_3 = _conv_bn(filters=filters, kernel_size=3, strides=init_strides)(input)
+                conv1_5 = _conv_bn(filters=filters, kernel_size=5, strides=init_strides)(input)
+                conv1 = concatenate([conv1_1, conv1_3, conv1_5])
+            else:
+                conv1 = Conv1D(filters=filters, kernel_size=3,
+                               strides=init_strides,
+                               padding="same",
+                               kernel_initializer="he_normal",
+                               kernel_regularizer=l2(1e-4))(input)
         else:
-            conv1 = _bn_relu_conv(filters=filters, kernel_size=3,
-                                  strides=init_strides)(input)
+            if inception:
+                conv1_1 = _conv_bn(filters=filters, kernel_size=1, strides=init_strides)(input)
+                conv1_3 = _conv_bn(filters=filters, kernel_size=3, strides=init_strides)(input)
+                conv1_5 = _conv_bn(filters=filters, kernel_size=5, strides=init_strides)(input)
+                conv1 = concatenate([conv1_1, conv1_3, conv1_5])
+                conv1 = Activation("relu")(conv1)
+            else:
+                conv1 = _bn_relu_conv(filters=filters, kernel_size=3,
+                                      strides=init_strides)(input)
 
         residual = _bn_relu_conv(filters=filters, kernel_size=3)(conv1)
         return _shortcut(input, residual)
@@ -170,7 +202,7 @@ def basic_block(filters, init_strides=1, is_first_block_of_first_layer=False):
     return f
 
 
-def bottleneck(filters, init_strides=1, is_first_block_of_first_layer=False):
+def bottleneck(filters, init_strides=1, is_first_block_of_first_layer=False, inception=False):
     """Bottleneck architecture for > 34 layer resnet.
     Follows improved proposed scheme in http://arxiv.org/pdf/1603.05027v2.pdf
     Returns:
@@ -179,17 +211,29 @@ def bottleneck(filters, init_strides=1, is_first_block_of_first_layer=False):
     def f(input):
 
         if is_first_block_of_first_layer:
-            # don't repeat bn->relu since we just did bn->relu->maxpool
-            conv_1 = Conv1D(filters=filters, kernel_size=1,
-                            strides=init_strides,
-                            padding="same",
-                            kernel_initializer="he_normal",
-                            kernel_regularizer=l2(1e-4))(input)
+            if inception:
+                conv1_1 = _conv_bn(filters=filters, kernel_size=1, strides=init_strides)(input)
+                conv1_3 = _conv_bn(filters=filters, kernel_size=3, strides=init_strides)(input)
+                conv1_5 = _conv_bn(filters=filters, kernel_size=5, strides=init_strides)(input)
+                conv1 = concatenate([conv1_1, conv1_3, conv1_5])
+            else:
+                conv1 = Conv1D(filters=filters, kernel_size=1,
+                               strides=init_strides,
+                               padding="same",
+                               kernel_initializer="he_normal",
+                               kernel_regularizer=l2(1e-4))(input)
         else:
-            conv_1 = _bn_relu_conv(filters=filters, kernel_size=1,
-                                   strides=init_strides)(input)
+            if inception:
+                conv1_1 = _conv_bn(filters=filters, kernel_size=1, strides=init_strides)(input)
+                conv1_3 = _conv_bn(filters=filters, kernel_size=3, strides=init_strides)(input)
+                conv1_5 = _conv_bn(filters=filters, kernel_size=5, strides=init_strides)(input)
+                conv1 = concatenate([conv1_1, conv1_3, conv1_5])
+                conv1 = Activation("relu")(conv1)
+            else:
+                conv1 = _bn_relu_conv(filters=filters, kernel_size=3,
+                                      strides=init_strides)(input)
 
-        conv_3 = _bn_relu_conv(filters=filters, kernel_size=3)(conv_1)
+        conv_3 = _bn_relu_conv(filters=filters, kernel_size=3)(conv1)
         residual = _bn_relu_conv(filters=filters * 4, kernel_size=1)(conv_3)
         return _shortcut(input, residual)
 
@@ -215,7 +259,7 @@ def _get_block(identifier):
 class TimeResnetBuilder(object):
     @staticmethod
     def build(input_shape, num_outputs, block_fn, rnn_fn, cnn_repetitions, filters, rnn_units,
-              dense_units=50, rnn_layers=None, embedding_size=None, vocab_size=None):
+              dense_units=50, rnn_layers=None, embedding_size=None, vocab_size=None, inception=True):
         """Builds a custom ResNet like architecture.
         Args:
             input_shape: The input shape in the form (time_steps, channels)
@@ -231,6 +275,7 @@ class TimeResnetBuilder(object):
             rnn_layers: num of layers, tuple (before cnn layers, after cnn layers)
             embedding_size:
             vocab_size:
+            inception:
 
         Returns:
             The keras `Model`.
@@ -249,7 +294,11 @@ class TimeResnetBuilder(object):
             block = conv1
             filters = filters
             for i, r in enumerate(cnn_repetitions):
-                block = _residual_block(block_fn, filters=filters, repetitions=r, is_first_layer=(i == 0))(block)
+                block = _residual_block(block_fn,
+                                        filters=filters,
+                                        repetitions=r,
+                                        is_first_layer=(i == 0),
+                                        inception=inception)(block)
                 filters *= 2
 
             # Last activation
@@ -278,7 +327,11 @@ class TimeResnetBuilder(object):
             block = conv1
             filters = filters
             for i, r in enumerate(cnn_repetitions):
-                block = _residual_block(block_fn, filters=filters, repetitions=r, is_first_layer=(i == 0))(block)
+                block = _residual_block(block_fn,
+                                        filters=filters,
+                                        repetitions=r,
+                                        is_first_layer=(i == 0),
+                                        inception=inception)(block)
                 filters *= 2
 
             # Last activation
@@ -317,7 +370,7 @@ class TimeResnetBuilder(object):
 
     @staticmethod
     def build_resnet_tiny(input_shape, num_outputs, embedding_size=None, vocab_size=None):
-        return TimeResnetBuilder.build(input_shape, num_outputs, basic_block, gru_bn_relu, [2, 2], 16, 32, 32, [0, 1],
+        return TimeResnetBuilder.build(input_shape, num_outputs, basic_block, gru_bn_relu, [2, 1], 16, 32, 32, [0, 1],
                                        embedding_size, vocab_size)
 
     @staticmethod

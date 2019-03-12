@@ -204,7 +204,6 @@ if __name__ == "__main__":
 
     KTF.set_session(sess)
 
-
     classifier = ProteinSWClassifier(args.time_steps,
                                      args.n_inputs,
                                      args.n_classes,

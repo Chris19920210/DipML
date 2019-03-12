@@ -7,3 +7,8 @@ from . import my_spm_utils
 from . import translatespm_zhen_ai50k
 from . import translatespm_enja_ai50k
 from . import translatespm_jaen_ai50k
+from . import translatespm_enja_ai1h
+from . import translate_p2r_ai3h
+from . import translatespm_enja_ai32k
+from . import translatespm_zhen_ai32k
+from . import translatespm_jaen_ai32k

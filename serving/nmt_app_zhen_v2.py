@@ -6,7 +6,6 @@ import logging
 import traceback
 from tornado import web, ioloop, gen
 from logging.handlers import TimedRotatingFileHandler
-import re
 import os
 """Tornado Web Application"""
 
@@ -61,9 +60,10 @@ class AsyncAppNmtHandler(MyAppBaseHandler):
         if not (content_type and content_type.lower().startswith('application/json')):
             MyAppException(reason="Wrong data format, needs json", status_code=400)
         res = yield gen.Task(nmt_tasks_zhen.translation.apply_async, args=[self.request.body])
-        self.write(res.result)
+        ret = res.result
+        self.write(ret)
         logger.info(self.request.body)
-        logger.info(res.result)
+        logger.info(ret)
         self.finish()
 
     @web.asynchronous
@@ -73,24 +73,24 @@ class AsyncAppNmtHandler(MyAppBaseHandler):
         if not (content_type and content_type.lower().startswith('application/json')):
             MyAppException(reason="Wrong data format, needs json", status_code=400)
         res = yield gen.Task(nmt_tasks_zhen.translation.apply_async, args=[self.request.body])
-        self.write(res.result)
+        ret = res.result
+        self.write(ret)
         logger.info(self.request.body)
-        logger.info(res.result)
+        logger.info(ret)
         self.finish()
 
 
 if __name__ == '__main__':
     log_format = "%(asctime)s-%(levelname)s-%(message)s"
     os.makedirs("zhen_logs", exist_ok=True)
-    handler = TimedRotatingFileHandler('zhen_logs/web_application_zhen.log', when='midnight', interval=1)
+    handler = TimedRotatingFileHandler('zhen_logs/web_application_zhen.log', when='midnight', interval=1,
+                                       encoding="utf-8")
     formatter = logging.Formatter(log_format)
     handler.setFormatter(formatter)
 
     handler.suffix = "%Y%m%d"
 
-    handler.extMatch = re.compile(r"^\d{8}$")
-
-    logger = logging.getLogger("web_application_zhen")
+    logger = logging.getLogger("zhen")
     logger.setLevel(logging.INFO)
     logger.addHandler(handler)
 

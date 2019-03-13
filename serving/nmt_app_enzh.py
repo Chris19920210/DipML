@@ -142,7 +142,7 @@ def translation():
 if __name__ == '__main__':
     logging.basicConfig(level=logging.INFO,
                         format='%(asctime)s %(levelname)s %(message)s',
-                        filename='./gnmt_query.log',
+                        filename='./query_enzh.log',
                         filemode='w')
     flags.mark_flags_as_required(["problem", "data_dir"])
     nmt_client = NmtClient()

@@ -15,7 +15,6 @@ from mosestokenizer import MosesDetokenizer
 import simplejson as json
 import logging
 import time
-import jieba
 from pyltp import SentenceSplitter
 import MeCab
 
@@ -35,8 +34,6 @@ flags.DEFINE_string("host", None, "host")
 
 app = Flask(__name__)
 CORS(app)
-
-jieba.load_userdict(FLAGS.dictionary)
 
 
 class InvalidUsage(Exception):

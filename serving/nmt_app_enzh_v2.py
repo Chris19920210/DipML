@@ -61,13 +61,9 @@ class AsyncAppNmtHandler(MyAppBaseHandler):
         logger.info(self.request.body)
         res = yield gen.Task(nmt_tasks_enzh.translation.apply_async, args=[self.request.body])
         ret = res.result
-        try:
-            self.write(ret)
-            logger.info(ret)
-            self.finish()
-        except Exception as e:
-            logger.error(str(e))
-            logger.error(type(ret))
+        self.write(ret)
+        logger.info(ret)
+        self.finish()
 
     @web.asynchronous
     @gen.coroutine
@@ -78,14 +74,9 @@ class AsyncAppNmtHandler(MyAppBaseHandler):
         logger.info(self.request.body)
         res = yield gen.Task(nmt_tasks_enzh.translation.apply_async, args=[self.request.body])
         ret = res.result
-        try:
-            self.write(ret)
-            logger.info(ret)
-            self.finish()
-        except Exception as e:
-            logger.error(str(e))
-            logger.error(type(ret))
-
+        self.write(ret)
+        logger.info(ret)
+        self.finish()
 
 
 if __name__ == '__main__':

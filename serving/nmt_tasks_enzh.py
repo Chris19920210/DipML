@@ -65,7 +65,7 @@ def translation(self, msg):
         return target
 
     except Exception as e:
-        self.retry(countdown=2 ** self.request.retries, exc=e)
+        self.retry(countdown=self.request.retries, exc=e)
 
 
 if __name__ == '__main__':

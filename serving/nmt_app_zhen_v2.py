@@ -59,12 +59,16 @@ class AsyncAppNmtHandler(MyAppBaseHandler):
         content_type = self.request.headers.get('Content-Type')
         if not (content_type and content_type.lower().startswith('application/json')):
             MyAppException(reason="Wrong data format, needs json", status_code=400)
+        logger.info(self.request.body)
         res = yield gen.Task(nmt_tasks_zhen.translation.apply_async, args=[self.request.body])
         ret = res.result
-        self.write(ret)
-        logger.info(self.request.body)
-        logger.info(ret)
-        self.finish()
+        try:
+            self.write(ret)
+            logger.info(ret)
+            self.finish()
+        except Exception as e:
+            logger.error(str(e))
+            logger.error(type(ret))
 
     @web.asynchronous
     @gen.coroutine
@@ -72,12 +76,16 @@ class AsyncAppNmtHandler(MyAppBaseHandler):
         content_type = self.request.headers.get('Content-Type')
         if not (content_type and content_type.lower().startswith('application/json')):
             MyAppException(reason="Wrong data format, needs json", status_code=400)
+        logger.info(self.request.body)
         res = yield gen.Task(nmt_tasks_zhen.translation.apply_async, args=[self.request.body])
         ret = res.result
-        self.write(ret)
-        logger.info(self.request.body)
-        logger.info(ret)
-        self.finish()
+        try:
+            self.write(ret)
+            logger.info(ret)
+            self.finish()
+        except Exception as e:
+            logger.error(str(e))
+            logger.error(type(ret))
 
 
 if __name__ == '__main__':

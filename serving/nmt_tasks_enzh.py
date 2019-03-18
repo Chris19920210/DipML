@@ -50,6 +50,7 @@ app = Celery("tasks_enzh",
              task_serializer='json',
              result_serializer='json',
              accept_content=['json'],
+             result_persistent=False
              )
 app.config_from_object("celeryconfig_enzh")
 

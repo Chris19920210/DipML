@@ -4,10 +4,12 @@
     <bookmark url="file://$PROJECT_DIR$/test/trtmodel.py" line="48" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="d0ac3b43-4858-4614-864d-9e52271baf67" name="Default Changelist" comment="demo translation web">
+    <list default="true" id="d0ac3b43-4858-4614-864d-9e52271baf67" name="Default Changelist" comment="logging encode">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change beforePath="$PROJECT_DIR$/serving/nmt_app_enzh_v2.py" afterPath="$PROJECT_DIR$/serving/nmt_app_enzh_v2.py" />
-      <change beforePath="$PROJECT_DIR$/serving/nmt_app_zhen_v2.py" afterPath="$PROJECT_DIR$/serving/nmt_app_zhen_v2.py" />
+      <change beforePath="$PROJECT_DIR$/serving/celeryconfig_enzh.py" afterPath="$PROJECT_DIR$/serving/celeryconfig_enzh.py" />
+      <change beforePath="$PROJECT_DIR$/serving/celeryconfig_zhen.py" afterPath="$PROJECT_DIR$/serving/celeryconfig_zhen.py" />
+      <change beforePath="$PROJECT_DIR$/serving/nmt_tasks_enzh.py" afterPath="$PROJECT_DIR$/serving/nmt_tasks_enzh.py" />
+      <change beforePath="$PROJECT_DIR$/serving/nmt_tasks_zhen.py" afterPath="$PROJECT_DIR$/serving/nmt_tasks_zhen.py" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -53,63 +55,51 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="750">
-      <file leaf-file-name="nmt_app_zhen_v2.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/serving/nmt_app_zhen_v2.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="2257">
-              <caret line="75" column="0" lean-forward="false" selection-start-line="75" selection-start-column="0" selection-end-line="75" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="nmt_app_enzh_v2.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="nmt_app_enzh_v2.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/serving/nmt_app_enzh_v2.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="694">
-              <caret line="79" column="0" lean-forward="true" selection-start-line="79" selection-start-column="0" selection-end-line="79" selection-end-column="0" />
+            <state relative-caret-position="148">
+              <caret line="18" column="25" lean-forward="true" selection-start-line="18" selection-start-column="25" selection-end-line="18" selection-end-column="25" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="nmt_app_zhen.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/serving/nmt_app_zhen.py">
+      <file leaf-file-name="__init__.py" pinned="false" current-in-tab="false">
+        <entry file="file://$USER_HOME$/anaconda3/lib/python3.6/site-packages/tcelery/__init__.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="5550">
-              <caret line="150" column="38" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="158" selection-end-column="0" />
-              <folding>
-                <element signature="e#0#38#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="nmt_tasks.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/serving/nmt_tasks.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1604">
-              <caret line="85" column="30" lean-forward="false" selection-start-line="85" selection-start-column="30" selection-end-line="85" selection-end-column="30" />
+            <state relative-caret-position="370">
+              <caret line="39" column="46" lean-forward="false" selection-start-line="39" selection-start-column="46" selection-end-line="39" selection-end-column="46" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="nmt_app_jaen.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/serving/nmt_app_jaen.py">
+      <file leaf-file-name="_state.py" pinned="false" current-in-tab="false">
+        <entry file="file://$USER_HOME$/anaconda3/lib/python3.6/site-packages/celery/_state.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="629">
-              <caret line="17" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="156" selection-end-column="0" />
+            <state relative-caret-position="-569">
+              <caret line="99" column="4" lean-forward="false" selection-start-line="99" selection-start-column="4" selection-end-line="99" selection-end-column="4" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="translatespm_jaen_ai32k.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/preprocess/translatespm_jaen_ai32k.py">
+      <file leaf-file-name="base.py" pinned="false" current-in-tab="false">
+        <entry file="file://$USER_HOME$/anaconda3/lib/python3.6/site-packages/celery/app/base.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-2488">
-              <caret line="43" column="29" lean-forward="true" selection-start-line="43" selection-start-column="29" selection-end-line="43" selection-end-column="29" />
+            <state relative-caret-position="-38">
+              <caret line="120" column="8" lean-forward="false" selection-start-line="120" selection-start-column="8" selection-end-line="120" selection-end-column="8" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="defaults.py" pinned="false" current-in-tab="false">
+        <entry file="file://$USER_HOME$/anaconda3/lib/python3.6/site-packages/celery/app/defaults.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="2737">
+              <caret line="147" column="26" lean-forward="false" selection-start-line="147" selection-start-column="16" selection-end-line="147" selection-end-column="26" />
               <folding />
             </state>
           </provider>
@@ -118,8 +108,8 @@
       <file leaf-file-name="nmt_tasks_enzh.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/serving/nmt_tasks_enzh.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="888">
-              <caret line="24" column="33" lean-forward="true" selection-start-line="24" selection-start-column="33" selection-end-line="24" selection-end-column="33" />
+            <state relative-caret-position="404">
+              <caret line="47" column="44" lean-forward="false" selection-start-line="47" selection-start-column="44" selection-end-line="47" selection-end-column="44" />
               <folding>
                 <element signature="e#0#25#0" expanded="true" />
               </folding>
@@ -127,21 +117,31 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="nmt_utils.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/serving/nmt_utils.py">
+      <file leaf-file-name="celeryconfig_enzh.py" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/serving/celeryconfig_enzh.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-1295">
-              <caret line="80" column="8" lean-forward="false" selection-start-line="80" selection-start-column="8" selection-end-line="80" selection-end-column="8" />
+            <state relative-caret-position="370">
+              <caret line="10" column="0" lean-forward="true" selection-start-line="10" selection-start-column="0" selection-end-line="10" selection-end-column="0" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="celeryconfig_enzh.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/serving/celeryconfig_enzh.py">
+      <file leaf-file-name="celeryconfig_zhen.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/serving/celeryconfig_zhen.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="0">
-              <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="10" selection-end-column="0" />
+            <state relative-caret-position="148">
+              <caret line="4" column="74" lean-forward="false" selection-start-line="4" selection-start-column="74" selection-end-line="4" selection-end-column="74" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="entity.py" pinned="false" current-in-tab="false">
+        <entry file="file://$USER_HOME$/anaconda3/lib/python3.6/site-packages/kombu/entity.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-1037">
+              <caret line="361" column="20" lean-forward="false" selection-start-line="361" selection-start-column="13" selection-end-line="361" selection-end-column="20" />
               <folding />
             </state>
           </provider>
@@ -150,8 +150,8 @@
       <file leaf-file-name="nmt_tasks_zhen.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/serving/nmt_tasks_zhen.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="1249">
-              <caret line="70" column="0" lean-forward="true" selection-start-line="70" selection-start-column="0" selection-end-line="70" selection-end-column="0" />
+            <state relative-caret-position="-77">
+              <caret line="54" column="36" lean-forward="false" selection-start-line="54" selection-start-column="36" selection-end-line="54" selection-end-column="36" />
               <folding />
             </state>
           </provider>
@@ -168,20 +168,6 @@
   </component>
   <component name="FindInProjectRecents">
     <findStrings>
-      <find>frozen_graph</find>
-      <find>constant</find>
-      <find>transformer/body/decoder/layer</find>
-      <find>usr_dir</find>
-      <find>create_</find>
-      <find>serialize</find>
-      <find>fro</find>
-      <find>import_g</find>
-      <find>names</find>
-      <find>shared</find>
-      <find>fp16</find>
-      <find>@</find>
-      <find>Seri</find>
-      <find>token</find>
       <find>Excep</find>
       <find>vocab_products</find>
       <find>vocab_products_list</find>
@@ -198,6 +184,20 @@
       <find>eature_info[fname].encoder</find>
       <find>celeryconfig</find>
       <find>jieba</find>
+      <find>CELERY_RESULT_PERSISTENT</find>
+      <find>app</find>
+      <find>self.app</find>
+      <find>wait</find>
+      <find>CELERY_</find>
+      <find>per</find>
+      <find>**kwa</find>
+      <find>result</find>
+      <find>result_persistent</find>
+      <find>result_pers</find>
+      <find>persistent</find>
+      <find>self.durable</find>
+      <find>durable</find>
+      <find>self.dur</find>
     </findStrings>
     <dirStrings>
       <dir>$PROJECT_DIR$/preprocess</dir>
@@ -209,8 +209,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/others/attention_with_context.py" />
-        <option value="$PROJECT_DIR$/others/protein_pred_han.py" />
         <option value="$PROJECT_DIR$/others/protein_pred_rnn.py" />
         <option value="$PROJECT_DIR$/preprocess/clean_first_step.py" />
         <option value="$PROJECT_DIR$/others/HAN.py" />
@@ -255,11 +253,13 @@
         <option value="$PROJECT_DIR$/preprocess/__init__.py" />
         <option value="$PROJECT_DIR$/serving/nmt_app_zhen.py" />
         <option value="$PROJECT_DIR$/serving/nmt_app_enzh.py" />
-        <option value="$PROJECT_DIR$/serving/nmt_tasks_enzh.py" />
-        <option value="$PROJECT_DIR$/serving/nmt_tasks_zhen.py" />
         <option value="$PROJECT_DIR$/serving/nmt_app_jaen.py" />
         <option value="$PROJECT_DIR$/serving/nmt_app_enzh_v2.py" />
         <option value="$PROJECT_DIR$/serving/nmt_app_zhen_v2.py" />
+        <option value="$PROJECT_DIR$/serving/nmt_tasks_enzh.py" />
+        <option value="$PROJECT_DIR$/serving/nmt_tasks_zhen.py" />
+        <option value="$PROJECT_DIR$/serving/celeryconfig_enzh.py" />
+        <option value="$PROJECT_DIR$/serving/celeryconfig_zhen.py" />
       </list>
     </option>
   </component>
@@ -270,9 +270,10 @@
     <sorting>DEFINITION_ORDER</sorting>
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="y" value="26" />
-    <option name="width" value="3840" />
-    <option name="height" value="2134" />
+    <option name="x" value="4471" />
+    <option name="y" value="788" />
+    <option name="width" value="2289" />
+    <option name="height" value="973" />
   </component>
   <component name="ProjectInspectionProfilesVisibleTreeState">
     <entry key="Project Default">
@@ -488,13 +489,6 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1540454164793</updated>
-    </task>
-    <task id="LOCAL-00005" summary="small change">
-      <created>1542175383412</created>
-      <option name="number" value="00005" />
-      <option name="presentableId" value="LOCAL-00005" />
-      <option name="project" value="LOCAL" />
-      <updated>1542175383412</updated>
     </task>
     <task id="LOCAL-00006" summary="preprocessing/punc remover/kenlm">
       <created>1543316613413</created>
@@ -832,22 +826,30 @@
       <option name="project" value="LOCAL" />
       <updated>1552547519364</updated>
     </task>
-    <option name="localTasksCounter" value="54" />
+    <task id="LOCAL-00054" summary="logging encode">
+      <created>1552564552030</created>
+      <option name="number" value="00054" />
+      <option name="presentableId" value="LOCAL-00054" />
+      <option name="project" value="LOCAL" />
+      <updated>1552564552030</updated>
+    </task>
+    <option name="localTasksCounter" value="55" />
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="26" width="3840" height="2134" extended-state="6" />
+    <frame x="3840" y="-32" width="2560" height="1472" extended-state="6" />
     <editor active="true" />
     <layout>
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.07597646" sideWeight="0.14973958" order="7" side_tool="true" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.11764706" sideWeight="0.14973958" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.22257891" sideWeight="0.85026044" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.2129481" sideWeight="0.49583334" order="11" side_tool="false" content_ui="tabs" />
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32958803" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4217067" sideWeight="0.6609375" order="9" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.19817708" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.29726562" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Docker" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="false" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="SciView" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.39967898" sideWeight="0.49895832" order="3" side_tool="false" content_ui="tabs" />
@@ -858,7 +860,6 @@
       <window_info id="Documentation" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32994792" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" x="0" y="0" width="910" height="1934" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
@@ -869,7 +870,6 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="VcsManagerConfiguration">
-    <MESSAGE value="Serializable SpmTextEncoder" />
     <MESSAGE value="SpmTextEncoder update" />
     <MESSAGE value="serving tornado celery rabbitmq" />
     <MESSAGE value="celery modification with process specific connection" />
@@ -894,7 +894,8 @@
     <MESSAGE value="Some extras" />
     <MESSAGE value="logger change" />
     <MESSAGE value="demo translation web" />
-    <option name="LAST_COMMIT_MESSAGE" value="demo translation web" />
+    <MESSAGE value="logging encode" />
+    <option name="LAST_COMMIT_MESSAGE" value="logging encode" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -943,73 +944,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/preprocess/spm_encode.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="333">
-          <caret line="11" column="22" lean-forward="false" selection-start-line="11" selection-start-column="22" selection-end-line="11" selection-end-column="22" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/preprocess/bpe_vocab_generator.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="10212">
-          <caret line="286" column="32" lean-forward="false" selection-start-line="286" selection-start-column="32" selection-end-line="286" selection-end-column="32" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/preprocess/IdTextEncoder.py" />
-    <entry file="file://$PROJECT_DIR$/others/Smipar.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1295">
-          <caret line="56" column="16" lean-forward="true" selection-start-line="0" selection-start-column="0" selection-end-line="266" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/anaconda3/lib/python3.6/site-packages/progressbar/progressbar.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1114">
-          <caret line="93" column="8" lean-forward="false" selection-start-line="93" selection-start-column="8" selection-end-line="93" selection-end-column="8" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/preprocess/SpmTextEncoder.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="999">
-          <caret line="36" column="28" lean-forward="false" selection-start-line="36" selection-start-column="28" selection-end-line="36" selection-end-column="28" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/anaconda3/lib/python3.6/site-packages/tensor2tensor/data_generators/problem.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="11063">
-          <caret line="314" column="6" lean-forward="false" selection-start-line="314" selection-start-column="6" selection-end-line="314" selection-end-column="6" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/preprocess/alignment_prep.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$USER_HOME$/anaconda3/lib/python3.6/site-packages/tensor2tensor/data_generators/translate.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="3589">
-          <caret line="109" column="4" lean-forward="false" selection-start-line="109" selection-start-column="4" selection-end-line="109" selection-end-column="4" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/others/token_data.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="5513">
-          <caret line="153" column="21" lean-forward="false" selection-start-line="153" selection-start-column="21" selection-end-line="153" selection-end-column="21" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/serving/export.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="6216">
@@ -1196,9 +1130,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="703">
           <caret line="19" column="34" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="159" selection-end-column="0" />
-          <folding>
-            <element signature="e#0#38#0" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1206,7 +1137,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="4810">
           <caret line="144" column="4" lean-forward="false" selection-start-line="144" selection-start-column="4" selection-end-line="144" selection-end-column="4" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1214,7 +1144,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1222,9 +1151,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="740">
           <caret line="20" column="38" lean-forward="false" selection-start-line="20" selection-start-column="30" selection-end-line="20" selection-end-column="38" />
-          <folding>
-            <element signature="e#0#12#0" expanded="false" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -1232,7 +1158,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="4625">
           <caret line="144" column="46" lean-forward="false" selection-start-line="144" selection-start-column="46" selection-end-line="144" selection-end-column="46" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -1240,32 +1165,23 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="4107">
           <caret line="130" column="23" lean-forward="false" selection-start-line="130" selection-start-column="23" selection-end-line="130" selection-end-column="23" />
-          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/serving/nmt_tasks.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1604">
+        <state relative-caret-position="2923">
           <caret line="85" column="30" lean-forward="false" selection-start-line="85" selection-start-column="30" selection-end-line="85" selection-end-column="30" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/serving/nmt_tasks_zhen.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="1249">
-          <caret line="70" column="0" lean-forward="true" selection-start-line="70" selection-start-column="0" selection-end-line="70" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/serving/nmt_app_zhen.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="5550">
+        <state relative-caret-position="4884">
           <caret line="150" column="38" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="158" selection-end-column="0" />
           <folding>
-            <element signature="e#0#38#0" expanded="true" />
+            <element signature="e#0#38#0" expanded="false" />
           </folding>
         </state>
       </provider>
@@ -1280,33 +1196,15 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/preprocess/translatespm_jaen_ai32k.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-2488">
-          <caret line="43" column="29" lean-forward="true" selection-start-line="43" selection-start-column="29" selection-end-line="43" selection-end-column="29" />
+        <state relative-caret-position="1110">
+          <caret line="43" column="29" lean-forward="false" selection-start-line="43" selection-start-column="29" selection-end-line="43" selection-end-column="29" />
           <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/serving/celeryconfig_enzh.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="10" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/serving/nmt_tasks_enzh.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="888">
-          <caret line="24" column="33" lean-forward="true" selection-start-line="24" selection-start-column="33" selection-end-line="24" selection-end-column="33" />
-          <folding>
-            <element signature="e#0#25#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/serving/nmt_utils.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-1295">
+        <state relative-caret-position="2479">
           <caret line="80" column="8" lean-forward="false" selection-start-line="80" selection-start-column="8" selection-end-line="80" selection-end-column="8" />
           <folding />
         </state>
@@ -1314,16 +1212,124 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/serving/nmt_app_zhen_v2.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2257">
+        <state relative-caret-position="2479">
           <caret line="75" column="0" lean-forward="false" selection-start-line="75" selection-start-column="0" selection-end-line="75" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/anaconda3/lib/python3.6/site-packages/kombu/messaging.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="295">
+          <caret line="581" column="23" lean-forward="false" selection-start-line="581" selection-start-column="23" selection-end-line="581" selection-end-column="23" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/anaconda3/lib/python3.6/site-packages/celery/app/amqp.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="36">
+          <caret line="186" column="23" lean-forward="false" selection-start-line="186" selection-start-column="23" selection-end-line="186" selection-end-column="23" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/anaconda3/lib/python3.6/site-packages/tcelery/producer.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="925">
+          <caret line="46" column="38" lean-forward="false" selection-start-line="46" selection-start-column="38" selection-end-line="46" selection-end-column="38" />
+          <folding>
+            <element signature="e#0#38#0" expanded="false" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/anaconda3/lib/python3.6/site-packages/celery/local.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-4704">
+          <caret line="61" column="8" lean-forward="false" selection-start-line="61" selection-start-column="8" selection-end-line="61" selection-end-column="8" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/anaconda3/lib/python3.6/site-packages/tcelery/__init__.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="370">
+          <caret line="39" column="46" lean-forward="false" selection-start-line="39" selection-start-column="46" selection-end-line="39" selection-end-column="46" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/anaconda3/lib/python3.6/site-packages/celery/_state.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-569">
+          <caret line="99" column="4" lean-forward="false" selection-start-line="99" selection-start-column="4" selection-end-line="99" selection-end-column="4" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/serving/nmt_app_enzh_v2.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="694">
-          <caret line="79" column="0" lean-forward="true" selection-start-line="79" selection-start-column="0" selection-end-line="79" selection-end-column="0" />
+        <state relative-caret-position="148">
+          <caret line="18" column="25" lean-forward="true" selection-start-line="18" selection-start-column="25" selection-end-line="18" selection-end-column="25" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/anaconda3/lib/python3.6/site-packages/celery/app/base.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-38">
+          <caret line="120" column="8" lean-forward="false" selection-start-line="120" selection-start-column="8" selection-end-line="120" selection-end-column="8" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/anaconda3/lib/python3.6/site-packages/celery/app/defaults.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2737">
+          <caret line="147" column="26" lean-forward="false" selection-start-line="147" selection-start-column="16" selection-end-line="147" selection-end-column="26" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/serving/nmt_tasks_zhen.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-77">
+          <caret line="54" column="36" lean-forward="false" selection-start-line="54" selection-start-column="36" selection-end-line="54" selection-end-column="36" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/anaconda3/lib/python3.6/site-packages/kombu/entity.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-1037">
+          <caret line="361" column="20" lean-forward="false" selection-start-line="361" selection-start-column="13" selection-end-line="361" selection-end-column="20" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/serving/celeryconfig_zhen.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="148">
+          <caret line="4" column="74" lean-forward="false" selection-start-line="4" selection-start-column="74" selection-end-line="4" selection-end-column="74" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/serving/nmt_tasks_enzh.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="404">
+          <caret line="47" column="44" lean-forward="false" selection-start-line="47" selection-start-column="44" selection-end-line="47" selection-end-column="44" />
+          <folding>
+            <element signature="e#0#25#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/serving/celeryconfig_enzh.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="370">
+          <caret line="10" column="0" lean-forward="true" selection-start-line="10" selection-start-column="0" selection-end-line="10" selection-end-column="0" />
           <folding />
         </state>
       </provider>

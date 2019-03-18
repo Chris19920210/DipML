@@ -1,8 +1,14 @@
 from kombu import Exchange, Queue
 
 
+exchange = Exchange("tasks_enzh")
+exchange.durable = False
+queue = Queue("tasks_enzh", exchange, routing_key="tasks_enzh")
+queue.durable = False
+queue.no_ack = True
+
 CELERY_QUEUES = (
-    Queue("tasks_enzh", Exchange("tasks_enzh"), routing_key="tasks_enzh", durable=False, no_ack=True),
+   queue,
 )
 
 CELERY_ROUTES = {

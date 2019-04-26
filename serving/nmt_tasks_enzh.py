@@ -5,6 +5,7 @@ import numpy as np
 import json
 import logging
 import os
+import traceback
 """Celery asynchronous task"""
 
 
@@ -56,7 +57,7 @@ app.config_from_object("celeryconfig_enzh")
 
 
 # make a asynchronous rpc request for translation
-@app.task(name="tasks_enzh.translation", base=TanslationTask, bind=True, max_retries=int(os.environ['MAX_RETRIES']))
+@app.task(name="tasks_enzh.translation", base=TanslationTask, bind=True)
 def translation(self, msg):
     try:
         source = json.loads(msg, strict=False)
@@ -64,9 +65,9 @@ def translation(self, msg):
                             .query(source),
                             ensure_ascii=False).replace("</", "<\\/")
         return target
+    except Exception:
 
-    except Exception as e:
-        self.retry(countdown=self.request.retries, exc=e)
+        return json.dumps({"error": traceback.format_exc()}, ensure_ascii=False)
 
 
 if __name__ == '__main__':

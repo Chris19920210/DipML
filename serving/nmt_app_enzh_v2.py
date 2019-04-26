@@ -52,6 +52,13 @@ class MyAppBaseHandler(web.RequestHandler):
 
 class AsyncAppNmtHandler(MyAppBaseHandler):
     global logger
+
+    @web.asynchronous
+    @gen.coroutine
+    def head(self):
+        self.set_status(200)
+        self.finish()
+
     @web.asynchronous
     @gen.coroutine
     def get(self):

@@ -5,8 +5,6 @@ import string
 import re
 import html
 from zhon.hanzi import punctuation as zhpunctuation
-from mosestokenizer import MosesTokenizer
-import MeCab
 
 parser = argparse.ArgumentParser(description='remover')
 parser.add_argument('--base-dir', type=str, default=None,
@@ -42,14 +40,32 @@ def punc_remover_lower(en_sentence):
     return en_sentence.translate(table).lower()
 
 
+def is_Chinese(uchar):
+    if len(uchar) != 1:
+        raise(TypeError,'expected a character, but a string found!')
+    if uchar >= u'\u4e00' and uchar <= u'\u9fa5':
+        return True
+    else:
+        return False
+
+
 def check_and_add(en_sentence, zh_sentence):
     global sentence_dict, entokenzier, mecab
     key = punc_remover_lower(en_sentence)
+    key = key.replace(" ", "")
+    if len(en_sentence.split(" ")) <= 4:
+        return
+    # total_en = len(en_sentence)
+    # total_ja = len(zh_sentence)
+    # ja_in_en = sum(map(is_Chinese, en_sentence))
+    # en_in_ja = sum(map(lambda x: x.isdigit(), zh_sentence))
+    # if ja_in_en / total_en >= 0.05 or en_in_ja / total_ja >= 0.4:
+    #     return
     if key not in sentence_dict:
         sentence_dict[key] = EnZhTuple(zh_sentence, en_sentence)
     else:
-        if abs(len(entokenzier(sentence_dict[key].getEn())) - len(mecab.parse(zh_sentence))) \
-                < abs(len(entokenzier(sentence_dict[key].getEn())) - len(mecab.parse(sentence_dict[key].getZh()))):
+        if abs(len(sentence_dict[key].getEn().split(" ")) - len(zh_sentence.split(" "))) \
+                < abs(len(sentence_dict[key].getEn().split(" ")) - len(sentence_dict[key].getZh().split(" "))):
             sentence_dict[key].setZh(zh_sentence)
 
 
@@ -59,10 +75,11 @@ if __name__ == '__main__':
     punctuations = punctuations.replace("(", "").replace("\"", "").replace("<", "") + " \t"
     cleaner = re.compile('<.*?>')
     table = str.maketrans(dict.fromkeys(string.punctuation + zhpunctuation + "\t "))
-    entokenzier = MosesTokenizer('en')
-    mecab = MeCab.Tagger('-Owakati')
+    #entokenzier = MosesTokenizer('en')
+    #mecab = MeCab.Tagger('-Owakati')
 
     with open(os.path.join(args.base_dir, args.input), 'r', errors='ignore') as f:
+        count = 0
         for each in f.readlines():
             try:
                 each = bytes(each, 'utf-8').decode('utf-8', 'ignore')
@@ -78,6 +95,9 @@ if __name__ == '__main__':
                 line = cleantext.strip().split("\t")
                 line = list(filter(lambda x: x != "", line))
                 check_and_add(line[0].strip(), line[1].strip())
+                count += 1
+                if count % 10000 == 0:
+                    print(count)
             except Exception as e:
                 print("""
                 Sentence:{sentence:s}
@@ -90,4 +110,3 @@ if __name__ == '__main__':
             g.write('\t')
             g.write(value.getZh())
             g.write('\n')
-

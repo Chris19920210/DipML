@@ -14,31 +14,31 @@ import shutil
 
 _OD_TRAIN_DATASETS = [[
     "train.tgz", [
-        "train/ai_challenger_en-zh.en.tok.train",
-        "train/ai_challenger_en-zh.zh.tok.train"
+        "train/ja_zh.ja.tok.total.train",
+        "train/ja_zh.zh.tok.total.train"
     ]
 ]]
 
-_ID_TRAIN_DATASETS = [[
-    "fine_tune_train.tgz", [
-        "fine_tune_train/en.tok.total.train",
-        "fine_tune_train/zh.tok.total.train"
-    ]
-]]
+#_ID_TRAIN_DATASETS = [[
+#    "fine_tune_train.tgz", [
+#        "fine_tune_train/en.tok.total.train",
+#        "fine_tune_train/zh.tok.total.train"
+#    ]
+#]]
 
 # Test set from News Commentary. 2000 lines
 _OD_TEST_DATASETS = [[
     "test.tgz",
-    ["test/ai_challenger_en-zh.en.tok.test",
-     "test/ai_challenger_en-zh.zh.tok.test"]
+    ["test/ja_zh.ja.tok.total.test",
+     "test/ja_zh.zh.tok.total.test"]
 ]]
 
-_ID_TEST_DATASETS = [[
-    "fine_tune_test.tgz", [
-        "fine_tune_test/en.tok.total.test",
-        "fine_tune_test/zh.tok.total.test"
-    ]
-]]
+#_ID_TEST_DATASETS = [[
+#    "fine_tune_test.tgz", [
+#        "fine_tune_test/en.tok.total.test",
+#        "fine_tune_test/zh.tok.total.test"
+#    ]
+#]]
 
 
 def get_filename(dataset):
@@ -47,7 +47,7 @@ def get_filename(dataset):
 
 def get_dataset(tmp_dir):
     full_dataset = _OD_TRAIN_DATASETS
-    for dataset in [_ID_TRAIN_DATASETS, _OD_TEST_DATASETS, _ID_TEST_DATASETS]:
+    for dataset in [_OD_TEST_DATASETS]:
         filename = get_filename(dataset)
         tmp_filepath = os.path.join(tmp_dir, filename)
         if tf.gfile.Exists(tmp_filepath):
@@ -198,11 +198,11 @@ class SpmSameBpeVocabGenerator(BpeVocabGenerator):
 
     @property
     def approx_vocab_size(self):
-        return 50000
+        return 32000
 
     @property
     def source_vocab_name(self):
-        return "%s.en" % self.vocab_filename
+        return "%s.ja" % self.vocab_filename
 
     @property
     def target_vocab_name(self):

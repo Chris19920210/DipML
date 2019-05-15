@@ -273,7 +273,7 @@ if __name__ == '__main__':
                         help='model_type for spm')
     parser.add_argument('--problem', type=str, default="translate_enzh_ai50k",
                         help="name for problem")
-    parser.add_argument('--reserved-tokens', type=str, default=None,
+    parser.add_argument('--reserved-tokens', type=str, nargs="+", default=None,
                         help="reserved tokens")
     args = parser.parse_args()
 
